@@ -2,6 +2,7 @@ import type { CustomMeal, Food, LogEntry, MetaRecord, Profile, WeightEntry } fro
 import { db } from './db';
 import { SEED_VERSION, seedDatabase } from './seed';
 import { localDateKey } from '../lib/date';
+import { applyStoredTheme } from '../lib/theme';
 
 /** Bump only when the exported shape changes. Importers refuse other versions. */
 export const BACKUP_SCHEMA_VERSION = 1;
@@ -335,4 +336,8 @@ export async function applyBackup(backup: BackupFile): Promise<void> {
   );
 
   await seedDatabase();
+
+  // The imported meta may carry a different theme (or none). Apply it to the
+  // document and the boot mirror so class, mirror and meta agree after import.
+  await applyStoredTheme();
 }

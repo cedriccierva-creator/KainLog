@@ -6,6 +6,7 @@ import { dateKeyToDate, formatDayLabel, lastNDays } from '../lib/date';
 import { formatGrams, formatKcal } from '../lib/format';
 import { movingAverage, summarizeDays, weightChange, type WeightPoint } from '../lib/weekly';
 import { PROFILE_LIMITS } from '../lib/tdee';
+import { isValidWeightKg, parseNumberInput } from '../lib/validation';
 
 const CARD =
   'rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900';
@@ -164,16 +165,12 @@ function WeightSection({ points }: { points: WeightPoint[] }) {
   const [kg, setKg] = useState('');
   const [message, setMessage] = useState<string | null>(null);
 
-  const parsed = Number(kg);
-  const isValid =
-    kg.trim() !== '' &&
-    Number.isFinite(parsed) &&
-    parsed >= PROFILE_LIMITS.weightKg.min &&
-    parsed <= PROFILE_LIMITS.weightKg.max;
+  const parsed = parseNumberInput(kg);
+  const isValid = isValidWeightKg(kg);
   const change = weightChange(points);
 
   async function save(): Promise<void> {
-    if (!isValid) return;
+    if (parsed === null || !isValid) return;
     await db.weightEntries.put({ date, kg: Math.round(parsed * 10) / 10 });
     setKg('');
     setMessage('Saved.');

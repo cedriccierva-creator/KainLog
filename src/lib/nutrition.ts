@@ -1,4 +1,5 @@
 import type { Food, FoodSnapshot, LogEntry, Meal } from '../types';
+import { newId } from './id';
 
 /** Atwater factors used by the food validator and the calorie math tests. */
 export const KCAL_PER_GRAM = { protein: 4, carbs: 4, fat: 9 } as const;
@@ -99,7 +100,7 @@ export interface CreateLogEntryInput {
  */
 export function createLogEntry(food: Food, input: CreateLogEntryInput): LogEntry {
   return {
-    id: crypto.randomUUID(),
+    id: newId(),
     date: input.date,
     meal: input.meal,
     foodId: food.id,

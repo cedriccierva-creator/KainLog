@@ -64,6 +64,42 @@ describe('profile goals', () => {
   });
 });
 
+describe('safety floor', () => {
+  it('warns below the male floor of 1500 kcal and still lets you save', async () => {
+    const user = userEvent.setup();
+    renderApp('/profile');
+
+    const target = await screen.findByLabelText('Daily calorie target');
+    await user.clear(target);
+    await user.type(target, '1200');
+
+    expect((await screen.findByTestId('floor-warning')).textContent).toContain('1500 kcal');
+
+    const save = screen.getByRole('button', { name: 'Save goals' }) as HTMLButtonElement;
+    expect(save.disabled).toBe(false);
+    await user.click(save);
+
+    expect(await screen.findByText('Goals saved.')).toBeTruthy();
+    expect((await db.profile.get('me'))?.kcalTarget).toBe(1200);
+  });
+
+  it('switches to the female floor and hides the warning at 1200', async () => {
+    const user = userEvent.setup();
+    renderApp('/profile');
+
+    await user.click(await screen.findByRole('button', { name: 'Female' }));
+    const target = screen.getByLabelText('Daily calorie target');
+    await user.clear(target);
+    await user.type(target, '1100');
+
+    expect((await screen.findByTestId('floor-warning')).textContent).toContain('1200 kcal');
+
+    await user.clear(target);
+    await user.type(target, '1200');
+    expect(screen.queryByTestId('floor-warning')).toBeNull();
+  });
+});
+
 describe('dark mode', () => {
   it('persists the choice in meta and toggles the html class', async () => {
     const user = userEvent.setup();
@@ -79,6 +115,7 @@ describe('dark mode', () => {
     expect((await db.meta.get('theme'))?.value).toBe('dark');
 
     await user.click(toggle);
+    expect(await screen.findByRole('switch', { name: 'Dark mode', checked: false })).toBeTruthy();
     expect(document.documentElement.classList.contains('dark')).toBe(false);
     expect((await db.meta.get('theme'))?.value).toBe('light');
   });

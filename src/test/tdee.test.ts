@@ -137,6 +137,33 @@ describe('validateProfileDraft', () => {
     expect(validateProfileDraft(validDraft)).toEqual([]);
   });
 
+  it.each([
+    ['age', 17, false],
+    ['age', 18, true],
+    ['age', 100, true],
+    ['age', 101, false],
+    ['heightCm', 119, false],
+    ['heightCm', 120, true],
+    ['heightCm', 230, true],
+    ['heightCm', 231, false],
+    ['weightKg', 29, false],
+    ['weightKg', 30, true],
+    ['weightKg', 300, true],
+    ['weightKg', 301, false],
+  ] as const)('boundary %s = %s → valid: %s', (field, value, expected) => {
+    const errors = validateProfileDraft({ ...validDraft, [field]: value });
+    expect(errors).toHaveLength(expected ? 0 : 1);
+  });
+
+  it('rejects an empty (zero) or NaN stat', () => {
+    expect(validateProfileDraft({ ...validDraft, age: Number('') })).toHaveLength(1);
+    expect(validateProfileDraft({ ...validDraft, age: Number.NaN })).toHaveLength(1);
+    expect(validateProfileDraft({ ...validDraft, heightCm: Number.NaN })).toHaveLength(1);
+    expect(validateProfileDraft({ ...validDraft, weightKg: Number.NaN })).toHaveLength(1);
+    expect(validateProfileDraft({ ...validDraft, kcalTarget: Number.NaN })).toHaveLength(1);
+    expect(validateProfileDraft({ ...validDraft, proteinG: Number.NaN })).toHaveLength(1);
+  });
+
   it('rejects out-of-range stats', () => {
     const errors = validateProfileDraft({
       ...validDraft,

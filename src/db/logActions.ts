@@ -8,6 +8,7 @@ import type {
   Meal,
 } from '../types';
 import { db, type KainLogDB } from './db';
+import { newId } from '../lib/id';
 
 export interface LogTarget {
   date: string;
@@ -89,7 +90,7 @@ export interface FoodInput {
 export async function createFood(input: FoodInput, database: KainLogDB = db): Promise<Food> {
   const food: Food = {
     ...input,
-    id: crypto.randomUUID(),
+    id: newId(),
     altServings: [],
     isFilipino: true,
     source: 'user',
@@ -128,7 +129,7 @@ export async function createCustomMeal(
   input: CustomMealInput,
   database: KainLogDB = db,
 ): Promise<CustomMeal> {
-  const meal: CustomMeal = { id: crypto.randomUUID(), name: input.name, items: input.items };
+  const meal: CustomMeal = { id: newId(), name: input.name, items: input.items };
   await database.customMeals.add(meal);
   return meal;
 }

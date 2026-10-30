@@ -7,6 +7,7 @@ import {
   ACTIVITY_LEVELS,
   GOAL_LABELS,
   GOAL_TYPES,
+  KCAL_FLOORS,
   MACRO_TOLERANCE,
   PROFILE_LIMITS,
   SEX_LABELS,
@@ -29,6 +30,7 @@ const CARD =
   'rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900';
 
 export default function ProfileScreen() {
+  const [formRevision, setFormRevision] = useState(0);
   const profile = useLiveQuery(() => db.profile.get('me'), []);
   const isPlaceholder = useLiveQuery(
     async () => (await db.meta.get(META_PROFILE_PLACEHOLDER))?.value === true,
@@ -46,7 +48,7 @@ export default function ProfileScreen() {
 
       {profile ? (
         <ProfileForm
-          key={`${profile.age}-${profile.heightCm}-${profile.weightKg}-${profile.kcalTarget}-${profile.proteinG}-${profile.carbsG}-${profile.fatG}`}
+          key={formRevision}
           profile={profile}
           isPlaceholder={isPlaceholder ?? false}
         />
@@ -54,7 +56,7 @@ export default function ProfileScreen() {
         <p className="text-sm text-slate-500 dark:text-slate-400">Loading profile…</p>
       )}
 
-      <BackupSection />
+      <BackupSection onDataReplaced={() => setFormRevision((revision) => revision + 1)} />
       <AppearanceSection />
     </div>
   );
@@ -98,6 +100,8 @@ function ProfileForm({ profile, isPlaceholder }: { profile: Profile; isPlacehold
   const macros = { proteinG: draft.proteinG, carbsG: draft.carbsG, fatG: draft.fatG };
   const deviation = macroDeviation(draft.kcalTarget, macros);
   const showMacroWarning = isValid && deviation > MACRO_TOLERANCE;
+  const belowSafetyFloor =
+    Number.isFinite(draft.kcalTarget) && draft.kcalTarget > 0 && draft.kcalTarget < KCAL_FLOORS[sex];
 
   function applyDefaultMacros(kcal: number): void {
     const macrosForTarget = defaultMacros(kcal, Number.isFinite(body.weightKg) ? body.weightKg : profile.weightKg);
@@ -262,6 +266,17 @@ function ProfileForm({ profile, isPlaceholder }: { profile: Profile; isPlacehold
             onChange={setKcalTarget}
             {...PROFILE_LIMITS.kcalTarget}
           />
+          {belowSafetyFloor ? (
+            <p
+              role="alert"
+              data-testid="floor-warning"
+              className="mt-2 rounded-xl bg-amber-50 p-2 text-xs text-amber-900 dark:bg-amber-950 dark:text-amber-200"
+            >
+              Below the adult safety floor of {KCAL_FLOORS[sex]} kcal for your selected sex. You can
+              still save it, but targets this low are usually only appropriate with medical
+              supervision.
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -388,7 +403,7 @@ function NumberField({
 /* Backup                                                              */
 /* ------------------------------------------------------------------ */
 
-function BackupSection() {
+function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
   const [pending, setPending] = useState<BackupFile | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -434,6 +449,7 @@ function BackupSection() {
       await applyBackup(pending);
       setPending(null);
       setMessage('Import complete. All data was replaced.');
+      onDataReplaced();
     } catch {
       setError('Import failed partway through. Reload and try again.');
     } finally {

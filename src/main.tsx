@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { seedDatabase } from './db/seed';
-import { applyTheme, readStoredTheme, resolveTheme } from './lib/theme';
+import { applyStoredTheme } from './lib/theme';
 import './index.css';
 
 const container = document.getElementById('root');
@@ -26,9 +26,9 @@ async function start(root: HTMLElement): Promise<void> {
     return;
   }
 
-  // index.html sets the class before paint; re-apply here in case the stored
-  // preference or the OS setting changed since that inline script ran.
-  applyTheme(resolveTheme(await readStoredTheme()));
+  // index.html sets the class before paint; meta wins here in case the mirror
+  // or the OS setting is stale.
+  await applyStoredTheme();
 
   createRoot(root).render(
     <StrictMode>

@@ -61,6 +61,26 @@ describe('weight log', () => {
     expect(await screen.findByText(/71 kg/)).toBeTruthy();
   });
 
+  it('enforces the 30–300 kg boundaries at the button', async () => {
+    const user = userEvent.setup();
+    renderApp('/progress');
+
+    const input = await screen.findByLabelText('Weight (kg)');
+    const button = screen.getByRole('button', { name: 'Log weight' }) as HTMLButtonElement;
+
+    for (const [value, enabled] of [
+      ['29', false],
+      ['30', true],
+      ['300', true],
+      ['301', false],
+      ['', false],
+    ] as const) {
+      await user.clear(input);
+      if (value) await user.type(input, value);
+      expect(button.disabled).toBe(!enabled);
+    }
+  });
+
   it('requires a plausible weight before saving', async () => {
     const user = userEvent.setup();
     renderApp('/progress');

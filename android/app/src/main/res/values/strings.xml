@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KainLog</string>
+    <string name="title_activity_main">KainLog</string>
+    <string name="package_name">ph.kainlog.app</string>
+    <string name="custom_url_scheme">ph.kainlog.app</string>
+</resources>

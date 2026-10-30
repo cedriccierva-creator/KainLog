@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
+import { hasOpenSheet, sheetClosed, sheetOpened } from '../lib/sheetState';
 import { formatGrams, formatServings, targetPercent } from '../lib/format';
 import { SERVING_STEP } from '../lib/nutrition';
 import type { Food } from '../types';
@@ -43,11 +44,6 @@ export function FoodBadges({ food }: { food: Pick<Food, 'source' | 'hidden'> }) 
 const FOCUSABLE_SELECTOR =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-/**
- * Counts mounted sheets. Used so closing one sheet does not pop a history entry
- * while another sheet (e.g. detail → edit) has just taken over.
- */
-let openSheetCount = 0;
 
 export function Sheet({
   open,
@@ -67,7 +63,7 @@ export function Sheet({
   useEffect(() => {
     if (!open) return;
 
-    openSheetCount += 1;
+    sheetOpened();
     const previousFocus =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
 
@@ -116,7 +112,7 @@ export function Sheet({
     window.addEventListener('popstate', handlePopState);
 
     return () => {
-      openSheetCount -= 1;
+      sheetClosed();
       document.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('popstate', handlePopState);
 
@@ -124,7 +120,7 @@ export function Sheet({
       // or another sheet is already taking over this render.
       const shouldPopHistory = !closedByPopstate;
       window.setTimeout(() => {
-        if (!shouldPopHistory || openSheetCount > 0) return;
+        if (!shouldPopHistory || hasOpenSheet()) return;
         const state = window.history.state as { kainlogSheet?: boolean } | null;
         if (state?.kainlogSheet) window.history.back();
       }, 0);

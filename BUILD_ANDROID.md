@@ -1,0 +1,162 @@
+# Building KainLog for Android
+
+This document covers turning this repo into a debug APK on Pop!_OS and installing it on a phone.
+
+**Status of this document.** The Capacitor project, sync and config were generated and verified in
+this repository (no JDK, Android SDK, Android Studio or phone was available here). The Gradle build,
+APK contents, install and on-device behaviour are **unverified** — see
+[What is unverified](#what-is-unverified).
+
+## Versions this project actually pins
+
+Read from the committed files and the installed packages:
+
+| Thing | Version | Source |
+|---|---|---|
+| Capacitor core / CLI / Android | 8.6.0 | `package.json`, `npx cap doctor` |
+| `@capacitor/app` (Back handling) | 8.1.2 | `package.json` |
+| Android Gradle Plugin | 8.13.0 | `android/build.gradle` |
+| Gradle | 8.14.3 | `android/gradle/wrapper/gradle-wrapper.properties` |
+| compileSdk / targetSdk | 36 | `android/variables.gradle` |
+| minSdk (Android 7.0) | 24 | `android/variables.gradle` |
+| Node | 20+ (this machine: 22.22.3) | `package.json` engines |
+| **JDK** | **21 or newer** | warning in the installed CLI: `node_modules/@capacitor/cli/dist/tasks/migrate.js` — “Capacitor 8 requires JDK 21 or higher” |
+
+Android Studio and build-tools versions are **not pinned by the project**. Use a current stable
+Android Studio that supports AGP 8.13.0, and let it install the matching build-tools. If you prefer
+no Studio, use the command-line path below.
+
+## Requirements
+
+- JDK 21+ (`java -version`).
+- Android SDK Platform 36, platform-tools, and a matching build-tools release.
+- A USB cable and a phone with Developer options / USB debugging enabled.
+
+## Path A — command line only (Pop!_OS)
+
+### 1. JDK 21
+
+Check what you have:
+
+```bash
+java -version
+```
+
+If it is older than 21, install a 21 JDK. On Pop!_OS 22.04 the Ubuntu archive may not package
+`openjdk-21-jdk` (unverified); either use SDKMAN or an Adoptium tarball:
+
+```bash
+# SDKMAN route
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 21.0.5-tem   # any 21.x Temurin build
+java -version
+```
+
+Do not install a JDK system-wide if you prefer SDKMAN; both work as long as `JAVA_HOME` points at 21.
+
+### 2. Android command-line tools + SDK
+
+Download **Command line tools only** from <https://developer.android.com/studio> (the exact filename
+changes; unverified here), then:
+
+```bash
+mkdir -p "$HOME/Android/Sdk/cmdline-tools"
+unzip ~/Downloads/commandlinetools-linux-*.zip -d "$HOME/Android/Sdk/cmdline-tools"
+mv "$HOME/Android/Sdk/cmdline-tools/cmdline-tools" "$HOME/Android/Sdk/cmdline-tools/latest"
+```
+
+Add to `~/.bashrc`:
+
+```bash
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+
+Install the SDK packages (accept licences first):
+
+```bash
+sdkmanager --licenses
+sdkmanager "platform-tools" "platforms;android-36"
+sdkmanager --list | grep build-tools   # pick the newest 36.x the SDK offers
+sdkmanager "build-tools;36.0.0"
+```
+
+The exact build-tools number is unverified: the project only requires 36 (AGP selects a default if
+none is pinned).
+
+### 3. Build the debug APK
+
+```bash
+cd ~/KainLog
+npm install
+npm run build
+npx cap sync android
+cd android
+./gradlew assembleDebug
+```
+
+Output: `android/app/build/outputs/apk/debug/app-debug.apk`.
+
+`npm run cap:sync` is the shortcut for build + sync. If Gradle complains about `local.properties`,
+either run once from Android Studio or create it with `sdk.dir=$HOME/Android/Sdk` (it is gitignored).
+
+### 4. Put it on the phone
+
+1. Phone: **Settings → About phone → Build number**, tap 7 times.
+2. **Settings → System → Developer options → USB debugging** on.
+3. Plug in USB, accept the “Allow USB debugging?” prompt, then:
+
+```bash
+adb devices                       # your serial must say "device"
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+Alternatively copy the APK to the phone and open it (allow “Install unknown apps” for your file
+manager). USB is more reliable for updates.
+
+## Path B — Android Studio
+
+1. Install Android Studio from <https://developer.android.com/studio> (tarball is fine on Pop!_OS;
+   extract and run `bin/studio.sh`). The minimum Studio version that supports AGP 8.13.0 is
+   **unverified**.
+2. With a phone connected (USB debugging on), from the repo root:
+
+   ```bash
+   npx cap open android
+   ```
+
+   This asks the CLI to launch Android Studio on `android/`. If it cannot find Studio, open the
+   `android` folder manually from Studio's welcome screen. Android Studio writes
+   `android/local.properties` for you; that file is gitignored.
+3. Wait for the Gradle sync to finish, pick your phone in the device dropdown, press **Run**.
+
+## Signing and keys
+
+- Debug builds are signed with `~/.android/debug.keystore`, which Gradle creates outside the repo.
+- Release builds need your own keystore. Keep it **outside** this repository and pass it via Gradle
+  properties or `android/key.properties`. `android/.gitignore` ignores `*.jks`, `*.keystore`,
+  `*.p12` and `key.properties`; never remove those lines and never commit a key.
+- This repo contains no keystores.
+
+## Before you uninstall
+
+Uninstalling the app or clearing its data wipes the IndexedDB database (food log, weigh-ins, goals).
+Open **Profile → Export data** first and keep the JSON file somewhere safe.
+
+## What is unverified
+
+Everything below could not be executed in this environment (no JDK, no Android SDK, no Android
+Studio, no phone):
+
+- `./gradlew assembleDebug` and any release build.
+- The APK's contents, signing, installation, launch and behaviour on a device.
+- Android Back inside the WebView (see the Phase 4 report for the code-level reasoning and unit
+  tests; the on-device press is unverified).
+- The minimum Android Studio version, the exact build-tools version, and package availability in
+  Pop!_OS repositories.
+- `npx cap open android` launching Studio on a machine where Studio is installed.
+- Whether `sdkmanager` accepts the licences unattended in your shell setup.
+
+If a step fails, run `./gradlew -version` (Gradle + JVM it selected), `npx cap doctor`, and confirm
+`ANDROID_HOME` points at the SDK that has `platforms/android-36`.

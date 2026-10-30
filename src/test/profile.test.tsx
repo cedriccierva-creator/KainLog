@@ -1,10 +1,11 @@
 // @vitest-environment jsdom
 import 'fake-indexeddb/auto';
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { db } from '../db/db';
 import { META_PROFILE_PLACEHOLDER } from '../db/seed';
+import { META_LAST_BACKUP } from '../lib/backupMeta';
 import { renderApp, resetDatabase } from './utils';
 
 beforeEach(async () => {
@@ -118,5 +119,93 @@ describe('dark mode', () => {
     expect(await screen.findByRole('switch', { name: 'Dark mode', checked: false })).toBeTruthy();
     expect(document.documentElement.classList.contains('dark')).toBe(false);
     expect((await db.meta.get('theme'))?.value).toBe('light');
+  });
+});
+
+describe('last backup', () => {
+  it('says there is no backup yet and nudges', async () => {
+    renderApp('/profile');
+
+    expect((await screen.findByTestId('last-backup')).textContent).toBe('No backup yet.');
+    expect(screen.getByTestId('backup-nudge').textContent).toMatch(/No backup yet/);
+  });
+
+  it('stops nudging for a recent backup', async () => {
+    await db.meta.put({ key: META_LAST_BACKUP, value: Date.now() - 2 * 86_400_000 });
+
+    renderApp('/profile');
+
+    await waitFor(() =>
+      expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: 2 days ago'),
+    );
+    expect(screen.queryByTestId('backup-nudge')).toBeNull();
+  });
+
+  it('nudges again after 14 days', async () => {
+    await db.meta.put({ key: META_LAST_BACKUP, value: Date.now() - 15 * 86_400_000 });
+
+    renderApp('/profile');
+
+    await waitFor(() =>
+      expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: 15 days ago'),
+    );
+    expect(screen.getByTestId('backup-nudge').textContent).toMatch(/15 days/);
+  });
+
+  it('records the export time and flips the label to today', async () => {
+    const user = userEvent.setup();
+    const createObjectURL = vi.fn(() => 'blob:kainlog');
+    Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: createObjectURL });
+    Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn() });
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+
+    try {
+      renderApp('/profile');
+      await screen.findByTestId('last-backup');
+
+      await user.click(screen.getByRole('button', { name: 'Export data' }));
+
+      await waitFor(() => expect(createObjectURL).toHaveBeenCalledTimes(1));
+      expect(await screen.findByText('Last backup: today')).toBeTruthy();
+      expect(typeof (await db.meta.get(META_LAST_BACKUP))?.value).toBe('number');
+      expect(screen.queryByTestId('backup-nudge')).toBeNull();
+    } finally {
+      click.mockRestore();
+    }
+  });
+});
+
+describe('persistent storage', () => {
+  it('shows the state and updates it after a request', async () => {
+    let persisted = false;
+    const storage = {
+      persisted: async () => persisted,
+      persist: async () => {
+        persisted = true;
+        return true;
+      },
+      estimate: async () => ({ usage: 2_500_000, quota: 12_000_000_000 }),
+    };
+    const original = Object.getOwnPropertyDescriptor(navigator, 'storage');
+    Object.defineProperty(navigator, 'storage', { configurable: true, value: storage });
+
+    try {
+      const user = userEvent.setup();
+      renderApp('/profile');
+
+      expect((await screen.findByTestId('persistence-state')).textContent).toMatch(/Not persistent/);
+
+      await user.click(screen.getByRole('button', { name: 'Request persistent storage' }));
+
+      expect((await screen.findByTestId('persistence-state')).textContent).toMatch(
+        /Persistent storage granted/,
+      );
+    } finally {
+      if (original) {
+        Object.defineProperty(navigator, 'storage', original);
+      } else {
+        delete (navigator as { storage?: unknown }).storage;
+      }
+    }
   });
 });

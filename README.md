@@ -3,6 +3,13 @@
 Offline-first calorie and macro tracker for Filipino food. Single user, no accounts, no backend:
 every record lives in IndexedDB on the device.
 
+## Your data lives only on this device
+
+There is no server and no account. Clearing the browser's site data, uninstalling the Android app,
+or losing the phone deletes the food log, weigh-ins and goals for good. Export a JSON backup from
+**Profile → Backup** regularly (the app reminds you after 14 days without one) and keep the file
+somewhere you trust. The backup file is the only way to move data to another device.
+
 ## Stack
 
 React 19 + TypeScript (strict) + Vite · Tailwind CSS 3.4 · Dexie 4 with `dexie-react-hooks` ·
@@ -27,6 +34,9 @@ npm run test:tz        # date tests in Asia/Manila and America/New_York
 npm run build          # typecheck + production build
 npm run validate:foods # checks src/data/foods.ph.json
 ```
+
+`npm run icons` regenerates the PNG icons in `public/icons` from the SVG in
+`scripts/generate-icons.mjs` (needs the `sharp` devDependency; the generated files are committed).
 
 `test:tz` runs the date suite twice so local-day logic is exercised on both sides of UTC
 (UTC+8 and UTC-4/-5). The preview/dev server accepts an extra Host header only when you ask:
@@ -126,10 +136,43 @@ pre-paint read — the canonical value stays in IndexedDB and no app data is sto
 - **Backup and appearance** live on the Profile screen: export/import JSON with a confirmation sheet,
   and the dark-mode switch.
 
+## Install and offline (PWA)
+
+`npm run build` also emits `manifest.webmanifest`, `sw.js` and a precache list (app shell, CSS, JS,
+icons). Serve `dist/` over **HTTPS** (or localhost) and install from the browser menu — Chrome
+"Install app", Safari "Add to Home Screen". After the first load the app opens and logs meals with
+no network.
+
+Updates use the prompt flow: a new service worker waits until the in-app banner offers **Reload**.
+**Later** keeps the current version; the app also checks for an update once an hour while open.
+Registration is skipped entirely in the Android build, where the APK already contains the assets.
+
+Profile shows whether the browser granted **persistent storage** (`navigator.storage.persist()`),
+so Chrome does not evict the database under storage pressure. The API needs HTTPS; over plain HTTP
+the Profile section says it is unavailable and backups remain the safety net.
+
+## Android (Capacitor)
+
+The Android project in `android/` wraps the same `dist/` bundle. `npm run cap:sync` builds the web
+app and copies it into the APK; `android/app/src/main/assets/public` and generated config files are
+gitignored. Build and install steps (JDK, SDK, USB debugging) are in
+[BUILD_ANDROID.md](BUILD_ANDROID.md).
+
+Web vs native differences:
+
+| | Web (browser) | Android (Capacitor) |
+|---|---|---|
+| Assets | precached by the service worker | bundled inside the APK |
+| Updates | in-app update prompt | install a new APK / store update |
+| Back button | browser Back closes sheets via history | `NativeBackHandler` via `@capacitor/app`: close sheet → previous screen → exit |
+| Storage | IndexedDB, optionally persistent | IndexedDB inside the app; **wiped on uninstall** |
+| Offline | SW cache | always, no network layer needed |
+
 ## Status
 
-Phases 1–2 complete: schema, seed library, validator, search, calorie math, diary, Add Food, Foods,
-custom meals, tests. Phase 3 adds goals, progress, backup and dark mode. PWA + Android are Phase 4.
+Phases 1–3 complete: schema, seed library, validator, search, calorie math, diary, Add Food, Foods,
+custom meals, goals, progress, backup and dark mode. Phase 4 adds the installable PWA and the
+Capacitor Android shell.
 
 ## Tests
 

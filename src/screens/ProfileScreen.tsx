@@ -23,6 +23,21 @@ import {
 import { formatKcal } from '../lib/format';
 import { applyTheme, readStoredTheme, resolveTheme, setStoredTheme } from '../lib/theme';
 import { buildBackup, downloadBackup, parseBackup, applyBackup, type BackupFile } from '../db/backup';
+import {
+  BACKUP_NUDGE_DAYS,
+  META_LAST_BACKUP,
+  backupNudgeDue,
+  daysSince,
+  describeBackupAge,
+} from '../lib/backupMeta';
+import {
+  formatBytes,
+  getPersistenceState,
+  getStorageEstimate,
+  requestPersistentStorage,
+  type PersistenceState,
+  type StorageEstimate,
+} from '../lib/storage';
 import { Sheet } from '../components/ui';
 import type { ActivityLevel, GoalType, Profile, Sex } from '../types';
 
@@ -57,6 +72,7 @@ export default function ProfileScreen() {
       )}
 
       <BackupSection onDataReplaced={() => setFormRevision((revision) => revision + 1)} />
+      <StorageSection />
       <AppearanceSection />
     </div>
   );
@@ -409,11 +425,17 @@ function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const lastBackupAt = useLiveQuery(async () => {
+    const record = await db.meta.get(META_LAST_BACKUP);
+    return typeof record?.value === 'number' ? record.value : null;
+  }, []);
 
   async function exportData(): Promise<void> {
     setError(null);
     setIsBusy(true);
     try {
+      // Recorded before building, so the exported file carries its own date.
+      await db.meta.put({ key: META_LAST_BACKUP, value: Date.now() });
       const backup = await buildBackup();
       const filename = downloadBackup(backup);
       setMessage(
@@ -470,6 +492,22 @@ function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
         Everything lives on this device. Export a JSON file before changing phones or clearing
         browser data.
       </p>
+
+      <p className="mb-3 text-sm font-medium" data-testid="last-backup">
+        {describeBackupAge(lastBackupAt ?? null)}
+      </p>
+
+      {backupNudgeDue(lastBackupAt ?? null) ? (
+        <p
+          role="status"
+          data-testid="backup-nudge"
+          className="mb-3 rounded-xl bg-amber-50 p-2 text-xs text-amber-900 dark:bg-amber-950 dark:text-amber-200"
+        >
+          {lastBackupAt === null || lastBackupAt === undefined
+            ? 'No backup yet. Export one so a cleared browser or a new phone cannot lose your log.'
+            : `It has been ${daysSince(lastBackupAt)} days since your last backup (${BACKUP_NUDGE_DAYS}-day reminder). Export a fresh one.`}
+        </p>
+      ) : null}
 
       <div className="flex flex-col gap-2">
         <button
@@ -532,6 +570,74 @@ function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
           </button>
         </div>
       </Sheet>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Storage                                                             */
+/* ------------------------------------------------------------------ */
+
+function StorageSection() {
+  const [state, setState] = useState<PersistenceState | 'loading'>('loading');
+  const [estimate, setEstimate] = useState<StorageEstimate | null>(null);
+  const [isRequesting, setIsRequesting] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getPersistenceState().then((value) => {
+      if (!cancelled) setState(value);
+    });
+    void getStorageEstimate().then((value) => {
+      if (!cancelled) setEstimate(value);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function request(): Promise<void> {
+    setIsRequesting(true);
+    try {
+      setState(await requestPersistentStorage());
+      setEstimate(await getStorageEstimate());
+    } finally {
+      setIsRequesting(false);
+    }
+  }
+
+  const description =
+    state === 'persisted'
+      ? 'Persistent storage granted. The browser will not evict your log automatically.'
+      : state === 'not-persisted'
+        ? 'Not persistent yet. The browser may clear your log if it runs low on space or you do not open KainLog for a long time.'
+        : state === 'unsupported'
+          ? 'Not available in this browser or over plain HTTP. Export backups; after installing over HTTPS the request can be granted.'
+          : 'Checking…';
+
+  return (
+    <section aria-label="Storage" className={CARD}>
+      <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        Storage
+      </h2>
+      <p className="text-sm" data-testid="persistence-state">
+        {description}
+      </p>
+      {estimate ? (
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          Using {formatBytes(estimate.usage)} of {formatBytes(estimate.quota)} available.
+        </p>
+      ) : null}
+      {state === 'not-persisted' ? (
+        <button
+          type="button"
+          onClick={() => void request()}
+          disabled={isRequesting}
+          className="mt-3 min-h-11 w-full rounded-xl border border-slate-300 text-sm font-semibold disabled:opacity-50 dark:border-slate-700"
+        >
+          {isRequesting ? 'Requesting…' : 'Request persistent storage'}
+        </button>
+      ) : null}
     </section>
   );
 }

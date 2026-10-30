@@ -76,7 +76,7 @@ export function searchFoods(
   );
 
   if (!normalizedQuery) {
-    return [...pool].sort(compareFoods).slice(0, limit);
+    return [...pool].sort((a, b) => a.name.localeCompare(b.name)).slice(0, limit);
   }
 
   return pool

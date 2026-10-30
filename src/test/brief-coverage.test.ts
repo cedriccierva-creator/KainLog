@@ -132,6 +132,37 @@ describe('brief coverage', () => {
     }
   });
 
+  it('gives rice, bread and common ulam realistic alternate servings', () => {
+    for (const food of seedFoods.filter((item) => item.category === 'rice')) {
+      expect(food.altServings.length, food.name).toBeGreaterThan(0);
+    }
+
+    const portioned = [
+      'seed-pandesal',
+      'seed-white-bread',
+      'seed-ensaymada',
+      'seed-puto',
+      'seed-kutsinta',
+      'seed-pork-adobo',
+      'seed-chicken-adobo',
+      'seed-sinigang-na-baboy',
+      'seed-menudo',
+      'seed-beef-caldereta',
+      'seed-sisig',
+      'seed-kare-kare',
+    ];
+
+    for (const id of portioned) {
+      const food = seedFoods.find((item) => item.id === id);
+      expect(food, id).toBeDefined();
+      if (!food) continue;
+      expect(food.altServings.length, id).toBeGreaterThan(0);
+      expect(food.altServings.every((alt) => alt.grams > 0), id).toBe(true);
+      // The data has to say out loud that portion grams are estimates.
+      expect((food.notes ?? '').toLowerCase(), id).toContain('estimates');
+    }
+  });
+
   it('keeps the fast-food category at 10 or fewer', () => {
     expect(seedFoods.filter((food) => food.category === 'fast-food').length).toBeLessThanOrEqual(
       10,

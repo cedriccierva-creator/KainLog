@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { formatGrams, formatKcal, formatServings } from '../lib/format';
 import {
   createLogEntry,
   entryNutrition,
@@ -120,14 +121,19 @@ describe('scaleNutrition', () => {
     });
   });
 
-  it('supports quarter servings and rounds to one decimal', () => {
+  it('keeps full precision for quarter servings (display rounds, storage does not)', () => {
     const quarter = scaleNutrition(
       { kcal: 205, proteinG: 4.3, carbsG: 45, fatG: 0.4, fiberG: 0.6, sodiumMg: 1 },
       0.25,
     );
-    expect(quarter.kcal).toBe(51.3);
-    expect(quarter.proteinG).toBe(1.1);
-    expect(quarter.carbsG).toBe(11.3);
+    expect(quarter.kcal).toBe(51.25);
+    expect(quarter.proteinG).toBeCloseTo(1.075, 10);
+    expect(quarter.carbsG).toBe(11.25);
+
+    // Only the display layer rounds.
+    expect(formatKcal(quarter.kcal)).toBe('51');
+    expect(formatGrams(quarter.proteinG)).toBe('1.1');
+    expect(formatGrams(quarter.carbsG)).toBe('11.3');
   });
 
   it('scales to zero without floating point noise', () => {
@@ -149,18 +155,44 @@ describe('entryNutrition', () => {
 });
 
 describe('sumNutrition', () => {
-  it('adds entries together', () => {
+  it('adds entries together without rounding', () => {
     const total = sumNutrition([
       { kcal: 200, proteinG: 10, carbsG: 20, fatG: 8, fiberG: 2, sodiumMg: 300 },
-      { kcal: 51.3, proteinG: 1.1, carbsG: 11.3, fatG: 0.1, fiberG: 0.2, sodiumMg: 1 },
+      { kcal: 51.25, proteinG: 1.075, carbsG: 11.25, fatG: 0.1, fiberG: 0.15, sodiumMg: 0.25 },
     ]);
-    expect(total.kcal).toBe(251.3);
-    expect(total.proteinG).toBe(11.1);
-    expect(total.carbsG).toBe(31.3);
-    expect(total.fatG).toBe(8.1);
+    expect(total.kcal).toBeCloseTo(251.25, 10);
+    expect(total.proteinG).toBeCloseTo(11.075, 10);
+    expect(total.carbsG).toBeCloseTo(31.25, 10);
+    expect(total.fatG).toBeCloseTo(8.1, 10);
+  });
+
+  it('sums four quarter servings to exactly one serving', () => {
+    const food = makeFood({ kcal: 205, proteinG: 4.3, carbsG: 45, fatG: 0.4, fiberG: 0.6, sodiumMg: 1 });
+    const quarters = [0.25, 0.25, 0.25, 0.25].map((servings) =>
+      createLogEntry(food, { date: '2026-10-31', meal: 'snack', servings }),
+    );
+
+    const total = sumNutrition(quarters.map(entryNutrition));
+    expect(total.kcal).toBe(205);
+    expect(total.proteinG).toBeCloseTo(4.3, 10);
+    expect(formatKcal(total.kcal)).toBe('205');
   });
 
   it('returns zeros for an empty day', () => {
     expect(sumNutrition([])).toEqual(ZERO_NUTRITION);
+  });
+});
+
+describe('display formatting', () => {
+  it('formats servings in quarter steps', () => {
+    expect(formatServings(1)).toBe('1');
+    expect(formatServings(1.25)).toBe('1.25');
+    expect(formatServings(0.5)).toBe('0.5');
+  });
+
+  it('trims trailing zeros for grams', () => {
+    expect(formatGrams(20)).toBe('20');
+    expect(formatGrams(1.5)).toBe('1.5');
+    expect(formatGrams(1.04)).toBe('1');
   });
 });

@@ -25,10 +25,6 @@ export const ZERO_NUTRITION: NutritionValues = {
   sodiumMg: 0,
 };
 
-export function round1(value: number): number {
-  return Math.round(value * 10) / 10;
-}
-
 /** Energy implied by the macro grams (4/4/9). */
 export function kcalFromMacros(proteinG: number, carbsG: number, fatG: number): number {
   return Math.round(
@@ -55,15 +51,18 @@ export function snapshotFromFood(food: Food): FoodSnapshot {
   };
 }
 
-/** Multiply per-serving (or already-scaled) values by a serving count. */
+/**
+ * Multiply per-serving (or already-scaled) values by a serving count.
+ * The result keeps full precision: rounding happens only when displaying.
+ */
 export function scaleNutrition(base: NutritionValues, servings: number): NutritionValues {
   return {
-    kcal: round1(base.kcal * servings),
-    proteinG: round1(base.proteinG * servings),
-    carbsG: round1(base.carbsG * servings),
-    fatG: round1(base.fatG * servings),
-    fiberG: round1(base.fiberG * servings),
-    sodiumMg: round1(base.sodiumMg * servings),
+    kcal: base.kcal * servings,
+    proteinG: base.proteinG * servings,
+    carbsG: base.carbsG * servings,
+    fatG: base.fatG * servings,
+    fiberG: base.fiberG * servings,
+    sodiumMg: base.sodiumMg * servings,
   };
 }
 
@@ -73,7 +72,8 @@ export function entryNutrition(entry: LogEntry): NutritionValues {
 }
 
 export function sumNutrition(items: readonly NutritionValues[]): NutritionValues {
-  const total = items.reduce<NutritionValues>(
+  // No rounding here either: four 0.25-serving entries must add up to exactly one serving.
+  return items.reduce<NutritionValues>(
     (acc, item) => ({
       kcal: acc.kcal + item.kcal,
       proteinG: acc.proteinG + item.proteinG,
@@ -84,15 +84,6 @@ export function sumNutrition(items: readonly NutritionValues[]): NutritionValues
     }),
     { ...ZERO_NUTRITION },
   );
-
-  return {
-    kcal: round1(total.kcal),
-    proteinG: round1(total.proteinG),
-    carbsG: round1(total.carbsG),
-    fatG: round1(total.fatG),
-    fiberG: round1(total.fiberG),
-    sodiumMg: round1(total.sodiumMg),
-  };
 }
 
 export interface CreateLogEntryInput {

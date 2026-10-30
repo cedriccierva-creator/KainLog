@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import { HashRouter, Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const mocks = vi.hoisted(() => ({
@@ -57,9 +58,24 @@ async function pressBack(): Promise<void> {
   });
 }
 
+function HashProbe() {
+  const location = useLocation();
+  return <p data-testid="hash-location">{`${location.pathname}|${location.key}`}</p>;
+}
+
+function HashNav() {
+  return (
+    <nav>
+      <Link to="/foods">to foods</Link>
+      <Link to="/add">to add</Link>
+    </nav>
+  );
+}
+
 beforeEach(() => {
   mocks.listeners.length = 0;
   mocks.exitApp.mockClear();
+  window.history.replaceState(null, '', '/');
 });
 
 afterEach(() => {
@@ -140,5 +156,58 @@ describe('NativeBackHandler', () => {
     expect(back).toHaveBeenCalledTimes(1);
     expect(mocks.exitApp).not.toHaveBeenCalled();
     back.mockRestore();
+  });
+});
+
+describe('HashRouter (real browser history)', () => {
+  function renderHash() {
+    return render(
+      <HashRouter>
+        <NativeBackHandler />
+        <HashProbe />
+        <HashNav />
+        <Screens />
+      </HashRouter>,
+    );
+  }
+
+  it('sees key "default" when the app mounts on a hash URL, and Back falls back to the Diary', async () => {
+    window.location.hash = '#/add';
+    renderHash();
+
+    const probe = await screen.findByTestId('hash-location');
+    console.log('[hashrouter] initial location:', probe.textContent);
+    expect(probe.textContent).toBe('/add|default');
+
+    await pressBack();
+    expect(await screen.findByText('Diary screen')).toBeTruthy();
+    expect(mocks.exitApp).not.toHaveBeenCalled();
+  });
+
+  it('uses a real pop when the history was pushed (key is not "default")', async () => {
+    const user = userEvent.setup();
+    renderHash();
+
+    const initial = await screen.findByTestId('hash-location');
+    console.log('[hashrouter] initial location:', initial.textContent);
+
+    await user.click(screen.getByRole('link', { name: 'to foods' }));
+    const foods = await screen.findByTestId('hash-location');
+    console.log('[hashrouter] pushed /foods key:', foods.textContent);
+
+    await user.click(screen.getByRole('link', { name: 'to add' }));
+    await waitFor(() =>
+      expect(screen.getByTestId('hash-location').textContent?.startsWith('/add|')).toBe(true),
+    );
+    const add = screen.getByTestId('hash-location');
+    console.log('[hashrouter] pushed /add key:', add.textContent);
+
+    const key = add.textContent?.split('|')[1];
+    expect(key).toBeTruthy();
+    expect(key).not.toBe('default');
+
+    await pressBack();
+    // navigate(-1) pops to the screen that pushed Add Food, not the Diary.
+    expect(await screen.findByText('Foods screen')).toBeTruthy();
   });
 });

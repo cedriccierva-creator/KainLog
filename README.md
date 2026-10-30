@@ -104,13 +104,17 @@ from the kcal target by more than 2%.
 
 Export writes one JSON file. In a browser it downloads the file; in the Android build it is written
 to the app cache with `@capacitor/filesystem` and handed to the share sheet with `@capacitor/share`,
-so you choose where it goes. `lastBackupAt` is only updated after the download or share succeeds. The
-file contains `app: "kainlog"`, `schemaVersion: 1`, `seedVersion`, `exportedAt` (the one
+so you choose where it goes. The cache copy is **not** deleted after sharing — the receiving app may
+still be reading it; instead, the next export clears any leftover `kainlog-backup-*.json` files from
+the cache first, and a failed list/delete never blocks the export. `lastBackupAt` is only updated
+after the download or share succeeds. The file contains `app: "kainlog"`, `schemaVersion: 1`, `seedVersion`, `exportedAt` (the one
 allowed `toISOString()`), and every table (`foods`, `logEntries`, `customMeals`, `weightEntries`,
 `profile`, `meta`). Import validates the app marker, schema version and every row by hand — no schema
 library — **before** touching IndexedDB. A rejected file leaves the database untouched. A valid file
-replaces all tables in one Dexie transaction, then re-seeds. The file is also the way to move data
-between devices: there is no cloud sync.
+replaces all tables in one Dexie transaction, then re-seeds. Import records the file's `exportedAt`
+as the last-backup date (clamped to the current time if the file is future-dated), so Profile shows
+the date the data was captured. The file is also the way to move data between devices: there is no
+cloud sync.
 
 ## Dark mode
 

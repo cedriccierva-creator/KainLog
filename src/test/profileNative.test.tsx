@@ -13,6 +13,7 @@ const mocks = vi.hoisted(() => ({
   getUri: vi.fn(async () => ({ uri: 'file:///cache/kainlog-backup.json' })),
   share: vi.fn(async () => ({ activityType: 'save' })),
   deleteFile: vi.fn(async () => undefined),
+  readdir: vi.fn(async () => ({ files: [] })),
 }));
 
 vi.mock('@capacitor/filesystem', () => ({
@@ -20,6 +21,7 @@ vi.mock('@capacitor/filesystem', () => ({
     writeFile: mocks.writeFile,
     getUri: mocks.getUri,
     deleteFile: mocks.deleteFile,
+    readdir: mocks.readdir,
   },
   Directory: { Cache: 'CACHE' },
   Encoding: { UTF8: 'utf8' },

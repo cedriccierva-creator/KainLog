@@ -331,6 +331,8 @@ export async function applyBackup(backup: BackupFile): Promise<void> {
   // rejected/failed import can never touch it.
   const exportedAt = Date.parse(backup.exportedAt);
   if (Number.isFinite(exportedAt)) {
-    await db.meta.put({ key: META_LAST_BACKUP, value: exportedAt });
+    // A future-dated file (clock skew, hand-edited JSON) must not claim a
+    // backup that has not happened yet, so clamp to now.
+    await db.meta.put({ key: META_LAST_BACKUP, value: Math.min(exportedAt, Date.now()) });
   }
 }

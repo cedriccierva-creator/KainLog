@@ -150,6 +150,8 @@ it yourself. If you ever want to disable system backup, that is a separate produ
 - **Export first.** Profile → **Export data** and keep the JSON off the phone. Uninstalling the app,
   or installing an APK signed with a different key, wipes the IndexedDB log. `adb install -r` only
   upgrades in place when the signing key matches and the app is not uninstalled.
+  The export writes a copy into the app cache and opens the share sheet; that copy stays until the
+  next export, which clears stale `kainlog-backup-*` files before writing a new one.
 - **Keep `~/.android/debug.keystore`.** Gradle creates it on the first Android build and signs every
   debug APK with it. If you delete it or build on another machine with a freshly generated key,
   `adb install -r` fails with an incompatible-signature error, and the only way forward is an

@@ -18,6 +18,7 @@ const mocks = vi.hoisted(() => ({
   getUri: vi.fn(),
   share: vi.fn(),
   deleteFile: vi.fn(),
+  readdir: vi.fn(),
 }));
 
 vi.mock('@capacitor/filesystem', () => ({
@@ -25,6 +26,7 @@ vi.mock('@capacitor/filesystem', () => ({
     writeFile: mocks.writeFile,
     getUri: mocks.getUri,
     deleteFile: mocks.deleteFile,
+    readdir: mocks.readdir,
   },
   Directory: { Cache: 'CACHE', Documents: 'DOCUMENTS' },
   Encoding: { UTF8: 'utf8' },
@@ -62,6 +64,8 @@ beforeEach(async () => {
   mocks.share.mockReset();
   mocks.deleteFile.mockReset();
   mocks.deleteFile.mockResolvedValue(undefined);
+  mocks.readdir.mockReset();
+  mocks.readdir.mockResolvedValue({ files: [] });
   mocks.writeFile.mockResolvedValue({ uri: 'file:///cache/file.json' });
   mocks.getUri.mockResolvedValue({ uri: 'file:///cache/kainlog-backup.json' });
   mocks.share.mockResolvedValue({ activityType: 'com.example.save' });
@@ -109,12 +113,65 @@ describe('native export', () => {
       expect.objectContaining({ files: ['file:///cache/kainlog-backup.json'] }),
     );
 
-    // The cache copy is removed once the share settles.
-    expect(mocks.deleteFile).toHaveBeenCalledTimes(1);
+    // The share no longer deletes the file afterwards; cleanup happens before
+    // the next export instead.
+    expect(mocks.deleteFile).not.toHaveBeenCalled();
+  });
+
+  it('clears leftover backup files from the cache before writing a new one', async () => {
+    mocks.readdir.mockResolvedValue({
+      files: [
+        { name: 'kainlog-backup-2026-01-01.json' },
+        { name: 'kainlog-backup-2026-01-02.json' },
+        { name: 'notes.txt' },
+      ],
+    });
+
+    const backup = await buildBackup();
+    const result = await exportBackupFile(backup, true);
+
+    expect(result.method).toBe('share');
+    expect(mocks.readdir).toHaveBeenCalledWith({ path: '', directory: 'CACHE' });
+    expect(mocks.deleteFile).toHaveBeenCalledTimes(2);
     expect(mocks.deleteFile).toHaveBeenCalledWith({
-      path: result.filename,
+      path: 'kainlog-backup-2026-01-01.json',
       directory: 'CACHE',
     });
+    expect(mocks.deleteFile).toHaveBeenCalledWith({
+      path: 'kainlog-backup-2026-01-02.json',
+      directory: 'CACHE',
+    });
+    // Unrelated cache entries are left alone.
+    expect(mocks.deleteFile).not.toHaveBeenCalledWith(
+      expect.objectContaining({ path: 'notes.txt' }),
+    );
+
+    // Every delete happens before the new file is written.
+    const lastDelete = Math.max(...mocks.deleteFile.mock.invocationCallOrder);
+    expect(lastDelete).toBeLessThan(mocks.writeFile.mock.invocationCallOrder[0]);
+  });
+
+  it('still exports when the cache cannot be listed', async () => {
+    mocks.readdir.mockRejectedValue(new Error('no cache dir'));
+
+    const backup = await buildBackup();
+    const result = await exportBackupFile(backup, true);
+
+    expect(result.method).toBe('share');
+    expect(mocks.writeFile).toHaveBeenCalledTimes(1);
+    expect(mocks.share).toHaveBeenCalledTimes(1);
+  });
+
+  it('still exports when deleting a stale file fails', async () => {
+    mocks.readdir.mockResolvedValue({ files: [{ name: 'kainlog-backup-old.json' }] });
+    mocks.deleteFile.mockRejectedValue(new Error('permission denied'));
+
+    const backup = await buildBackup();
+    const result = await exportBackupFile(backup, true);
+
+    expect(result.method).toBe('share');
+    expect(mocks.writeFile).toHaveBeenCalledTimes(1);
+    expect(mocks.share).toHaveBeenCalledTimes(1);
   });
 
   it('defaults to the web download when Capacitor reports a browser', async () => {
@@ -168,8 +225,10 @@ describe('recording the export', () => {
 
     expect(await db.meta.get(META_LAST_BACKUP)).toBeUndefined();
     expect(backupNudgeDue(null)).toBe(true);
-    // Cleanup still runs even though the share failed.
-    expect(mocks.deleteFile).toHaveBeenCalledTimes(1);
+    // The stale-file sweep ran before the write, but the share failure is not
+    // recorded as a backup.
+    expect(mocks.readdir).toHaveBeenCalledTimes(1);
+    expect(mocks.deleteFile).not.toHaveBeenCalled();
   });
 
   it('leaves lastBackupAt untouched when the web download throws', async () => {

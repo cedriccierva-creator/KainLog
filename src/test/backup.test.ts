@@ -107,6 +107,34 @@ describe('backup round-trip', () => {
   });
 });
 
+describe('failed import keeps the previous backup date', () => {
+  it('leaves lastBackupAt alone when the file is rejected before the DB is touched', async () => {
+    await db.meta.put({ key: META_LAST_BACKUP, value: 12_345 });
+
+    const result = parseBackup('{"app":"kainlog","schemaVersion":1,"tables":{}}');
+
+    expect(result.ok).toBe(false);
+    expect((await db.meta.get(META_LAST_BACKUP))?.value).toBe(12_345);
+  });
+
+  it('rolls back and keeps lastBackupAt when the import fails mid-transaction', async () => {
+    await db.meta.put({ key: META_LAST_BACKUP, value: 777 });
+
+    const backup = await buildBackup();
+    const first = backup.tables.foods[0];
+    const duplicated = {
+      ...backup,
+      tables: { ...backup.tables, foods: [...backup.tables.foods, first] },
+    };
+
+    await expect(applyBackup(duplicated)).rejects.toBeTruthy();
+
+    expect((await db.meta.get(META_LAST_BACKUP))?.value).toBe(777);
+    expect(await db.foods.count()).toBe(167);
+    expect(await db.meta.get('seedVersion')).toBeDefined();
+  });
+});
+
 describe('backup validation', () => {
   it('rejects a corrupted file without touching the database', async () => {
     const foodsBefore = await db.foods.count();

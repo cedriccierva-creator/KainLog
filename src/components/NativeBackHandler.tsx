@@ -17,6 +17,8 @@ import { isNativePlatform } from '../lib/platform';
  */
 export default function NativeBackHandler() {
   const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  navigateRef.current = navigate;
   const location = useLocation();
   const pathRef = useRef(location.pathname);
   pathRef.current = location.pathname;
@@ -41,14 +43,14 @@ export default function NativeBackHandler() {
         // 'default' means this is the first location of the session, so there
         // is no in-app entry to pop; go to the Diary instead of doing nothing.
         if (locationKeyRef.current === 'default') {
-          navigate('/');
+          navigateRef.current('/');
         } else {
-          navigate(-1);
+          navigateRef.current(-1);
         }
         return;
       }
       if (action === 'go-diary') {
-        navigate('/');
+        navigateRef.current('/');
         return;
       }
       void App.exitApp();
@@ -64,7 +66,7 @@ export default function NativeBackHandler() {
       removed = true;
       if (handle) void handle.remove();
     };
-  }, [navigate]);
+  }, []);
 
   return null;
 }

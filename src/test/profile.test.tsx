@@ -188,6 +188,26 @@ describe('last backup', () => {
     expect(screen.getByTestId('backup-nudge').textContent).toMatch(/20 days/);
   });
 
+  it('clamps a future-dated file to now', async () => {
+    const backup = await buildBackup();
+    const before = Date.now();
+
+    await applyBackup({ ...backup, exportedAt: isoAgo(-5) }); // five days ahead
+
+    const stored = (await db.meta.get(META_LAST_BACKUP))?.value;
+    expect(typeof stored).toBe('number');
+    if (typeof stored === 'number') {
+      expect(stored).toBeGreaterThanOrEqual(before);
+      expect(stored).toBeLessThanOrEqual(Date.now());
+    }
+
+    renderApp('/profile');
+    await waitFor(() =>
+      expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: today'),
+    );
+    expect(screen.queryByTestId('backup-nudge')).toBeNull();
+  });
+
   it('records the export time and flips the label to today', async () => {
     const user = userEvent.setup();
     const createObjectURL = vi.fn(() => 'blob:kainlog');

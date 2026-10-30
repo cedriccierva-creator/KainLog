@@ -32,8 +32,30 @@ function downloadInBrowser(backup: BackupFile, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-/** Native only: write to the app cache, then hand the file to the share sheet. */
+/** Best-effort removal of previous exports left in the cache directory. */
+async function clearStaleBackups(): Promise<void> {
+  try {
+    const { files } = await Filesystem.readdir({ path: '', directory: Directory.Cache });
+
+    await Promise.all(
+      files
+        .filter((entry) => entry.name.startsWith('kainlog-backup-') && entry.name.endsWith('.json'))
+        .map((entry) =>
+          // A single unreadable/undeletable file must not block the export.
+          Filesystem.deleteFile({ path: entry.name, directory: Directory.Cache }).catch(
+            () => undefined,
+          ),
+        ),
+    );
+  } catch {
+    // Listing the cache can fail on any platform; housekeeping is optional.
+  }
+}
+
+/** Native only: clear old cache copies, write this export, open the share sheet. */
 async function shareOnDevice(backup: BackupFile, filename: string): Promise<void> {
+  await clearStaleBackups();
+
   await Filesystem.writeFile({
     path: filename,
     data: serializeBackup(backup),
@@ -43,22 +65,12 @@ async function shareOnDevice(backup: BackupFile, filename: string): Promise<void
 
   const { uri } = await Filesystem.getUri({ path: filename, directory: Directory.Cache });
 
-  try {
-    await Share.share({
-      title: 'KainLog backup',
-      text: 'KainLog backup (JSON)',
-      files: [uri],
-      dialogTitle: 'Save KainLog backup',
-    });
-  } finally {
-    // The receiving app has its own copy once the share resolves; drop the
-    // cache file either way (cache cleanup is best-effort).
-    try {
-      await Filesystem.deleteFile({ path: filename, directory: Directory.Cache });
-    } catch {
-      // Ignore: a leftover cache file is harmless.
-    }
-  }
+  await Share.share({
+    title: 'KainLog backup',
+    text: 'KainLog backup (JSON)',
+    files: [uri],
+    dialogTitle: 'Save KainLog backup',
+  });
 }
 
 export async function exportBackupFile(

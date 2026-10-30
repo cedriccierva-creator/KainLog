@@ -1,0 +1,3495 @@
+[
+  {
+    "id": "seed-pork-adobo",
+    "name": "Pork Adobo",
+    "aliases": [
+      "adobong baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup (≈4 pcs + sauce)",
+    "servingGrams": 180,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 35
+      }
+    ],
+    "kcal": 270,
+    "proteinG": 22,
+    "carbsG": 5,
+    "fatG": 18,
+    "fiberG": 0.5,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sauce amount varies; sodium is a rough estimate."
+  },
+  {
+    "id": "seed-chicken-adobo",
+    "name": "Chicken Adobo",
+    "aliases": [
+      "adobong manok"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 thigh + sauce (≈130 g)",
+    "servingGrams": 130,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 90
+      }
+    ],
+    "kcal": 208,
+    "proteinG": 21,
+    "carbsG": 4,
+    "fatG": 12,
+    "fiberG": 0.2,
+    "sodiumMg": 750,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-adobong-pusit",
+    "name": "Adobong Pusit",
+    "aliases": [
+      "squid adobo"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 154,
+    "proteinG": 18,
+    "carbsG": 7,
+    "fatG": 6,
+    "fiberG": 0.5,
+    "sodiumMg": 820,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sinigang-na-baboy",
+    "name": "Sinigang na Baboy",
+    "aliases": [
+      "pork sinigang",
+      "sinigang baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 bowl (meat + broth + vegetables)",
+    "servingGrams": 350,
+    "altServings": [
+      {
+        "label": "1 cup",
+        "grams": 240
+      }
+    ],
+    "kcal": 181,
+    "proteinG": 16,
+    "carbsG": 9,
+    "fatG": 9,
+    "fiberG": 2.5,
+    "sodiumMg": 950,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Broth-heavy; assumes a normal bowl with 2-3 pieces of pork."
+  },
+  {
+    "id": "seed-chicken-tinola",
+    "name": "Chicken Tinola",
+    "aliases": [
+      "tinolang manok",
+      "tinola"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 bowl (chicken + papaya + broth)",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 163,
+    "proteinG": 17,
+    "carbsG": 8,
+    "fatG": 7,
+    "fiberG": 2,
+    "sodiumMg": 880,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-nilagang-baka",
+    "name": "Nilagang Baka",
+    "aliases": [
+      "beef nilaga"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 bowl",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 215,
+    "proteinG": 19,
+    "carbsG": 10,
+    "fatG": 11,
+    "fiberG": 2.5,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-nilagang-baboy",
+    "name": "Nilagang Baboy",
+    "aliases": [
+      "pork nilaga"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 bowl",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 208,
+    "proteinG": 16,
+    "carbsG": 9,
+    "fatG": 12,
+    "fiberG": 2.5,
+    "sodiumMg": 850,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-menudo",
+    "name": "Menudo",
+    "aliases": [
+      "pork menudo",
+      "menudong baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 204,
+    "proteinG": 14,
+    "carbsG": 10,
+    "fatG": 12,
+    "fiberG": 1.5,
+    "sodiumMg": 780,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-chicken-afritada",
+    "name": "Chicken Afritada",
+    "aliases": [
+      "afritadang manok"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 202,
+    "proteinG": 16,
+    "carbsG": 12,
+    "fatG": 10,
+    "fiberG": 2,
+    "sodiumMg": 760,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pork-afritada",
+    "name": "Pork Afritada",
+    "aliases": [
+      "afritadang baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 221,
+    "proteinG": 14,
+    "carbsG": 12,
+    "fatG": 13,
+    "fiberG": 2,
+    "sodiumMg": 780,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-beef-caldereta",
+    "name": "Beef Caldereta",
+    "aliases": [
+      "kalderetang baka",
+      "beef kaldereta"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 252,
+    "proteinG": 18,
+    "carbsG": 9,
+    "fatG": 16,
+    "fiberG": 1.5,
+    "sodiumMg": 820,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Cheese and liver spread amounts vary a lot between recipes."
+  },
+  {
+    "id": "seed-kare-kare",
+    "name": "Kare-Kare",
+    "aliases": [
+      "karekare"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup (oxtail + sauce)",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 322,
+    "proteinG": 19,
+    "carbsG": 12,
+    "fatG": 22,
+    "fiberG": 3,
+    "sodiumMg": 780,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Peanut sauce is calorie-dense; assumes a moderate amount."
+  },
+  {
+    "id": "seed-bicol-express",
+    "name": "Bicol Express",
+    "aliases": [
+      "bikol express"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 262,
+    "proteinG": 10,
+    "carbsG": 6,
+    "fatG": 22,
+    "fiberG": 1.5,
+    "sodiumMg": 780,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sisig",
+    "name": "Sisig",
+    "aliases": [
+      "pork sisig",
+      "sizzling sisig"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup (≈150 g)",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 296,
+    "proteinG": 16,
+    "carbsG": 4,
+    "fatG": 24,
+    "fiberG": 0.3,
+    "sodiumMg": 880,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Mayonnaise and pork belly ratios vary by stall."
+  },
+  {
+    "id": "seed-lechon-kawali",
+    "name": "Lechon Kawali",
+    "aliases": [
+      "crispy pork belly"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup sliced (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 364,
+    "proteinG": 18,
+    "carbsG": 1,
+    "fatG": 32,
+    "fiberG": 0,
+    "sodiumMg": 620,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-bistek-tagalog",
+    "name": "Bistek Tagalog",
+    "aliases": [
+      "bisték",
+      "beef steak tagalog"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 220,
+    "proteinG": 22,
+    "carbsG": 6,
+    "fatG": 12,
+    "fiberG": 0.5,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-dinuguan",
+    "name": "Dinuguan",
+    "aliases": [
+      "pork blood stew",
+      "dinuguan baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 206,
+    "proteinG": 15,
+    "carbsG": 5,
+    "fatG": 14,
+    "fiberG": 0.5,
+    "sodiumMg": 850,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pork-bbq",
+    "name": "Pork BBQ",
+    "aliases": [
+      "pork barbecue",
+      "bbq pork"
+    ],
+    "category": "ulam",
+    "servingLabel": "2 sticks (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [
+      {
+        "label": "1 stick",
+        "grams": 50
+      }
+    ],
+    "kcal": 208,
+    "proteinG": 16,
+    "carbsG": 9,
+    "fatG": 12,
+    "fiberG": 0.2,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sweet marinade; sugar varies per vendor."
+  },
+  {
+    "id": "seed-chicken-bbq",
+    "name": "Chicken BBQ",
+    "aliases": [
+      "chicken barbecue"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 stick (≈80 g)",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 130,
+    "proteinG": 14,
+    "carbsG": 5,
+    "fatG": 6,
+    "fiberG": 0.1,
+    "sodiumMg": 520,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-inihaw-na-liempo",
+    "name": "Inihaw na Liempo",
+    "aliases": [
+      "grilled pork belly",
+      "liempo"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 serving (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 346,
+    "proteinG": 18,
+    "carbsG": 1,
+    "fatG": 30,
+    "fiberG": 0,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-beef-tapa",
+    "name": "Beef Tapa",
+    "aliases": [
+      "tapang baka"
+    ],
+    "category": "ulam",
+    "servingLabel": "1/2 cup (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 177,
+    "proteinG": 20,
+    "carbsG": 4,
+    "fatG": 9,
+    "fiberG": 0,
+    "sodiumMg": 800,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-chicken-inasal",
+    "name": "Chicken Inasal",
+    "aliases": [
+      "inasal",
+      "bacolod inasal"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 leg quarter (≈180 g)",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 246,
+    "proteinG": 28,
+    "carbsG": 2,
+    "fatG": 14,
+    "fiberG": 0.1,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pork-tocino",
+    "name": "Pork Tocino",
+    "aliases": [
+      "tocino",
+      "sweet cured pork"
+    ],
+    "category": "ulam",
+    "servingLabel": "3 slices (≈90 g)",
+    "servingGrams": 90,
+    "altServings": [],
+    "kcal": 171,
+    "proteinG": 13,
+    "carbsG": 14,
+    "fatG": 7,
+    "fiberG": 0,
+    "sodiumMg": 720,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Commercial tocino is much sweeter; assumes homemade."
+  },
+  {
+    "id": "seed-pork-longganisa",
+    "name": "Pork Longganisa",
+    "aliases": [
+      "longganisa",
+      "longganisang baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "2 pieces (≈80 g)",
+    "servingGrams": 80,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 40
+      }
+    ],
+    "kcal": 198,
+    "proteinG": 10,
+    "carbsG": 8,
+    "fatG": 14,
+    "fiberG": 0,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Recipes differ widely by region (Vigan, Lucban, skinless)."
+  },
+  {
+    "id": "seed-chicken-curry",
+    "name": "Chicken Curry (Filipino Style)",
+    "aliases": [
+      "filipino chicken curry"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 230,
+    "proteinG": 16,
+    "carbsG": 10,
+    "fatG": 14,
+    "fiberG": 2,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-chicken-pastel",
+    "name": "Chicken Pastel",
+    "aliases": [],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 246,
+    "proteinG": 16,
+    "carbsG": 14,
+    "fatG": 14,
+    "fiberG": 1,
+    "sodiumMg": 650,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pork-hamonado",
+    "name": "Pork Hamonado",
+    "aliases": [
+      "hamonadong baboy"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 238,
+    "proteinG": 16,
+    "carbsG": 12,
+    "fatG": 14,
+    "fiberG": 0.5,
+    "sodiumMg": 780,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginataang-manok",
+    "name": "Ginataang Manok",
+    "aliases": [
+      "chicken ginataan"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 220,
+    "altServings": [],
+    "kcal": 254,
+    "proteinG": 18,
+    "carbsG": 5,
+    "fatG": 18,
+    "fiberG": 1,
+    "sodiumMg": 620,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-nilagang-manok",
+    "name": "Nilagang Manok",
+    "aliases": [
+      "chicken nilaga"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 bowl",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 158,
+    "proteinG": 18,
+    "carbsG": 8,
+    "fatG": 6,
+    "fiberG": 2,
+    "sodiumMg": 820,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-giniling-na-baboy",
+    "name": "Giniling na Baboy",
+    "aliases": [
+      "pork giniling",
+      "giniling"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 226,
+    "proteinG": 15,
+    "carbsG": 10,
+    "fatG": 14,
+    "fiberG": 1.5,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-embutido",
+    "name": "Embutido",
+    "aliases": [
+      "pork embutido"
+    ],
+    "category": "ulam",
+    "servingLabel": "2 slices (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 216,
+    "proteinG": 12,
+    "carbsG": 6,
+    "fatG": 16,
+    "fiberG": 0.5,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-beef-mechado",
+    "name": "Beef Mechado",
+    "aliases": [
+      "mechadong baka"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 235,
+    "proteinG": 17,
+    "carbsG": 8,
+    "fatG": 15,
+    "fiberG": 1.5,
+    "sodiumMg": 760,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lechon",
+    "name": "Lechon (Roast Pig)",
+    "aliases": [
+      "lechon baboy",
+      "roast pig"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 serving (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 322,
+    "proteinG": 22,
+    "carbsG": 0,
+    "fatG": 26,
+    "fiberG": 0,
+    "sodiumMg": 450,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-tortang-giniling",
+    "name": "Tortang Giniling",
+    "aliases": [
+      "pork omelet"
+    ],
+    "category": "ulam",
+    "servingLabel": "1 piece (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 207,
+    "proteinG": 14,
+    "carbsG": 4,
+    "fatG": 15,
+    "fiberG": 0.5,
+    "sodiumMg": 520,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-fried-bangus",
+    "name": "Fried Bangus",
+    "aliases": [
+      "fried milkfish",
+      "bangus"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 188,
+    "proteinG": 20,
+    "carbsG": 0,
+    "fatG": 12,
+    "fiberG": 0,
+    "sodiumMg": 300,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-inihaw-na-bangus",
+    "name": "Inihaw na Bangus",
+    "aliases": [
+      "grilled milkfish"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 serving (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 182,
+    "proteinG": 22,
+    "carbsG": 1,
+    "fatG": 10,
+    "fiberG": 0,
+    "sodiumMg": 380,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sinigang-na-bangus",
+    "name": "Sinigang na Bangus",
+    "aliases": [
+      "bangus sinigang"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 168,
+    "proteinG": 16,
+    "carbsG": 8,
+    "fatG": 8,
+    "fiberG": 2,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-daing-na-bangus",
+    "name": "Daing na Bangus (Fried)",
+    "aliases": [
+      "daing",
+      "fried daing"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈80 g)",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 202,
+    "proteinG": 18,
+    "carbsG": 1,
+    "fatG": 14,
+    "fiberG": 0,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Dried fish is high in sodium; values are approximate."
+  },
+  {
+    "id": "seed-tinapang-bangus",
+    "name": "Tinapang Bangus",
+    "aliases": [
+      "smoked bangus",
+      "tinapa"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈80 g)",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 193,
+    "proteinG": 19,
+    "carbsG": 0,
+    "fatG": 13,
+    "fiberG": 0,
+    "sodiumMg": 950,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-fried-tilapia",
+    "name": "Fried Tilapia",
+    "aliases": [
+      "tilapia"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 152,
+    "proteinG": 20,
+    "carbsG": 0,
+    "fatG": 8,
+    "fiberG": 0,
+    "sodiumMg": 250,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-inihaw-na-tilapia",
+    "name": "Inihaw na Tilapia",
+    "aliases": [
+      "grilled tilapia"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 137,
+    "proteinG": 23,
+    "carbsG": 0,
+    "fatG": 5,
+    "fiberG": 0,
+    "sodiumMg": 300,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-tuyo",
+    "name": "Tuyo (Fried Dried Herring)",
+    "aliases": [
+      "tuyong isda",
+      "dried herring"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "2 pieces (≈40 g)",
+    "servingGrams": 40,
+    "altServings": [],
+    "kcal": 119,
+    "proteinG": 14,
+    "carbsG": 0,
+    "fatG": 7,
+    "fiberG": 0,
+    "sodiumMg": 1200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Very salty; sodium is a conservative estimate."
+  },
+  {
+    "id": "seed-galunggong",
+    "name": "Galunggong (Fried)",
+    "aliases": [
+      "fried round scad"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈80 g)",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 158,
+    "proteinG": 17,
+    "carbsG": 0,
+    "fatG": 10,
+    "fiberG": 0,
+    "sodiumMg": 260,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-paksiw-na-galunggong",
+    "name": "Paksiw na Galunggong",
+    "aliases": [
+      "paksiw na isda"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece + sauce (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 161,
+    "proteinG": 17,
+    "carbsG": 3,
+    "fatG": 9,
+    "fiberG": 0.5,
+    "sodiumMg": 750,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginataang-hipon",
+    "name": "Ginataang Hipon",
+    "aliases": [
+      "shrimp in coconut milk"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 cup (≈180 g)",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 223,
+    "proteinG": 16,
+    "carbsG": 6,
+    "fatG": 15,
+    "fiberG": 1,
+    "sodiumMg": 620,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sinigang-na-hipon",
+    "name": "Sinigang na Hipon",
+    "aliases": [
+      "shrimp sinigang",
+      "sinigang na sugpo"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 138,
+    "proteinG": 14,
+    "carbsG": 7,
+    "fatG": 6,
+    "fiberG": 1.5,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-escabeche",
+    "name": "Sweet and Sour Fish (Escabeche)",
+    "aliases": [
+      "escabeche"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 cup (≈200 g)",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 193,
+    "proteinG": 16,
+    "carbsG": 12,
+    "fatG": 9,
+    "fiberG": 1,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-inihaw-na-pusit",
+    "name": "Inihaw na Pusit",
+    "aliases": [
+      "grilled squid"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 120,
+    "proteinG": 18,
+    "carbsG": 3,
+    "fatG": 4,
+    "fiberG": 0,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-halabos-na-hipon",
+    "name": "Halabos na Hipon",
+    "aliases": [
+      "steamed shrimp",
+      "halabos"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1 cup (≈150 g)",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 119,
+    "proteinG": 22,
+    "carbsG": 1,
+    "fatG": 3,
+    "fiberG": 0,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-dilis",
+    "name": "Dilis (Fried)",
+    "aliases": [
+      "fried anchovies"
+    ],
+    "category": "fish-seafood",
+    "servingLabel": "1/4 cup (≈30 g)",
+    "servingGrams": 30,
+    "altServings": [],
+    "kcal": 98,
+    "proteinG": 11,
+    "carbsG": 0,
+    "fatG": 6,
+    "fiberG": 0,
+    "sodiumMg": 850,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Fried in oil; absorbs a variable amount of oil."
+  },
+  {
+    "id": "seed-pinakbet",
+    "name": "Pinakbet",
+    "aliases": [
+      "pakbet",
+      "pinakbet ilocano"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 167,
+    "proteinG": 5,
+    "carbsG": 12,
+    "fatG": 11,
+    "fiberG": 4,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-laing",
+    "name": "Laing",
+    "aliases": [
+      "ginataang laing"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1/2 cup",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 184,
+    "proteinG": 4,
+    "carbsG": 6,
+    "fatG": 16,
+    "fiberG": 3,
+    "sodiumMg": 650,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Coconut cream amount varies; conservative estimate."
+  },
+  {
+    "id": "seed-chopsuey",
+    "name": "Chopsuey",
+    "aliases": [
+      "chop suey"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 149,
+    "proteinG": 5,
+    "carbsG": 12,
+    "fatG": 9,
+    "fiberG": 3.5,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginisang-munggo",
+    "name": "Ginisang Munggo",
+    "aliases": [
+      "mung bean stew",
+      "monggo"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 192,
+    "proteinG": 10,
+    "carbsG": 20,
+    "fatG": 8,
+    "fiberG": 6,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ensaladang-talong",
+    "name": "Ensaladang Talong",
+    "aliases": [
+      "eggplant salad"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 76,
+    "proteinG": 2,
+    "carbsG": 8,
+    "fatG": 4,
+    "fiberG": 4,
+    "sodiumMg": 300,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginataang-kalabasa",
+    "name": "Ginataang Kalabasa at Sitaw",
+    "aliases": [
+      "squash and string beans in coconut milk",
+      "ginataang kalabasa"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 171,
+    "proteinG": 4,
+    "carbsG": 14,
+    "fatG": 11,
+    "fiberG": 4,
+    "sodiumMg": 550,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-adobong-kangkong",
+    "name": "Adobong Kangkong",
+    "aliases": [
+      "water spinach adobo"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 104,
+    "proteinG": 3,
+    "carbsG": 5,
+    "fatG": 8,
+    "fiberG": 3,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginisang-ampalaya",
+    "name": "Ginisang Ampalaya",
+    "aliases": [
+      "bitter melon stir-fry"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 103,
+    "proteinG": 4,
+    "carbsG": 6,
+    "fatG": 7,
+    "fiberG": 3,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ensaladang-pipino",
+    "name": "Ensaladang Pipino",
+    "aliases": [
+      "cucumber salad"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 38,
+    "proteinG": 1,
+    "carbsG": 4,
+    "fatG": 2,
+    "fiberG": 1.5,
+    "sodiumMg": 250,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ensaladang-mangga",
+    "name": "Ensaladang Mangga",
+    "aliases": [
+      "green mango salad"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 71,
+    "proteinG": 1,
+    "carbsG": 10,
+    "fatG": 3,
+    "fiberG": 2,
+    "sodiumMg": 400,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-tortang-talong",
+    "name": "Tortang Talong",
+    "aliases": [
+      "eggplant omelet"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 137,
+    "proteinG": 6,
+    "carbsG": 8,
+    "fatG": 9,
+    "fiberG": 2.5,
+    "sodiumMg": 350,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginataang-langka",
+    "name": "Ginataang Langka",
+    "aliases": [
+      "jackfruit in coconut milk"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 178,
+    "proteinG": 4,
+    "carbsG": 9,
+    "fatG": 14,
+    "fiberG": 3.5,
+    "sodiumMg": 550,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginisang-togue",
+    "name": "Ginisang Togue",
+    "aliases": [
+      "bean sprout stir-fry",
+      "togue guisado"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 120,
+    "proteinG": 5,
+    "carbsG": 7,
+    "fatG": 8,
+    "fiberG": 2.5,
+    "sodiumMg": 550,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginisang-sayote",
+    "name": "Ginisang Sayote",
+    "aliases": [
+      "chayote stir-fry"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 91,
+    "proteinG": 2,
+    "carbsG": 5,
+    "fatG": 7,
+    "fiberG": 2,
+    "sodiumMg": 450,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-puso-ng-saging",
+    "name": "Puso ng Saging Ginataan",
+    "aliases": [
+      "banana heart in coconut milk"
+    ],
+    "category": "vegetables",
+    "servingLabel": "1 cup",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 160,
+    "proteinG": 3,
+    "carbsG": 10,
+    "fatG": 12,
+    "fiberG": 3,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-tapsilog",
+    "name": "Tapsilog",
+    "aliases": [
+      "tapa silog",
+      "beef tapa with rice and egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 plate",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 574,
+    "proteinG": 30,
+    "carbsG": 55,
+    "fatG": 26,
+    "fiberG": 1.5,
+    "sodiumMg": 1200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 1 cup rice, 1 egg and about 80 g tapa."
+  },
+  {
+    "id": "seed-tocilog",
+    "name": "Tocilog",
+    "aliases": [
+      "tocino silog",
+      "tocino with rice and egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 plate",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 544,
+    "proteinG": 24,
+    "carbsG": 58,
+    "fatG": 24,
+    "fiberG": 1,
+    "sodiumMg": 1000,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 1 cup rice, 1 egg and 3 slices of tocino."
+  },
+  {
+    "id": "seed-longsilog",
+    "name": "Longsilog",
+    "aliases": [
+      "longganisa silog",
+      "longganisa with rice and egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 plate",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 578,
+    "proteinG": 21,
+    "carbsG": 56,
+    "fatG": 30,
+    "fiberG": 1,
+    "sodiumMg": 1100,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 1 cup rice, 1 egg and 2 longganisa."
+  },
+  {
+    "id": "seed-bangsilog",
+    "name": "Bangsilog",
+    "aliases": [
+      "bangus silog",
+      "bangus with rice and egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 plate",
+    "servingGrams": 420,
+    "altServings": [],
+    "kcal": 560,
+    "proteinG": 32,
+    "carbsG": 54,
+    "fatG": 24,
+    "fiberG": 1,
+    "sodiumMg": 1000,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 1 cup rice, 1 egg and 1 piece of bangus."
+  },
+  {
+    "id": "seed-cornsilog",
+    "name": "Cornsilog",
+    "aliases": [
+      "corned beef silog"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 plate",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 554,
+    "proteinG": 26,
+    "carbsG": 54,
+    "fatG": 26,
+    "fiberG": 1,
+    "sodiumMg": 1300,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Canned corned beef is high in sodium."
+  },
+  {
+    "id": "seed-champorado",
+    "name": "Champorado",
+    "aliases": [
+      "tsamporado",
+      "chocolate rice porridge"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 207,
+    "proteinG": 5,
+    "carbsG": 40,
+    "fatG": 3,
+    "fiberG": 2,
+    "sodiumMg": 250,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Usually served with milk or tuyo; those are not included."
+  },
+  {
+    "id": "seed-arroz-caldo",
+    "name": "Arroz Caldo",
+    "aliases": [
+      "chicken rice porridge",
+      "arroz caldo manok"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 280,
+    "proteinG": 12,
+    "carbsG": 40,
+    "fatG": 8,
+    "fiberG": 1,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lugaw",
+    "name": "Lugaw",
+    "aliases": [
+      "rice porridge",
+      "plain lugaw"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 bowl",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 178,
+    "proteinG": 5,
+    "carbsG": 35,
+    "fatG": 2,
+    "fiberG": 0.5,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-goto",
+    "name": "Goto",
+    "aliases": [
+      "beef tripe porridge",
+      "goto batangas"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 289,
+    "proteinG": 14,
+    "carbsG": 38,
+    "fatG": 9,
+    "fiberG": 1,
+    "sodiumMg": 950,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-fried-egg",
+    "name": "Fried Egg (Itlog)",
+    "aliases": [
+      "itlog",
+      "prinitong itlog",
+      "sunny side up"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 piece",
+    "servingGrams": 50,
+    "altServings": [],
+    "kcal": 91,
+    "proteinG": 6.3,
+    "carbsG": 0.6,
+    "fatG": 7,
+    "fiberG": 0,
+    "sodiumMg": 170,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-salted-egg",
+    "name": "Salted Egg",
+    "aliases": [
+      "itlog na maalat",
+      "salted duck egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 piece",
+    "servingGrams": 60,
+    "altServings": [],
+    "kcal": 91,
+    "proteinG": 6,
+    "carbsG": 1,
+    "fatG": 7,
+    "fiberG": 0,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-scrambled-egg",
+    "name": "Scrambled Egg",
+    "aliases": [
+      "scrambled itlog"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "2 eggs",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 184,
+    "proteinG": 13,
+    "carbsG": 1.5,
+    "fatG": 14,
+    "fiberG": 0,
+    "sodiumMg": 340,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-hard-boiled-egg",
+    "name": "Hard-Boiled Egg",
+    "aliases": [
+      "boiled egg"
+    ],
+    "category": "silog-breakfast",
+    "servingLabel": "1 piece",
+    "servingGrams": 50,
+    "altServings": [],
+    "kcal": 75,
+    "proteinG": 6.3,
+    "carbsG": 0.6,
+    "fatG": 5.3,
+    "fiberG": 0,
+    "sodiumMg": 65,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-plain-rice",
+    "name": "Plain Rice (1 cup cooked)",
+    "aliases": [
+      "steamed rice",
+      "kanin",
+      "white rice",
+      "cooked rice"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup cooked",
+    "servingGrams": 180,
+    "altServings": [
+      {
+        "label": "1/2 cup cooked",
+        "grams": 90
+      }
+    ],
+    "kcal": 200,
+    "proteinG": 4,
+    "carbsG": 45,
+    "fatG": 0.4,
+    "fiberG": 0.6,
+    "sodiumMg": 1,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Rice variety and packing affect weight; assumes a level cup."
+  },
+  {
+    "id": "seed-brown-rice",
+    "name": "Brown Rice",
+    "aliases": [
+      "whole grain rice"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup cooked",
+    "servingGrams": 185,
+    "altServings": [
+      {
+        "label": "1/2 cup cooked",
+        "grams": 93
+      }
+    ],
+    "kcal": 210,
+    "proteinG": 5,
+    "carbsG": 44,
+    "fatG": 1.6,
+    "fiberG": 3,
+    "sodiumMg": 5,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sinangag",
+    "name": "Sinangag (Garlic Fried Rice)",
+    "aliases": [
+      "garlic fried rice"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 247,
+    "proteinG": 4.5,
+    "carbsG": 46,
+    "fatG": 5,
+    "fiberG": 0.7,
+    "sodiumMg": 400,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-bringhe",
+    "name": "Bringhe",
+    "aliases": [
+      "bringhe kapampangan"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 282,
+    "proteinG": 8,
+    "carbsG": 40,
+    "fatG": 10,
+    "fiberG": 1,
+    "sodiumMg": 650,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Kapampangan glutinous rice dish; coconut milk amount varies."
+  },
+  {
+    "id": "seed-malagkit",
+    "name": "Malagkit (Sticky Rice)",
+    "aliases": [
+      "glutinous rice",
+      "sticky rice"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup cooked",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 224,
+    "proteinG": 5,
+    "carbsG": 50,
+    "fatG": 0.4,
+    "fiberG": 0.8,
+    "sodiumMg": 5,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-java-rice",
+    "name": "Java Rice",
+    "aliases": [
+      "yellow fried rice"
+    ],
+    "category": "rice",
+    "servingLabel": "1 cup",
+    "servingGrams": 180,
+    "altServings": [],
+    "kcal": 252,
+    "proteinG": 4.5,
+    "carbsG": 45,
+    "fatG": 6,
+    "fiberG": 0.8,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pancit-canton",
+    "name": "Pancit Canton",
+    "aliases": [
+      "pansit canton",
+      "canton guisado"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 242,
+    "proteinG": 8,
+    "carbsG": 30,
+    "fatG": 10,
+    "fiberG": 2,
+    "sodiumMg": 750,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pancit-bihon",
+    "name": "Pancit Bihon",
+    "aliases": [
+      "pansit bihon",
+      "bihon guisado"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 228,
+    "proteinG": 7,
+    "carbsG": 32,
+    "fatG": 8,
+    "fiberG": 2,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-palabok",
+    "name": "Pancit Palabok",
+    "aliases": [
+      "palabok"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 271,
+    "proteinG": 9,
+    "carbsG": 34,
+    "fatG": 11,
+    "fiberG": 2,
+    "sodiumMg": 800,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Generous sauce and toppings assumed."
+  },
+  {
+    "id": "seed-sotanghon",
+    "name": "Sotanghon (Glass Noodles)",
+    "aliases": [
+      "pansit sotanghon",
+      "glass noodle soup"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 208,
+    "proteinG": 6,
+    "carbsG": 28,
+    "fatG": 8,
+    "fiberG": 2,
+    "sodiumMg": 650,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lomi",
+    "name": "Lomi",
+    "aliases": [
+      "lomi batangas",
+      "pancit lomi"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 bowl",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 342,
+    "proteinG": 14,
+    "carbsG": 40,
+    "fatG": 14,
+    "fiberG": 2,
+    "sodiumMg": 950,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-batchoy",
+    "name": "Batchoy",
+    "aliases": [
+      "la paz batchoy"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 341,
+    "proteinG": 18,
+    "carbsG": 38,
+    "fatG": 13,
+    "fiberG": 1.5,
+    "sodiumMg": 1000,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-mami",
+    "name": "Mami",
+    "aliases": [
+      "chicken mami",
+      "mami soup"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 269,
+    "proteinG": 15,
+    "carbsG": 32,
+    "fatG": 9,
+    "fiberG": 1.5,
+    "sodiumMg": 900,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-beef-mami",
+    "name": "Beef Mami",
+    "aliases": [
+      "beef noodle soup"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 290,
+    "proteinG": 17,
+    "carbsG": 33,
+    "fatG": 10,
+    "fiberG": 1.5,
+    "sodiumMg": 950,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pancit-malabon",
+    "name": "Pancit Malabon",
+    "aliases": [
+      "pansit malabon"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 280,
+    "proteinG": 10,
+    "carbsG": 33,
+    "fatG": 12,
+    "fiberG": 2,
+    "sodiumMg": 850,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-instant-pancit-canton",
+    "name": "Instant Pancit Canton (Pack)",
+    "aliases": [
+      "instant noodles"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 pack cooked",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 318,
+    "proteinG": 8,
+    "carbsG": 40,
+    "fatG": 14,
+    "fiberG": 2,
+    "sodiumMg": 1200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Seasoning packet drives the sodium; estimate only."
+  },
+  {
+    "id": "seed-filipino-spaghetti",
+    "name": "Filipino Spaghetti",
+    "aliases": [
+      "sweet spaghetti",
+      "spaghetti filipino"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 cup",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 289,
+    "proteinG": 10,
+    "carbsG": 42,
+    "fatG": 9,
+    "fiberG": 2,
+    "sodiumMg": 750,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Filipino-style sauce is sweeter than Italian."
+  },
+  {
+    "id": "seed-sopas",
+    "name": "Sopas (Macaroni Soup)",
+    "aliases": [
+      "sopas"
+    ],
+    "category": "noodles",
+    "servingLabel": "1 bowl",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 260,
+    "proteinG": 12,
+    "carbsG": 35,
+    "fatG": 8,
+    "fiberG": 1.5,
+    "sodiumMg": 850,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-fishball",
+    "name": "Fishball",
+    "aliases": [
+      "fish balls"
+    ],
+    "category": "street-food",
+    "servingLabel": "5 pieces + sauce",
+    "servingGrams": 80,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 16
+      }
+    ],
+    "kcal": 84,
+    "proteinG": 4,
+    "carbsG": 8,
+    "fatG": 4,
+    "fiberG": 0.5,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Deep-fried; oil absorption varies."
+  },
+  {
+    "id": "seed-kwek-kwek",
+    "name": "Kwek-Kwek",
+    "aliases": [
+      "quail egg fritters"
+    ],
+    "category": "street-food",
+    "servingLabel": "3 pieces",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 192,
+    "proteinG": 9,
+    "carbsG": 12,
+    "fatG": 12,
+    "fiberG": 0.5,
+    "sodiumMg": 450,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Batter thickness varies by vendor."
+  },
+  {
+    "id": "seed-isaw",
+    "name": "Isaw",
+    "aliases": [
+      "isaw manok",
+      "grilled chicken intestine"
+    ],
+    "category": "street-food",
+    "servingLabel": "3 sticks",
+    "servingGrams": 90,
+    "altServings": [
+      {
+        "label": "1 stick",
+        "grams": 30
+      }
+    ],
+    "kcal": 97,
+    "proteinG": 10,
+    "carbsG": 3,
+    "fatG": 5,
+    "fiberG": 0,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-betamax",
+    "name": "Betamax",
+    "aliases": [
+      "grilled blood cubes",
+      "betamax bbq"
+    ],
+    "category": "street-food",
+    "servingLabel": "2 sticks",
+    "servingGrams": 60,
+    "altServings": [],
+    "kcal": 71,
+    "proteinG": 7,
+    "carbsG": 4,
+    "fatG": 3,
+    "fiberG": 0,
+    "sodiumMg": 450,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-balut",
+    "name": "Balut",
+    "aliases": [
+      "fertilized duck egg"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 piece",
+    "servingGrams": 90,
+    "altServings": [],
+    "kcal": 146,
+    "proteinG": 13,
+    "carbsG": 1,
+    "fatG": 10,
+    "fiberG": 0,
+    "sodiumMg": 400,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Values differ by embryo age; conservative estimate."
+  },
+  {
+    "id": "seed-banana-cue",
+    "name": "Banana Cue",
+    "aliases": [
+      "banana q"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 stick",
+    "servingGrams": 90,
+    "altServings": [],
+    "kcal": 178,
+    "proteinG": 1,
+    "carbsG": 30,
+    "fatG": 6,
+    "fiberG": 1.5,
+    "sodiumMg": 10,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-camote-cue",
+    "name": "Camote Cue",
+    "aliases": [
+      "sweet potato cue"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 stick",
+    "servingGrams": 90,
+    "altServings": [],
+    "kcal": 174,
+    "proteinG": 1,
+    "carbsG": 29,
+    "fatG": 6,
+    "fiberG": 2.5,
+    "sodiumMg": 15,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-turon",
+    "name": "Turon",
+    "aliases": [
+      "banana spring roll",
+      "turon saging"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 piece",
+    "servingGrams": 70,
+    "altServings": [],
+    "kcal": 157,
+    "proteinG": 1.5,
+    "carbsG": 22,
+    "fatG": 7,
+    "fiberG": 1.5,
+    "sodiumMg": 20,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-siomai",
+    "name": "Siomai",
+    "aliases": [
+      "pork siomai"
+    ],
+    "category": "street-food",
+    "servingLabel": "4 pieces",
+    "servingGrams": 120,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 30
+      }
+    ],
+    "kcal": 160,
+    "proteinG": 10,
+    "carbsG": 12,
+    "fatG": 8,
+    "fiberG": 0.5,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-kikiam",
+    "name": "Kikiam",
+    "aliases": [],
+    "category": "street-food",
+    "servingLabel": "2 sticks",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 143,
+    "proteinG": 8,
+    "carbsG": 12,
+    "fatG": 7,
+    "fiberG": 0.5,
+    "sodiumMg": 800,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-squid-ball",
+    "name": "Squid Ball",
+    "aliases": [
+      "squid balls"
+    ],
+    "category": "street-food",
+    "servingLabel": "5 pieces",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 100,
+    "proteinG": 6,
+    "carbsG": 10,
+    "fatG": 4,
+    "fiberG": 0.5,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-proben",
+    "name": "Proben",
+    "aliases": [
+      "proben chicken"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 order",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 138,
+    "proteinG": 9,
+    "carbsG": 3,
+    "fatG": 10,
+    "fiberG": 0,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-chicken-skin",
+    "name": "Chicken Skin (Fried)",
+    "aliases": [
+      "chicharon manok"
+    ],
+    "category": "street-food",
+    "servingLabel": "1 order (≈50 g)",
+    "servingGrams": 50,
+    "altServings": [],
+    "kcal": 171,
+    "proteinG": 8,
+    "carbsG": 1,
+    "fatG": 15,
+    "fiberG": 0,
+    "sodiumMg": 400,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-street-tempura",
+    "name": "Tempura (Street Style)",
+    "aliases": [
+      "tempura"
+    ],
+    "category": "street-food",
+    "servingLabel": "5 pieces",
+    "servingGrams": 90,
+    "altServings": [],
+    "kcal": 144,
+    "proteinG": 6,
+    "carbsG": 12,
+    "fatG": 8,
+    "fiberG": 0.5,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-chicharon",
+    "name": "Chicharon (Pork)",
+    "aliases": [
+      "chicharon baboy",
+      "pork rinds"
+    ],
+    "category": "street-food",
+    "servingLabel": "1/2 cup (≈30 g)",
+    "servingGrams": 30,
+    "altServings": [],
+    "kcal": 126,
+    "proteinG": 7,
+    "carbsG": 2,
+    "fatG": 10,
+    "fiberG": 0,
+    "sodiumMg": 450,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pandesal",
+    "name": "Pandesal",
+    "aliases": [
+      "salt bread"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 piece (≈40 g)",
+    "servingGrams": 40,
+    "altServings": [
+      {
+        "label": "2 pieces",
+        "grams": 80
+      }
+    ],
+    "kcal": 106,
+    "proteinG": 3,
+    "carbsG": 20,
+    "fatG": 1.5,
+    "fiberG": 0.8,
+    "sodiumMg": 130,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ensaymada",
+    "name": "Ensaymada",
+    "aliases": [
+      "butter bread"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 piece (≈70 g)",
+    "servingGrams": 70,
+    "altServings": [],
+    "kcal": 248,
+    "proteinG": 5,
+    "carbsG": 30,
+    "fatG": 12,
+    "fiberG": 0.8,
+    "sodiumMg": 150,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Topping and filling vary; conservative estimate."
+  },
+  {
+    "id": "seed-bibingka",
+    "name": "Bibingka",
+    "aliases": [
+      "rice cake bibingka"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 252,
+    "proteinG": 5,
+    "carbsG": 40,
+    "fatG": 8,
+    "fiberG": 0.5,
+    "sodiumMg": 200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-puto",
+    "name": "Puto",
+    "aliases": [
+      "putong puti",
+      "steamed rice cake"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "2 pieces (≈60 g)",
+    "servingGrams": 60,
+    "altServings": [],
+    "kcal": 134,
+    "proteinG": 3,
+    "carbsG": 26,
+    "fatG": 2,
+    "fiberG": 0.4,
+    "sodiumMg": 180,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-kutsinta",
+    "name": "Kutsinta",
+    "aliases": [
+      "brown rice cake"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "3 pieces (≈75 g)",
+    "servingGrams": 75,
+    "altServings": [],
+    "kcal": 137,
+    "proteinG": 2,
+    "carbsG": 30,
+    "fatG": 1,
+    "fiberG": 0.5,
+    "sodiumMg": 200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-halo-halo",
+    "name": "Halo-Halo",
+    "aliases": [
+      "halo-halo special"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 glass (≈350 g)",
+    "servingGrams": 350,
+    "altServings": [],
+    "kcal": 372,
+    "proteinG": 6,
+    "carbsG": 60,
+    "fatG": 12,
+    "fiberG": 2,
+    "sodiumMg": 150,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Toppings vary a lot; estimate for a typical order with ice cream."
+  },
+  {
+    "id": "seed-leche-flan",
+    "name": "Leche Flan",
+    "aliases": [
+      "flan",
+      "caramel custard"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 232,
+    "proteinG": 6,
+    "carbsG": 25,
+    "fatG": 12,
+    "fiberG": 0,
+    "sodiumMg": 120,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ube-halaya",
+    "name": "Ube Halaya",
+    "aliases": [
+      "ube jam",
+      "halayang ube"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1/2 cup (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 242,
+    "proteinG": 3,
+    "carbsG": 35,
+    "fatG": 10,
+    "fiberG": 1,
+    "sodiumMg": 90,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-taho",
+    "name": "Taho",
+    "aliases": [
+      "sweet tofu dessert"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 cup (≈250 g)",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 156,
+    "proteinG": 8,
+    "carbsG": 22,
+    "fatG": 4,
+    "fiberG": 0.5,
+    "sodiumMg": 60,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes arnibal and sago; sweetness varies."
+  },
+  {
+    "id": "seed-maja-blanca",
+    "name": "Maja Blanca",
+    "aliases": [
+      "coconut pudding"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 184,
+    "proteinG": 3,
+    "carbsG": 25,
+    "fatG": 8,
+    "fiberG": 0.6,
+    "sodiumMg": 90,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-biko",
+    "name": "Biko",
+    "aliases": [
+      "biko kalamay",
+      "sticky rice cake"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 244,
+    "proteinG": 3,
+    "carbsG": 40,
+    "fatG": 8,
+    "fiberG": 0.7,
+    "sodiumMg": 60,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-palitaw",
+    "name": "Palitaw",
+    "aliases": [
+      "rice cake with coconut"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "2 pieces",
+    "servingGrams": 80,
+    "altServings": [],
+    "kcal": 138,
+    "proteinG": 2,
+    "carbsG": 28,
+    "fatG": 2,
+    "fiberG": 0.5,
+    "sodiumMg": 60,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sapin-sapin",
+    "name": "Sapin-Sapin",
+    "aliases": [],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 182,
+    "proteinG": 4,
+    "carbsG": 28,
+    "fatG": 6,
+    "fiberG": 1,
+    "sodiumMg": 70,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-ginataang-bilo-bilo",
+    "name": "Ginataang Bilo-Bilo",
+    "aliases": [
+      "bilo bilo",
+      "ginataang halo-halo"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 cup",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 266,
+    "proteinG": 4,
+    "carbsG": 40,
+    "fatG": 10,
+    "fiberG": 2.5,
+    "sodiumMg": 100,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-macaroni-salad",
+    "name": "Macaroni Salad",
+    "aliases": [
+      "filipino macaroni salad"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 262,
+    "proteinG": 4,
+    "carbsG": 30,
+    "fatG": 14,
+    "fiberG": 1,
+    "sodiumMg": 200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-buko-pandan",
+    "name": "Buko Pandan",
+    "aliases": [
+      "buko pandan salad"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 222,
+    "proteinG": 3,
+    "carbsG": 30,
+    "fatG": 10,
+    "fiberG": 1,
+    "sodiumMg": 90,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-cassava-cake",
+    "name": "Cassava Cake",
+    "aliases": [
+      "bibingkang cassava"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 246,
+    "proteinG": 4,
+    "carbsG": 35,
+    "fatG": 10,
+    "fiberG": 1,
+    "sodiumMg": 100,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-polvoron",
+    "name": "Polvoron",
+    "aliases": [
+      "powdered milk candy"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 piece (≈30 g)",
+    "servingGrams": 30,
+    "altServings": [],
+    "kcal": 117,
+    "proteinG": 2,
+    "carbsG": 16,
+    "fatG": 5,
+    "fiberG": 0.4,
+    "sodiumMg": 50,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-puto-bumbong",
+    "name": "Puto Bumbong",
+    "aliases": [
+      "purple rice cake"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 serving (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 185,
+    "proteinG": 3,
+    "carbsG": 32,
+    "fatG": 5,
+    "fiberG": 1,
+    "sodiumMg": 80,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lumpiang-shanghai",
+    "name": "Lumpiang Shanghai",
+    "aliases": [
+      "lumpia shanghai",
+      "pork spring roll"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "4 pieces",
+    "servingGrams": 100,
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 25
+      }
+    ],
+    "kcal": 188,
+    "proteinG": 8,
+    "carbsG": 12,
+    "fatG": 12,
+    "fiberG": 0.8,
+    "sodiumMg": 500,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-fresh-lumpia",
+    "name": "Fresh Lumpia",
+    "aliases": [
+      "lumpiang sariwa",
+      "fresh vegetable lumpia"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 piece (≈120 g)",
+    "servingGrams": 120,
+    "altServings": [],
+    "kcal": 160,
+    "proteinG": 4,
+    "carbsG": 18,
+    "fatG": 8,
+    "fiberG": 2,
+    "sodiumMg": 400,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-three-in-one-coffee",
+    "name": "3-in-1 Coffee",
+    "aliases": [
+      "instant coffee 3 in 1"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 sachet + 200 ml water",
+    "servingGrams": 220,
+    "altServings": [],
+    "kcal": 71,
+    "proteinG": 1,
+    "carbsG": 11,
+    "fatG": 2.5,
+    "fiberG": 0,
+    "sodiumMg": 90,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sugar content depends on the brand."
+  },
+  {
+    "id": "seed-kapeng-barako",
+    "name": "Kapeng Barako (Black)",
+    "aliases": [
+      "barako coffee",
+      "black coffee"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 cup",
+    "servingGrams": 240,
+    "altServings": [],
+    "kcal": 3,
+    "proteinG": 0.3,
+    "carbsG": 0.5,
+    "fatG": 0,
+    "fiberG": 0,
+    "sodiumMg": 5,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-sagot-gulaman",
+    "name": "Sago't Gulaman",
+    "aliases": [
+      "sago gulaman",
+      "sago gulaman drink"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈300 ml)",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 108,
+    "proteinG": 0.5,
+    "carbsG": 26,
+    "fatG": 0.2,
+    "fiberG": 0,
+    "sodiumMg": 30,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sugar level varies per vendor."
+  },
+  {
+    "id": "seed-buko-juice",
+    "name": "Buko Juice",
+    "aliases": [
+      "coconut water",
+      "buko water"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈250 ml)",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 59,
+    "proteinG": 1,
+    "carbsG": 13,
+    "fatG": 0.3,
+    "fiberG": 0,
+    "sodiumMg": 30,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-calamansi-juice",
+    "name": "Calamansi Juice",
+    "aliases": [
+      "calamansi juice drink"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈250 ml, sweetened)",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 73,
+    "proteinG": 0.3,
+    "carbsG": 18,
+    "fatG": 0,
+    "fiberG": 0,
+    "sodiumMg": 10,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 2 tsp sugar."
+  },
+  {
+    "id": "seed-milo",
+    "name": "Milo (Hot Chocolate Drink)",
+    "aliases": [
+      "milo",
+      "chocolate malt drink"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 cup (≈200 ml)",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 91,
+    "proteinG": 2,
+    "carbsG": 15,
+    "fatG": 2.5,
+    "fiberG": 0.5,
+    "sodiumMg": 60,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Assumes 3 tsp of powder; sweetness varies."
+  },
+  {
+    "id": "seed-soft-drink",
+    "name": "Soft Drink (Regular)",
+    "aliases": [
+      "soda",
+      "softdrinks",
+      "coke"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 can (≈330 ml)",
+    "servingGrams": 330,
+    "altServings": [
+      {
+        "label": "1 bottle (500 ml)",
+        "grams": 500
+      }
+    ],
+    "kcal": 156,
+    "proteinG": 0,
+    "carbsG": 39,
+    "fatG": 0,
+    "fiberG": 0,
+    "sodiumMg": 45,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-soft-drink-zero",
+    "name": "Soft Drink (Zero Sugar)",
+    "aliases": [
+      "diet soda",
+      "zero sugar soda"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 can (≈330 ml)",
+    "servingGrams": 330,
+    "altServings": [],
+    "kcal": 0,
+    "proteinG": 0,
+    "carbsG": 0,
+    "fatG": 0,
+    "fiberG": 0,
+    "sodiumMg": 40,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Zero-calorie drink; label-type values, not a lab test."
+  },
+  {
+    "id": "seed-iced-tea",
+    "name": "Iced Tea",
+    "aliases": [
+      "house iced tea",
+      "iced tea drink"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈300 ml)",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 96,
+    "proteinG": 0,
+    "carbsG": 24,
+    "fatG": 0,
+    "fiberG": 0,
+    "sodiumMg": 15,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pineapple-juice",
+    "name": "Pineapple Juice",
+    "aliases": [
+      "canned pineapple juice"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈250 ml)",
+    "servingGrams": 250,
+    "altServings": [],
+    "kcal": 103,
+    "proteinG": 0.5,
+    "carbsG": 25,
+    "fatG": 0.1,
+    "fiberG": 0.3,
+    "sodiumMg": 10,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-buko-shake",
+    "name": "Buko Shake",
+    "aliases": [
+      "coconut shake"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 glass (≈300 ml)",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 192,
+    "proteinG": 2,
+    "carbsG": 28,
+    "fatG": 8,
+    "fiberG": 0.5,
+    "sodiumMg": 60,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sweetened with syrup and often condensed milk."
+  },
+  {
+    "id": "seed-tsokolate",
+    "name": "Tsokolate (Hot Chocolate)",
+    "aliases": [
+      "tsokolate",
+      "tablea drink"
+    ],
+    "category": "drinks",
+    "servingLabel": "1 cup",
+    "servingGrams": 200,
+    "altServings": [],
+    "kcal": 105,
+    "proteinG": 3,
+    "carbsG": 12,
+    "fatG": 5,
+    "fiberG": 1.5,
+    "sodiumMg": 40,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-mango",
+    "name": "Mango (Ripe)",
+    "aliases": [
+      "mangga",
+      "ripe mango"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 medium fruit (≈200 g)",
+    "servingGrams": 200,
+    "altServings": [
+      {
+        "label": "1/2 cup sliced",
+        "grams": 100
+      }
+    ],
+    "kcal": 134,
+    "proteinG": 1.6,
+    "carbsG": 30,
+    "fatG": 0.8,
+    "fiberG": 3.2,
+    "sodiumMg": 2,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-saba",
+    "name": "Saba Banana",
+    "aliases": [
+      "saba",
+      "plantain saba"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 137,
+    "proteinG": 1.3,
+    "carbsG": 32,
+    "fatG": 0.4,
+    "fiberG": 2.6,
+    "sodiumMg": 1,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lakatan",
+    "name": "Lakatan Banana",
+    "aliases": [
+      "lakatan",
+      "banana lakatan"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 piece (≈110 g)",
+    "servingGrams": 110,
+    "altServings": [],
+    "kcal": 113,
+    "proteinG": 1.3,
+    "carbsG": 26,
+    "fatG": 0.4,
+    "fiberG": 2.6,
+    "sodiumMg": 1,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-papaya",
+    "name": "Papaya (Ripe)",
+    "aliases": [
+      "papaya"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 cup (≈140 g)",
+    "servingGrams": 140,
+    "altServings": [],
+    "kcal": 64,
+    "proteinG": 0.6,
+    "carbsG": 15,
+    "fatG": 0.2,
+    "fiberG": 2.5,
+    "sodiumMg": 4,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pakwan",
+    "name": "Pakwan (Watermelon)",
+    "aliases": [
+      "watermelon"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 cup (≈150 g)",
+    "servingGrams": 150,
+    "altServings": [],
+    "kcal": 49,
+    "proteinG": 0.9,
+    "carbsG": 11,
+    "fatG": 0.2,
+    "fiberG": 1.1,
+    "sodiumMg": 2,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-pineapple",
+    "name": "Pineapple",
+    "aliases": [
+      "pinya"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 cup (≈165 g)",
+    "servingGrams": 165,
+    "altServings": [],
+    "kcal": 93,
+    "proteinG": 0.9,
+    "carbsG": 22,
+    "fatG": 0.2,
+    "fiberG": 2.3,
+    "sodiumMg": 2,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-calamansi",
+    "name": "Calamansi",
+    "aliases": [
+      "calamondin",
+      "kalamansi"
+    ],
+    "category": "fruits",
+    "servingLabel": "3 pieces (≈30 g)",
+    "servingGrams": 30,
+    "altServings": [],
+    "kcal": 16,
+    "proteinG": 0.3,
+    "carbsG": 3.5,
+    "fatG": 0.1,
+    "fiberG": 0.9,
+    "sodiumMg": 1,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-lanzones",
+    "name": "Lanzones",
+    "aliases": [
+      "lansones"
+    ],
+    "category": "fruits",
+    "servingLabel": "5 pieces (≈60 g)",
+    "servingGrams": 60,
+    "altServings": [],
+    "kcal": 76,
+    "proteinG": 0.5,
+    "carbsG": 18,
+    "fatG": 0.2,
+    "fiberG": 1,
+    "sodiumMg": 3,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-rambutan",
+    "name": "Rambutan",
+    "aliases": [],
+    "category": "fruits",
+    "servingLabel": "5 pieces (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 68,
+    "proteinG": 0.6,
+    "carbsG": 16,
+    "fatG": 0.2,
+    "fiberG": 1.5,
+    "sodiumMg": 10,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-guyabano",
+    "name": "Guyabano (Soursop)",
+    "aliases": [
+      "soursop",
+      "guyabano"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 cup (≈225 g)",
+    "servingGrams": 225,
+    "altServings": [],
+    "kcal": 91,
+    "proteinG": 1.5,
+    "carbsG": 20,
+    "fatG": 0.6,
+    "fiberG": 3,
+    "sodiumMg": 30,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-avocado",
+    "name": "Avocado",
+    "aliases": [
+      "abokado"
+    ],
+    "category": "fruits",
+    "servingLabel": "1/2 fruit (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 179,
+    "proteinG": 2,
+    "carbsG": 9,
+    "fatG": 15,
+    "fiberG": 4,
+    "sodiumMg": 10,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-kaimito",
+    "name": "Kaimito (Star Apple)",
+    "aliases": [
+      "star apple"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 piece (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 56,
+    "proteinG": 0.8,
+    "carbsG": 12,
+    "fatG": 0.5,
+    "fiberG": 2.5,
+    "sodiumMg": 5,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-melon",
+    "name": "Melon (Cantaloupe)",
+    "aliases": [
+      "cantaloupe"
+    ],
+    "category": "fruits",
+    "servingLabel": "1 cup (≈160 g)",
+    "servingGrams": 160,
+    "altServings": [],
+    "kcal": 61,
+    "proteinG": 0.8,
+    "carbsG": 14,
+    "fatG": 0.2,
+    "fiberG": 1.5,
+    "sodiumMg": 25,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-mangosteen",
+    "name": "Mangosteen",
+    "aliases": [],
+    "category": "fruits",
+    "servingLabel": "3 pieces (≈100 g)",
+    "servingGrams": 100,
+    "altServings": [],
+    "kcal": 66,
+    "proteinG": 0.5,
+    "carbsG": 15,
+    "fatG": 0.4,
+    "fiberG": 2,
+    "sodiumMg": 5,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false
+  },
+  {
+    "id": "seed-jollibee-chickenjoy",
+    "name": "Jollibee Chickenjoy (1 pc with rice)",
+    "aliases": [
+      "chickenjoy"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 pc + 1 cup rice",
+    "servingGrams": 380,
+    "altServings": [],
+    "kcal": 626,
+    "proteinG": 34,
+    "carbsG": 55,
+    "fatG": 30,
+    "fiberG": 1,
+    "sodiumMg": 1300,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Fast-food estimate compiled from public figures; check the official nutrition info."
+  },
+  {
+    "id": "seed-jolly-spaghetti",
+    "name": "Jolly Spaghetti",
+    "aliases": [
+      "jollibee spaghetti"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 regular plate",
+    "servingGrams": 300,
+    "altServings": [],
+    "kcal": 450,
+    "proteinG": 12,
+    "carbsG": 60,
+    "fatG": 18,
+    "fiberG": 2,
+    "sodiumMg": 1000,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Sweet Filipino-style sauce; check the official nutrition info."
+  },
+  {
+    "id": "seed-jollibee-burger-steak",
+    "name": "Jollibee Burger Steak with Rice",
+    "aliases": [
+      "burger steak"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 order",
+    "servingGrams": 360,
+    "altServings": [],
+    "kcal": 506,
+    "proteinG": 22,
+    "carbsG": 55,
+    "fatG": 22,
+    "fiberG": 1.5,
+    "sodiumMg": 1200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-yumburger",
+    "name": "Jollibee Yumburger",
+    "aliases": [
+      "yumburger"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 piece",
+    "servingGrams": 130,
+    "altServings": [],
+    "kcal": 295,
+    "proteinG": 12,
+    "carbsG": 28,
+    "fatG": 15,
+    "fiberG": 1,
+    "sodiumMg": 700,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-jolly-hotdog",
+    "name": "Jollibee Jolly Hotdog",
+    "aliases": [
+      "jolly hotdog"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 piece",
+    "servingGrams": 160,
+    "altServings": [],
+    "kcal": 304,
+    "proteinG": 10,
+    "carbsG": 30,
+    "fatG": 16,
+    "fiberG": 1,
+    "sodiumMg": 800,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-mang-inasal-inasal",
+    "name": "Mang Inasal Chicken Inasal (1 pc with rice)",
+    "aliases": [
+      "mang inasal inasal"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 pc + 1 cup rice",
+    "servingGrams": 400,
+    "altServings": [],
+    "kcal": 516,
+    "proteinG": 32,
+    "carbsG": 52,
+    "fatG": 20,
+    "fiberG": 1,
+    "sodiumMg": 1200,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-chao-fan",
+    "name": "Chowking Chao Fan",
+    "aliases": [
+      "chao fan"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 order",
+    "servingGrams": 380,
+    "altServings": [],
+    "kcal": 464,
+    "proteinG": 18,
+    "carbsG": 62,
+    "fatG": 16,
+    "fiberG": 1.5,
+    "sodiumMg": 1100,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-siopao-asado",
+    "name": "Chowking Siopao Asado",
+    "aliases": [
+      "siopao asado"
+    ],
+    "category": "fast-food",
+    "servingLabel": "1 piece",
+    "servingGrams": 130,
+    "altServings": [],
+    "kcal": 222,
+    "proteinG": 10,
+    "carbsG": 32,
+    "fatG": 6,
+    "fiberG": 1,
+    "sodiumMg": 600,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Check the official nutrition info."
+  }
+]

@@ -1,0 +1,46 @@
+import js from '@eslint/js';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  { ignores: ['dist', 'dev-dist', 'coverage', 'android', 'node_modules'] },
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      '@typescript-eslint/no-explicit-any': 'error',
+      'no-restricted-properties': [
+        'error',
+        {
+          property: 'toISOString',
+          message:
+            'toISOString() is UTC and shifts the local calendar day. Use localDateKey() from src/lib/date.ts. The only allowed use is the backup export timestamp (add a targeted eslint-disable there).',
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/test/**/*.ts'],
+    languageOptions: { globals: globals.node },
+  },
+  {
+    files: ['**/*.mjs', '**/*.config.js'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: globals.node,
+    },
+  },
+);

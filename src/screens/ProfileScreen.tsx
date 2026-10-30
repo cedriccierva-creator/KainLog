@@ -22,7 +22,9 @@ import {
 } from '../lib/tdee';
 import { formatKcal } from '../lib/format';
 import { applyTheme, readStoredTheme, resolveTheme, setStoredTheme } from '../lib/theme';
-import { buildBackup, downloadBackup, parseBackup, applyBackup, type BackupFile } from '../db/backup';
+import { isNativePlatform } from '../lib/platform';
+import { parseBackup, applyBackup, type BackupFile } from '../db/backup';
+import { exportBackupAndRecord } from '../lib/backupFile';
 import {
   BACKUP_NUDGE_DAYS,
   META_LAST_BACKUP,
@@ -434,15 +436,14 @@ function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
     setError(null);
     setIsBusy(true);
     try {
-      // Recorded before building, so the exported file carries its own date.
-      await db.meta.put({ key: META_LAST_BACKUP, value: Date.now() });
-      const backup = await buildBackup();
-      const filename = downloadBackup(backup);
+      const result = await exportBackupAndRecord();
       setMessage(
-        `Exported ${backup.tables.logEntries.length} entries to ${filename}.`,
+        result.method === 'share'
+          ? `Exported ${result.entries} entries to ${result.filename} — choose where to save it.`
+          : `Exported ${result.entries} entries to ${result.filename}.`,
       );
     } catch {
-      setError('Export failed. Try again.');
+      setError('Export failed. Nothing was marked as backed up.');
     } finally {
       setIsBusy(false);
     }
@@ -579,11 +580,14 @@ function BackupSection({ onDataReplaced }: { onDataReplaced: () => void }) {
 /* ------------------------------------------------------------------ */
 
 function StorageSection() {
+  const native = isNativePlatform();
   const [state, setState] = useState<PersistenceState | 'loading'>('loading');
   const [estimate, setEstimate] = useState<StorageEstimate | null>(null);
   const [isRequesting, setIsRequesting] = useState(false);
 
   useEffect(() => {
+    // Browser persistence requests do not apply to the Android build.
+    if (native) return;
     let cancelled = false;
     void getPersistenceState().then((value) => {
       if (!cancelled) setState(value);
@@ -594,7 +598,7 @@ function StorageSection() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [native]);
 
   async function request(): Promise<void> {
     setIsRequesting(true);
@@ -604,6 +608,20 @@ function StorageSection() {
     } finally {
       setIsRequesting(false);
     }
+  }
+
+  if (native) {
+    return (
+      <section aria-label="Storage" className={CARD}>
+        <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          Storage
+        </h2>
+        <p className="text-sm" data-testid="persistence-state">
+          Android keeps KainLog&apos;s data in app-private storage. Browser persistence requests do
+          not apply here, and uninstalling the app deletes the log — export a backup first.
+        </p>
+      </section>
+    );
   }
 
   const description =

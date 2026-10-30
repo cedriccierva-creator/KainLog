@@ -1,7 +1,6 @@
 import type { CustomMeal, Food, LogEntry, MetaRecord, Profile, WeightEntry } from '../types';
 import { db } from './db';
 import { SEED_VERSION, seedDatabase } from './seed';
-import { localDateKey } from '../lib/date';
 import { applyStoredTheme } from '../lib/theme';
 
 /** Bump only when the exported shape changes. Importers refuse other versions. */
@@ -44,21 +43,6 @@ export async function buildBackup(): Promise<BackupFile> {
 
 export function serializeBackup(backup: BackupFile): string {
   return JSON.stringify(backup, null, 2);
-}
-
-/** Triggers a browser download and returns the filename used. */
-export function downloadBackup(backup: BackupFile): string {
-  const filename = `kainlog-backup-${localDateKey()}.json`;
-  const blob = new Blob([serializeBackup(backup)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-  return filename;
 }
 
 /* ------------------------------------------------------------------ */

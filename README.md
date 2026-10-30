@@ -102,7 +102,10 @@ from the kcal target by more than 2%.
 
 ## Backup format
 
-Export writes one JSON file: `app: "kainlog"`, `schemaVersion: 1`, `seedVersion`, `exportedAt` (the one
+Export writes one JSON file. In a browser it downloads the file; in the Android build it is written
+to the app cache with `@capacitor/filesystem` and handed to the share sheet with `@capacitor/share`,
+so you choose where it goes. `lastBackupAt` is only updated after the download or share succeeds. The
+file contains `app: "kainlog"`, `schemaVersion: 1`, `seedVersion`, `exportedAt` (the one
 allowed `toISOString()`), and every table (`foods`, `logEntries`, `customMeals`, `weightEntries`,
 `profile`, `meta`). Import validates the app marker, schema version and every row by hand — no schema
 library — **before** touching IndexedDB. A rejected file leaves the database untouched. A valid file
@@ -153,7 +156,12 @@ the Profile section says it is unavailable and backups remain the safety net.
 
 ## Android (Capacitor)
 
-The Android project in `android/` wraps the same `dist/` bundle. `npm run cap:sync` builds the web
+The Android project in `android/` wraps the same `dist/` bundle.
+
+**Never change `appId` or `server.androidScheme` after installing the app.** Android keys app data
+(including IndexedDB) to the app id and the WebView origin. Changing either one creates a new origin,
+so the existing log becomes unreachable — it looks like every entry vanished. Treat both as fixed
+once the APK has been installed anywhere. `npm run cap:sync` builds the web
 app and copies it into the APK; `android/app/src/main/assets/public` and generated config files are
 gitignored. Build and install steps (JDK, SDK, USB debugging) are in
 [BUILD_ANDROID.md](BUILD_ANDROID.md).
@@ -164,9 +172,14 @@ Web vs native differences:
 |---|---|---|
 | Assets | precached by the service worker | bundled inside the APK |
 | Updates | in-app update prompt | install a new APK / store update |
-| Back button | browser Back closes sheets via history | `NativeBackHandler` via `@capacitor/app`: close sheet → previous screen → exit |
+| Back button | browser Back closes sheets via history | `NativeBackHandler` via `@capacitor/app`: close sheet → Foods/Progress/Profile return to Diary, Add Food pops back, Diary exits |
 | Storage | IndexedDB, optionally persistent | IndexedDB inside the app; **wiped on uninstall** |
 | Offline | SW cache | always, no network layer needed |
+
+The native Back listener is a deliberate safeguard rather than a response to a documented Capacitor
+bug: `@capacitor/app` registers an `OnBackPressedCallback` and only forwards an event when JS has a
+listener. KainLog registers one so it can enforce the routing above on every device instead of
+leaving Back to raw WebView history.
 
 ## Status
 

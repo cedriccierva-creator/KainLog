@@ -175,6 +175,30 @@ describe('last backup', () => {
   });
 });
 
+describe('failed export', () => {
+  it('reports the failure and leaves the backup nudge alone', async () => {
+    const user = userEvent.setup();
+    Object.defineProperty(URL, 'createObjectURL', {
+      configurable: true,
+      value: vi.fn(() => {
+        throw new Error('blob blocked');
+      }),
+    });
+
+    renderApp('/profile');
+    await screen.findByTestId('last-backup');
+
+    await user.click(screen.getByRole('button', { name: 'Export data' }));
+
+    expect(
+      await screen.findByText('Export failed. Nothing was marked as backed up.'),
+    ).toBeTruthy();
+    expect(screen.getByTestId('last-backup').textContent).toBe('No backup yet.');
+    expect(screen.getByTestId('backup-nudge')).toBeTruthy();
+    expect(await db.meta.get(META_LAST_BACKUP)).toBeUndefined();
+  });
+});
+
 describe('persistent storage', () => {
   it('shows the state and updates it after a request', async () => {
     let persisted = false;

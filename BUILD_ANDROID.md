@@ -42,8 +42,14 @@ Check what you have:
 java -version
 ```
 
-If it is older than 21, install a 21 JDK. On Pop!_OS 22.04 the Ubuntu archive may not package
-`openjdk-21-jdk` (unverified); either use SDKMAN or an Adoptium tarball:
+If it is older than 21, first check whether Pop!_OS offers the package:
+
+```bash
+apt-cache policy openjdk-21-jdk
+```
+
+If `Candidate:` shows a version, install it with `sudo apt install openjdk-21-jdk`. If it shows
+`(none)`, use SDKMAN or an Adoptium tarball instead (Pop!_OS 22.04 may not package it; unverified):
 
 ```bash
 # SDKMAN route
@@ -130,6 +136,17 @@ manager). USB is more reliable for updates.
    `android` folder manually from Studio's welcome screen. Android Studio writes
    `android/local.properties` for you; that file is gitignored.
 3. Wait for the Gradle sync to finish, pick your phone in the device dropdown, press **Run**.
+
+## Before every reinstall: export a backup, keep `~/.android/debug.keystore`
+
+- **Export first.** Profile → **Export data** and keep the JSON off the phone. Uninstalling the app,
+  or installing an APK signed with a different key, wipes the IndexedDB log. `adb install -r` only
+  upgrades in place when the signing key matches and the app is not uninstalled.
+- **Keep `~/.android/debug.keystore`.** Gradle creates it on the first Android build and signs every
+  debug APK with it. If you delete it or build on another machine with a freshly generated key,
+  `adb install -r` fails with an incompatible-signature error, and the only way forward is an
+  uninstall — which deletes the data. Back the file up; it lives outside this repository and is
+  never committed.
 
 ## Signing and keys
 

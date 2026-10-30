@@ -9,6 +9,11 @@ const config: CapacitorConfig = {
   appId: 'ph.kainlog.app',
   appName: 'KainLog',
   webDir: 'dist',
+  server: {
+    // The WebView origin. Changing this (or appId) after install makes a new
+    // origin, and IndexedDB data from the old one becomes unreachable.
+    androidScheme: 'https',
+  },
   android: {
     allowMixedContent: false,
   },

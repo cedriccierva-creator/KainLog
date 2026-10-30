@@ -8,11 +8,11 @@ import { isNativePlatform } from '../lib/platform';
 /**
  * Android hardware/gesture Back inside the Capacitor WebView.
  *
- * Capacitor core 8 has no Back handling; @capacitor/app installs an
- * OnBackPressedCallback that only reports an event. Without a listener the
- * plugin falls back to WebView history, which exits the app when a sheet is
- * open on a fresh page load. Registering here makes Back always close a sheet
- * first, then walk back through routes, then exit.
+ * @capacitor/app installs an OnBackPressedCallback and only reports an event
+ * to JS when a listener exists. Registering here is a deliberate safeguard:
+ * this app owns the routing policy (sheet -> tabs -> Diary -> exit) instead of
+ * leaving Back to raw WebView history, and it keeps that policy identical on
+ * every device.
  */
 export default function NativeBackHandler() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function NativeBackHandler() {
     let handle: { remove: () => Promise<void> } | undefined;
 
     void App.addListener('backButton', () => {
-      const action = decideNativeBack(hasOpenSheet(), pathRef.current === '/');
+      const action = decideNativeBack(hasOpenSheet(), pathRef.current);
       if (action === 'close-sheet') {
         // The open sheet pushed a history entry; popping it fires popstate,
         // which is what actually closes the sheet and restores focus.
@@ -36,6 +36,10 @@ export default function NativeBackHandler() {
       }
       if (action === 'go-back') {
         navigate(-1);
+        return;
+      }
+      if (action === 'go-diary') {
+        navigate('/');
         return;
       }
       void App.exitApp();

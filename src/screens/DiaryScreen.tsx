@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CalorieRing, MacroBar, Sheet, Stepper } from '../components/ui';
 import { db } from '../db/db';
+import { useTodayKey } from '../hooks/useTodayKey';
 import { deleteEntry, logFood, updateEntryServings } from '../db/logActions';
 import { getDayEntries, getRecentFoods, type RecentFood } from '../db/queries';
 import { META_PROFILE_PLACEHOLDER } from '../db/seed';
@@ -13,9 +14,18 @@ import { entryNutrition, sumNutrition } from '../lib/nutrition';
 import type { LogEntry, Meal } from '../types';
 
 export default function DiaryScreen() {
+  const today = useTodayKey();
   const [searchParams] = useSearchParams();
   // The date is local-device state; Add Food can hand a date back through the query string.
   const [date, setDate] = useState(() => searchParams.get('date') ?? todayKey());
+  // Stay on "today" if that is what the user was looking at, even if midnight passes.
+  const [followToday, setFollowToday] = useState(
+    () => (searchParams.get('date') ?? todayKey()) === todayKey(),
+  );
+
+  useEffect(() => {
+    if (followToday) setDate(today);
+  }, [followToday, today]);
 
   const entries = useLiveQuery(() => getDayEntries(date), [date]);
   const profile = useLiveQuery(() => db.profile.get('me'), []);
@@ -45,7 +55,10 @@ export default function DiaryScreen() {
           ) : (
             <button
               type="button"
-              onClick={() => setDate(todayKey())}
+              onClick={() => {
+                setFollowToday(true);
+                setDate(today);
+              }}
               className="min-h-12 rounded-xl px-3 text-sm font-medium text-emerald-600 dark:text-emerald-400"
             >
               Jump to today
@@ -57,7 +70,10 @@ export default function DiaryScreen() {
           <button
             type="button"
             aria-label="Previous day"
-            onClick={() => setDate(addDays(date, -1))}
+            onClick={() => {
+              setFollowToday(false);
+              setDate(addDays(date, -1));
+            }}
             className="h-12 w-12 rounded-xl border border-slate-200 bg-white text-lg dark:border-slate-800 dark:bg-slate-900"
           >
             ‹
@@ -69,7 +85,10 @@ export default function DiaryScreen() {
           <button
             type="button"
             aria-label="Next day"
-            onClick={() => setDate(addDays(date, 1))}
+            onClick={() => {
+              setFollowToday(false);
+              setDate(addDays(date, 1));
+            }}
             className="h-12 w-12 rounded-xl border border-slate-200 bg-white text-lg dark:border-slate-800 dark:bg-slate-900"
           >
             ›

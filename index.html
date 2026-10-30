@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0f172a" />
     <title>KainLog</title>
+    <script>
+      // Runs before first paint so the stored theme never flashes light first.
+      // localStorage holds only this one boot-time preference mirror; all app data
+      // lives in IndexedDB.
+      (function () {
+        try {
+          var stored = localStorage.getItem('kainlog:theme');
+          var dark = stored
+            ? stored === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch (error) {
+          // Private mode can block storage; the app still renders in light mode.
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

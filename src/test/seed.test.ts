@@ -1,6 +1,7 @@
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { KainLogDB } from '../db/db';
+import { setFoodHidden } from '../db/logActions';
 import { DEFAULT_PROFILE, SEED_VERSION, seedDatabase, seedFoods } from '../db/seed';
 
 let database: KainLogDB;
@@ -53,6 +54,92 @@ describe('seedDatabase', () => {
     expect(stored?.proteinG).toBe(88);
     expect(stored?.source).toBe('user');
     expect(stored?.name).toBe('My Edited Adobo');
+  });
+
+  it('refreshes an unedited seed row when the stored version is older', async () => {
+    await seedDatabase(database);
+    const seed = seedFoods.find((food) => food.id === 'seed-pork-adobo');
+    expect(seed).toBeDefined();
+    if (!seed) return;
+
+    // Simulate stale data written by an older app version (still an estimate).
+    await database.foods.update(seed.id, {
+      kcal: 1,
+      aliases: [],
+      altServings: [],
+      notes: 'stale',
+      servingGrams: 1,
+    });
+    await database.meta.put({ key: 'seedVersion', value: 1 });
+
+    await seedDatabase(database);
+
+    const refreshed = await database.foods.get(seed.id);
+    expect(refreshed?.kcal).toBe(seed.kcal);
+    expect(refreshed?.servingGrams).toBe(seed.servingGrams);
+    expect(refreshed?.aliases).toEqual(seed.aliases);
+    expect(refreshed?.altServings).toEqual(seed.altServings);
+    expect(refreshed?.notes).toBe(seed.notes);
+    expect(refreshed?.source).toBe('seed-estimate');
+    expect((await database.meta.get('seedVersion'))?.value).toBe(SEED_VERSION);
+  });
+
+  it('skips edited rows (source "user") on upgrade', async () => {
+    await seedDatabase(database);
+    const seed = seedFoods.find((food) => food.id === 'seed-pork-adobo');
+    expect(seed).toBeDefined();
+    if (!seed) return;
+
+    await database.foods.update(seed.id, {
+      kcal: 999,
+      source: 'user',
+      name: 'My Adobo',
+      notes: 'family recipe',
+    });
+    await database.meta.put({ key: 'seedVersion', value: 1 });
+
+    await seedDatabase(database);
+
+    const stored = await database.foods.get(seed.id);
+    expect(stored?.kcal).toBe(999);
+    expect(stored?.name).toBe('My Adobo');
+    expect(stored?.notes).toBe('family recipe');
+    expect(stored?.source).toBe('user');
+  });
+
+  it('preserves hidden through an upgrade and still refreshes the values', async () => {
+    await seedDatabase(database);
+    const seed = seedFoods.find((food) => food.id === 'seed-menudo');
+    expect(seed).toBeDefined();
+    if (!seed) return;
+
+    await database.foods.update(seed.id, { hidden: true, kcal: 1 });
+    await database.meta.put({ key: 'seedVersion', value: 1 });
+
+    await seedDatabase(database);
+
+    const stored = await database.foods.get(seed.id);
+    expect(stored?.hidden).toBe(true);
+    expect(stored?.kcal).toBe(seed.kcal);
+  });
+
+  it('hiding and unhiding a food does not change its source', async () => {
+    await seedDatabase(database);
+    const seed = seedFoods[0];
+    expect(seed).toBeDefined();
+    if (!seed) return;
+
+    await setFoodHidden(seed.id, true, database);
+    expect((await database.foods.get(seed.id))?.source).toBe('seed-estimate');
+
+    await setFoodHidden(seed.id, false, database);
+    expect((await database.foods.get(seed.id))?.source).toBe('seed-estimate');
+
+    await database.meta.put({ key: 'seedVersion', value: 1 });
+    await seedDatabase(database);
+    const afterUpgrade = await database.foods.get(seed.id);
+    expect(afterUpgrade?.source).toBe('seed-estimate');
+    expect(afterUpgrade?.hidden).toBe(false);
   });
 
   it('keeps hidden seed foods hidden and still stored', async () => {

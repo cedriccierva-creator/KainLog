@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { seedDatabase } from './db/seed';
+import { applyTheme, readStoredTheme, resolveTheme } from './lib/theme';
 import './index.css';
 
 const container = document.getElementById('root');
@@ -12,7 +13,8 @@ if (!container) {
 
 /**
  * Seed before the first render so screens never flash an empty library.
- * Seeding is insert-only, so this is safe on every launch.
+ * Seeding only inserts missing foods and refreshes untouched seed rows, so it
+ * is safe on every launch.
  */
 async function start(root: HTMLElement): Promise<void> {
   try {
@@ -23,6 +25,10 @@ async function start(root: HTMLElement): Promise<void> {
     console.error('Failed to open KainLog database', error);
     return;
   }
+
+  // index.html sets the class before paint; re-apply here in case the stored
+  // preference or the OS setting changed since that inline script ran.
+  applyTheme(resolveTheme(await readStoredTheme()));
 
   createRoot(root).render(
     <StrictMode>

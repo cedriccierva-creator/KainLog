@@ -41,13 +41,9 @@ describe('custom meal expansion', () => {
       database,
     );
 
-    const written = await logCustomMeal(
-      meal,
-      { date: '2026-10-31', meal: 'lunch' },
-      database,
-    );
+    const result = await logCustomMeal(meal, { date: '2026-10-31', meal: 'lunch' }, database);
 
-    expect(written).toBe(2);
+    expect(result).toEqual({ written: 2, skipped: 0 });
 
     const entries = await database.logEntries.where('date').equals('2026-10-31').toArray();
     expect(entries).toHaveLength(2);
@@ -78,7 +74,10 @@ describe('custom meal expansion', () => {
 
     await database.foods.delete(adobo.id);
 
-    expect(await logCustomMeal(meal, { date: '2026-10-31', meal: 'dinner' }, database)).toBe(1);
+    expect(await logCustomMeal(meal, { date: '2026-10-31', meal: 'dinner' }, database)).toEqual({
+      written: 1,
+      skipped: 1,
+    });
     const entries = await database.logEntries.toArray();
     expect(entries).toHaveLength(1);
     expect(entries[0]?.snapshot.foodName).toBe('Plain Rice (1 cup cooked)');

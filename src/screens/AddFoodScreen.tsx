@@ -362,6 +362,7 @@ function MealSheet({
   onLog: () => Promise<void>;
 }) {
   const [saving, setSaving] = useState(false);
+  const missingCount = customMeal.items.filter((item) => !foodById.has(item.foodId)).length;
 
   return (
     <Sheet open title={customMeal.name} onClose={onClose}>
@@ -370,14 +371,30 @@ function MealSheet({
           const food = foodById.get(item.foodId);
           return (
             <li key={`${item.foodId}-${item.servings}`} className="flex justify-between gap-2 py-2 text-sm">
-              <span>{food?.name ?? 'Unavailable food'}</span>
-              <span className="text-slate-500 dark:text-slate-400">
+              <span className="min-w-0">
+                <span className="block truncate">{food?.name ?? 'Missing food'}</span>
+                {food ? null : (
+                  <span className="block text-xs font-medium text-rose-600 dark:text-rose-400">
+                    food no longer exists
+                  </span>
+                )}
+              </span>
+              <span className="shrink-0 text-slate-500 dark:text-slate-400">
                 {item.servings}× · {formatKcal((food?.kcal ?? 0) * item.servings)} kcal
               </span>
             </li>
           );
         })}
       </ul>
+
+      {missingCount > 0 ? (
+        <p
+          role="status"
+          className="mt-2 rounded-xl bg-rose-50 p-2 text-xs font-medium text-rose-700 dark:bg-rose-500/10 dark:text-rose-300"
+        >
+          {missingCount} item(s) skipped: food no longer exists
+        </p>
+      ) : null}
 
       <p className="mt-2 text-sm font-semibold">
         Total {formatKcal(totalForMeal(customMeal, foodById))} kcal

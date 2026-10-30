@@ -95,8 +95,15 @@ export default function MealFormSheet({
               return (
                 <li key={item.foodId} className="py-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="min-w-0 truncate text-sm">
-                      {food?.name ?? 'Unavailable food'}
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm">
+                        {food?.name ?? 'Missing food'}
+                      </span>
+                      {food ? null : (
+                        <span className="block text-xs font-medium text-rose-600 dark:text-rose-400">
+                          food no longer exists
+                        </span>
+                      )}
                     </span>
                     <button
                       type="button"

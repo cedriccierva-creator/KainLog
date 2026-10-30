@@ -38,15 +38,21 @@ export async function deleteEntry(entryId: string, database: KainLogDB = db): Pr
   await database.logEntries.delete(entryId);
 }
 
+export interface CustomMealLogResult {
+  written: number;
+  skipped: number;
+}
+
 /**
  * Expand a custom meal into one snapshot entry per item (e.g. Tapsilog becomes
- * tapa + sinangag + itlog). Items whose food no longer exists are skipped.
+ * tapa + sinangag + itlog). Items whose food no longer exists are skipped and
+ * reported back so the UI can say how many were dropped.
  */
 export async function logCustomMeal(
   meal: CustomMeal,
   target: LogTarget,
   database: KainLogDB = db,
-): Promise<number> {
+): Promise<CustomMealLogResult> {
   const foods = await database.foods.bulkGet(meal.items.map((item) => item.foodId));
 
   const entries: LogEntry[] = [];
@@ -61,7 +67,7 @@ export async function logCustomMeal(
   if (entries.length > 0) {
     await database.logEntries.bulkAdd(entries);
   }
-  return entries.length;
+  return { written: entries.length, skipped: meal.items.length - entries.length };
 }
 
 export interface FoodInput {

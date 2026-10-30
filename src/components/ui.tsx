@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { formatGrams, formatServings, targetPercent } from '../lib/format';
 import { SERVING_STEP } from '../lib/nutrition';
 import type { Food } from '../types';
@@ -40,6 +40,15 @@ export function FoodBadges({ food }: { food: Pick<Food, 'source' | 'hidden'> }) 
   );
 }
 
+const FOCUSABLE_SELECTOR =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/**
+ * Counts mounted sheets. Used so closing one sheet does not pop a history entry
+ * while another sheet (e.g. detail → edit) has just taken over.
+ */
+let openSheetCount = 0;
+
 export function Sheet({
   open,
   title,
@@ -51,21 +60,96 @@ export function Sheet({
   onClose: () => void;
   children: ReactNode;
 }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    if (!open) return;
+
+    openSheetCount += 1;
+    const previousFocus =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    // One history entry per sheet, so Android/browser Back closes the sheet
+    // instead of leaving the screen.
+    window.history.pushState({ kainlogSheet: true }, '');
+
+    const dialog = dialogRef.current;
+    const initialFocusables = dialog
+      ? Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+      : [];
+    (initialFocusables[0] ?? dialog)?.focus();
+
+    let closedByPopstate = false;
+
+    function handlePopState(): void {
+      closedByPopstate = true;
+      onCloseRef.current();
+    }
+
+    function handleKeyDown(event: KeyboardEvent): void {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialog) return;
+
+      const focusables = Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (!first || !last) {
+        event.preventDefault();
+        return;
+      }
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      openSheetCount -= 1;
+      document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('popstate', handlePopState);
+
+      // Remove the history entry we added, but leave it alone if Back consumed it
+      // or another sheet is already taking over this render.
+      const shouldPopHistory = !closedByPopstate;
+      window.setTimeout(() => {
+        if (!shouldPopHistory || openSheetCount > 0) return;
+        const state = window.history.state as { kainlogSheet?: boolean } | null;
+        if (state?.kainlogSheet) window.history.back();
+      }, 0);
+
+      previousFocus?.focus();
+    };
+  }, [open]);
+
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      {/* Backdrop: mouse convenience only; the Close button is the accessible exit. */}
+      {/* Backdrop: mouse convenience only; the Close button and Escape are the accessible exits. */}
       <div
         aria-hidden="true"
         onClick={onClose}
         className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px]"
       />
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-4 pb-8 shadow-xl dark:bg-slate-900 sm:rounded-3xl"
+        tabIndex={-1}
+        className="relative max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-4 pb-8 shadow-xl outline-none dark:bg-slate-900 sm:rounded-3xl"
       >
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-300 dark:bg-slate-700" />
         <div className="mb-3 flex items-start justify-between gap-3">

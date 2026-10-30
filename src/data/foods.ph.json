@@ -10,6 +10,10 @@
     "servingGrams": 180,
     "altServings": [
       {
+        "label": "1/2 cup",
+        "grams": 90
+      },
+      {
         "label": "1 piece",
         "grams": 35
       }
@@ -23,7 +27,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Sauce amount varies; sodium is a rough estimate."
+    "notes": "Sauce amount varies; sodium is a rough estimate. Alternate serving grams are estimates."
   },
   {
     "id": "seed-chicken-adobo",
@@ -35,6 +39,10 @@
     "servingLabel": "1 thigh + sauce (≈130 g)",
     "servingGrams": 130,
     "altServings": [
+      {
+        "label": "1/2 cup shredded",
+        "grams": 90
+      },
       {
         "label": "1 piece",
         "grams": 90
@@ -48,7 +56,8 @@
     "sodiumMg": 750,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-adobong-pusit",
@@ -95,7 +104,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Broth-heavy; assumes a normal bowl with 2-3 pieces of pork."
+    "notes": "Broth-heavy; assumes a normal bowl with 2-3 pieces of pork. Alternate serving grams are estimates."
   },
   {
     "id": "seed-chicken-tinola",
@@ -107,7 +116,12 @@
     "category": "ulam",
     "servingLabel": "1 bowl (chicken + papaya + broth)",
     "servingGrams": 400,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1 cup",
+        "grams": 200
+      }
+    ],
     "kcal": 163,
     "proteinG": 17,
     "carbsG": 8,
@@ -116,7 +130,8 @@
     "sodiumMg": 880,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-nilagang-baka",
@@ -127,7 +142,12 @@
     "category": "ulam",
     "servingLabel": "1 bowl",
     "servingGrams": 400,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1 cup",
+        "grams": 200
+      }
+    ],
     "kcal": 215,
     "proteinG": 19,
     "carbsG": 10,
@@ -136,7 +156,8 @@
     "sodiumMg": 900,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-nilagang-baboy",
@@ -147,7 +168,12 @@
     "category": "ulam",
     "servingLabel": "1 bowl",
     "servingGrams": 400,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1 cup",
+        "grams": 200
+      }
+    ],
     "kcal": 208,
     "proteinG": 16,
     "carbsG": 9,
@@ -156,7 +182,8 @@
     "sodiumMg": 850,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-menudo",
@@ -168,7 +195,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 250,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 125
+      }
+    ],
     "kcal": 204,
     "proteinG": 14,
     "carbsG": 10,
@@ -177,7 +209,8 @@
     "sodiumMg": 780,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-chicken-afritada",
@@ -188,7 +221,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 250,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 125
+      }
+    ],
     "kcal": 202,
     "proteinG": 16,
     "carbsG": 12,
@@ -197,7 +235,8 @@
     "sodiumMg": 760,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-pork-afritada",
@@ -208,7 +247,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 250,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 125
+      }
+    ],
     "kcal": 221,
     "proteinG": 14,
     "carbsG": 12,
@@ -217,7 +261,8 @@
     "sodiumMg": 780,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-beef-caldereta",
@@ -229,7 +274,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 250,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 125
+      }
+    ],
     "kcal": 252,
     "proteinG": 18,
     "carbsG": 9,
@@ -239,7 +289,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Cheese and liver spread amounts vary a lot between recipes."
+    "notes": "Cheese and liver spread amounts vary a lot between recipes. Alternate serving grams are estimates."
   },
   {
     "id": "seed-kare-kare",
@@ -250,7 +300,12 @@
     "category": "ulam",
     "servingLabel": "1 cup (oxtail + sauce)",
     "servingGrams": 300,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 150
+      }
+    ],
     "kcal": 322,
     "proteinG": 19,
     "carbsG": 12,
@@ -260,7 +315,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Peanut sauce is calorie-dense; assumes a moderate amount."
+    "notes": "Peanut sauce is calorie-dense; assumes a moderate amount. Alternate serving grams are estimates."
   },
   {
     "id": "seed-bicol-express",
@@ -271,7 +326,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 200,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 100
+      }
+    ],
     "kcal": 262,
     "proteinG": 10,
     "carbsG": 6,
@@ -280,7 +340,8 @@
     "sodiumMg": 780,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-sisig",
@@ -292,7 +353,12 @@
     "category": "ulam",
     "servingLabel": "1 cup (≈150 g)",
     "servingGrams": 150,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 75
+      }
+    ],
     "kcal": 296,
     "proteinG": 16,
     "carbsG": 4,
@@ -302,7 +368,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Mayonnaise and pork belly ratios vary by stall."
+    "notes": "Mayonnaise and pork belly ratios vary by stall. Alternate serving grams are estimates."
   },
   {
     "id": "seed-lechon-kawali",
@@ -313,7 +379,12 @@
     "category": "ulam",
     "servingLabel": "1 cup sliced (≈100 g)",
     "servingGrams": 100,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 50
+      }
+    ],
     "kcal": 364,
     "proteinG": 18,
     "carbsG": 1,
@@ -322,7 +393,8 @@
     "sodiumMg": 620,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-bistek-tagalog",
@@ -334,7 +406,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 200,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 100
+      }
+    ],
     "kcal": 220,
     "proteinG": 22,
     "carbsG": 6,
@@ -343,7 +420,8 @@
     "sodiumMg": 900,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-dinuguan",
@@ -355,7 +433,12 @@
     "category": "ulam",
     "servingLabel": "1 cup",
     "servingGrams": 250,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 125
+      }
+    ],
     "kcal": 206,
     "proteinG": 15,
     "carbsG": 5,
@@ -364,7 +447,8 @@
     "sodiumMg": 850,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-pork-bbq",
@@ -1651,6 +1735,10 @@
       {
         "label": "1/2 cup cooked",
         "grams": 90
+      },
+      {
+        "label": "1 bowl (≈1.5 cups)",
+        "grams": 270
       }
     ],
     "kcal": 200,
@@ -1662,7 +1750,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Rice variety and packing affect weight; assumes a level cup."
+    "notes": "Rice variety and packing affect weight; assumes a level cup. Alternate serving grams are estimates."
   },
   {
     "id": "seed-brown-rice",
@@ -1687,7 +1775,8 @@
     "sodiumMg": 5,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-sinangag",
@@ -1698,7 +1787,12 @@
     "category": "rice",
     "servingLabel": "1 cup",
     "servingGrams": 180,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 90
+      }
+    ],
     "kcal": 247,
     "proteinG": 4.5,
     "carbsG": 46,
@@ -1707,7 +1801,8 @@
     "sodiumMg": 400,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-bringhe",
@@ -1718,7 +1813,12 @@
     "category": "rice",
     "servingLabel": "1 cup",
     "servingGrams": 200,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 100
+      }
+    ],
     "kcal": 282,
     "proteinG": 8,
     "carbsG": 40,
@@ -1728,7 +1828,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Kapampangan glutinous rice dish; coconut milk amount varies."
+    "notes": "Kapampangan glutinous rice dish; coconut milk amount varies. Alternate serving grams are estimates."
   },
   {
     "id": "seed-malagkit",
@@ -1740,7 +1840,12 @@
     "category": "rice",
     "servingLabel": "1 cup cooked",
     "servingGrams": 180,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup cooked",
+        "grams": 90
+      }
+    ],
     "kcal": 224,
     "proteinG": 5,
     "carbsG": 50,
@@ -1749,7 +1854,8 @@
     "sodiumMg": 5,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-java-rice",
@@ -1760,7 +1866,12 @@
     "category": "rice",
     "servingLabel": "1 cup",
     "servingGrams": 180,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 cup",
+        "grams": 90
+      }
+    ],
     "kcal": 252,
     "proteinG": 4.5,
     "carbsG": 45,
@@ -1769,7 +1880,8 @@
     "sodiumMg": 600,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-pancit-canton",
@@ -2351,6 +2463,10 @@
     "servingGrams": 40,
     "altServings": [
       {
+        "label": "1/2 piece",
+        "grams": 20
+      },
+      {
         "label": "2 pieces",
         "grams": 80
       }
@@ -2363,7 +2479,8 @@
     "sodiumMg": 130,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-ensaymada",
@@ -2374,7 +2491,12 @@
     "category": "merienda-desserts",
     "servingLabel": "1 piece (≈70 g)",
     "servingGrams": 70,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1/2 piece",
+        "grams": 35
+      }
+    ],
     "kcal": 248,
     "proteinG": 5,
     "carbsG": 30,
@@ -2384,7 +2506,7 @@
     "isFilipino": true,
     "source": "seed-estimate",
     "verified": false,
-    "notes": "Topping and filling vary; conservative estimate."
+    "notes": "Topping and filling vary; conservative estimate. Alternate serving grams are estimates."
   },
   {
     "id": "seed-bibingka",
@@ -2416,7 +2538,12 @@
     "category": "merienda-desserts",
     "servingLabel": "2 pieces (≈60 g)",
     "servingGrams": 60,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 30
+      }
+    ],
     "kcal": 134,
     "proteinG": 3,
     "carbsG": 26,
@@ -2425,7 +2552,8 @@
     "sodiumMg": 180,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-kutsinta",
@@ -2436,7 +2564,12 @@
     "category": "merienda-desserts",
     "servingLabel": "3 pieces (≈75 g)",
     "servingGrams": 75,
-    "altServings": [],
+    "altServings": [
+      {
+        "label": "1 piece",
+        "grams": 25
+      }
+    ],
     "kcal": 137,
     "proteinG": 2,
     "carbsG": 30,
@@ -2445,7 +2578,8 @@
     "sodiumMg": 200,
     "isFilipino": true,
     "source": "seed-estimate",
-    "verified": false
+    "verified": false,
+    "notes": "Alternate serving grams are estimates."
   },
   {
     "id": "seed-halo-halo",
@@ -3491,5 +3625,33 @@
     "source": "seed-estimate",
     "verified": false,
     "notes": "Check the official nutrition info."
+  },
+  {
+    "id": "seed-white-bread",
+    "name": "White Bread (1 slice)",
+    "aliases": [
+      "loaf bread",
+      "white loaf bread",
+      "tinapay"
+    ],
+    "category": "merienda-desserts",
+    "servingLabel": "1 slice",
+    "servingGrams": 30,
+    "altServings": [
+      {
+        "label": "2 slices",
+        "grams": 60
+      }
+    ],
+    "kcal": 79,
+    "proteinG": 2.5,
+    "carbsG": 15,
+    "fatG": 1,
+    "fiberG": 0.8,
+    "sodiumMg": 150,
+    "isFilipino": true,
+    "source": "seed-estimate",
+    "verified": false,
+    "notes": "Standard sliced loaf. Alternate serving grams are estimates."
   }
 ]

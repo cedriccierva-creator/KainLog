@@ -154,6 +154,28 @@ foods.forEach((food, index) => {
     }
   }
 
+  // --- physical plausibility (non-circular: uses the serving weight, not the macro math) ---
+  const macrosValid =
+    isNonNegative(food.proteinG) && isNonNegative(food.carbsG) && isNonNegative(food.fatG);
+  const servingValid = isFiniteNumber(food.servingGrams) && food.servingGrams > 0;
+
+  if (macrosValid && servingValid) {
+    const macroGrams = food.proteinG + food.carbsG + food.fatG;
+    if (macroGrams > food.servingGrams) {
+      problem(
+        `${where}: protein+carbs+fat total ${macroGrams.toFixed(1)} g, more than the ${food.servingGrams} g serving can weigh`,
+      );
+    }
+    if (isNonNegative(food.kcal) && food.kcal > 9 * food.servingGrams) {
+      problem(
+        `${where}: kcal ${food.kcal} exceeds the maximum possible 9 × servingGrams (${9 * food.servingGrams}); pure fat is 9 kcal/g`,
+      );
+    }
+    if (isNonNegative(food.fiberG) && isNonNegative(food.carbsG) && food.fiberG > food.carbsG) {
+      problem(`${where}: fiberG ${food.fiberG} is higher than carbsG ${food.carbsG}; fiber is part of carbohydrate`);
+    }
+  }
+
   // --- kcal vs macros ---
   if (isNonNegative(food.kcal) && isNonNegative(food.proteinG) && isNonNegative(food.carbsG) && isNonNegative(food.fatG)) {
     const expected = 4 * food.proteinG + 4 * food.carbsG + 9 * food.fatG;

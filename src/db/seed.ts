@@ -3,7 +3,10 @@ import type { Food, MetaRecord, Profile } from '../types';
 import { db, type KainLogDB } from './db';
 
 /** Bump when foods.ph.json changes; new seed ids are then filled in on next launch. */
-export const SEED_VERSION = 1;
+export const SEED_VERSION = 2;
+
+/** meta key: true while the user has not set real goals (Phase 3 turns it off). */
+export const META_PROFILE_PLACEHOLDER = 'profileIsPlaceholder';
 
 /**
  * The JSON is checked by `npm run validate:foods`; the cast narrows the widened
@@ -42,6 +45,7 @@ export async function seedDatabase(database: KainLogDB = db): Promise<void> {
     const profile = await database.profile.get('me');
     if (!profile) {
       await database.profile.add(DEFAULT_PROFILE);
+      await database.meta.put({ key: META_PROFILE_PLACEHOLDER, value: true });
     }
 
     const meta: MetaRecord = { key: 'seedVersion', value: SEED_VERSION };

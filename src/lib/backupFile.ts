@@ -43,12 +43,22 @@ async function shareOnDevice(backup: BackupFile, filename: string): Promise<void
 
   const { uri } = await Filesystem.getUri({ path: filename, directory: Directory.Cache });
 
-  await Share.share({
-    title: 'KainLog backup',
-    text: 'KainLog backup (JSON)',
-    files: [uri],
-    dialogTitle: 'Save KainLog backup',
-  });
+  try {
+    await Share.share({
+      title: 'KainLog backup',
+      text: 'KainLog backup (JSON)',
+      files: [uri],
+      dialogTitle: 'Save KainLog backup',
+    });
+  } finally {
+    // The receiving app has its own copy once the share resolves; drop the
+    // cache file either way (cache cleanup is best-effort).
+    try {
+      await Filesystem.deleteFile({ path: filename, directory: Directory.Cache });
+    } catch {
+      // Ignore: a leftover cache file is harmless.
+    }
+  }
 }
 
 export async function exportBackupFile(

@@ -103,10 +103,20 @@ describe('NativeBackHandler', () => {
   });
 
   it('Back from Add Food pops back to the previous screen', async () => {
-    renderAt(['/', '/add'], 1);
+    renderAt(['/foods', '/add'], 1);
     await pressBack();
 
     // navigate(-1) returns to the entry that pushed Add Food.
+    expect(await screen.findByText('Foods screen')).toBeTruthy();
+    expect(mocks.exitApp).not.toHaveBeenCalled();
+  });
+
+  it('falls back to the Diary when Add Food is the first location (key "default")', async () => {
+    // The first memory entry carries location.key === 'default', i.e. there is
+    // no in-app history to pop.
+    renderAt(['/add']);
+    await pressBack();
+
     expect(await screen.findByText('Diary screen')).toBeTruthy();
     expect(mocks.exitApp).not.toHaveBeenCalled();
   });

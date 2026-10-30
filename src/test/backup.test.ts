@@ -10,6 +10,7 @@ import {
   type BackupFile,
 } from '../db/backup';
 import { seedDatabase } from '../db/seed';
+import { META_LAST_BACKUP } from '../lib/backupMeta';
 import { todayKey } from '../lib/date';
 import { createLogEntry } from '../lib/nutrition';
 
@@ -19,13 +20,20 @@ async function freshDatabase(): Promise<void> {
   await seedDatabase(db);
 }
 
-/** Shape held by the round-trip test: everything except the export timestamp. */
+/**
+ * Shape held by the round-trip test: everything except the export timestamp,
+ * and except lastBackupAt, which import intentionally sets to the file's
+ * exportedAt (asserted separately).
+ */
 function withoutTimestamp(backup: BackupFile): Omit<BackupFile, 'exportedAt'> {
   return {
     app: backup.app,
     schemaVersion: backup.schemaVersion,
     seedVersion: backup.seedVersion,
-    tables: backup.tables,
+    tables: {
+      ...backup.tables,
+      meta: backup.tables.meta.filter((record) => record.key !== META_LAST_BACKUP),
+    },
   };
 }
 
@@ -86,6 +94,7 @@ describe('backup round-trip', () => {
     expect(await db.weightEntries.count()).toBe(1);
     expect((await db.profile.get('me'))?.kcalTarget).toBe(1650);
     expect((await db.meta.get('theme'))?.value).toBe('dark');
+    expect((await db.meta.get(META_LAST_BACKUP))?.value).toBe(Date.parse(original.exportedAt));
   });
 
   it('parses its own serialized output', async () => {

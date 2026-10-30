@@ -2,6 +2,7 @@ import type { CustomMeal, Food, LogEntry, MetaRecord, Profile, WeightEntry } fro
 import { db } from './db';
 import { SEED_VERSION, seedDatabase } from './seed';
 import { applyStoredTheme } from '../lib/theme';
+import { META_LAST_BACKUP } from '../lib/backupMeta';
 
 /** Bump only when the exported shape changes. Importers refuse other versions. */
 export const BACKUP_SCHEMA_VERSION = 1;
@@ -324,4 +325,12 @@ export async function applyBackup(backup: BackupFile): Promise<void> {
   // The imported meta may carry a different theme (or none). Apply it to the
   // document and the boot mirror so class, mirror and meta agree after import.
   await applyStoredTheme();
+
+  // Treat the file's own date as the last backup: that is when the data was
+  // captured, not when it was restored. Written after the transaction so a
+  // rejected/failed import can never touch it.
+  const exportedAt = Date.parse(backup.exportedAt);
+  if (Number.isFinite(exportedAt)) {
+    await db.meta.put({ key: META_LAST_BACKUP, value: exportedAt });
+  }
 }

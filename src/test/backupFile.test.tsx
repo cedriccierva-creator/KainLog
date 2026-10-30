@@ -17,10 +17,15 @@ const mocks = vi.hoisted(() => ({
   writeFile: vi.fn(),
   getUri: vi.fn(),
   share: vi.fn(),
+  deleteFile: vi.fn(),
 }));
 
 vi.mock('@capacitor/filesystem', () => ({
-  Filesystem: { writeFile: mocks.writeFile, getUri: mocks.getUri },
+  Filesystem: {
+    writeFile: mocks.writeFile,
+    getUri: mocks.getUri,
+    deleteFile: mocks.deleteFile,
+  },
   Directory: { Cache: 'CACHE', Documents: 'DOCUMENTS' },
   Encoding: { UTF8: 'utf8' },
 }));
@@ -55,6 +60,8 @@ beforeEach(async () => {
   mocks.writeFile.mockReset();
   mocks.getUri.mockReset();
   mocks.share.mockReset();
+  mocks.deleteFile.mockReset();
+  mocks.deleteFile.mockResolvedValue(undefined);
   mocks.writeFile.mockResolvedValue({ uri: 'file:///cache/file.json' });
   mocks.getUri.mockResolvedValue({ uri: 'file:///cache/kainlog-backup.json' });
   mocks.share.mockResolvedValue({ activityType: 'com.example.save' });
@@ -101,6 +108,13 @@ describe('native export', () => {
     expect(mocks.share).toHaveBeenCalledWith(
       expect.objectContaining({ files: ['file:///cache/kainlog-backup.json'] }),
     );
+
+    // The cache copy is removed once the share settles.
+    expect(mocks.deleteFile).toHaveBeenCalledTimes(1);
+    expect(mocks.deleteFile).toHaveBeenCalledWith({
+      path: result.filename,
+      directory: 'CACHE',
+    });
   });
 
   it('defaults to the web download when Capacitor reports a browser', async () => {
@@ -154,6 +168,8 @@ describe('recording the export', () => {
 
     expect(await db.meta.get(META_LAST_BACKUP)).toBeUndefined();
     expect(backupNudgeDue(null)).toBe(true);
+    // Cleanup still runs even though the share failed.
+    expect(mocks.deleteFile).toHaveBeenCalledTimes(1);
   });
 
   it('leaves lastBackupAt untouched when the web download throws', async () => {

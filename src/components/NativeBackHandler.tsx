@@ -8,17 +8,20 @@ import { isNativePlatform } from '../lib/platform';
 /**
  * Android hardware/gesture Back inside the Capacitor WebView.
  *
- * @capacitor/app installs an OnBackPressedCallback and only reports an event
- * to JS when a listener exists. Registering here is a deliberate safeguard:
- * this app owns the routing policy (sheet -> tabs -> Diary -> exit) instead of
- * leaving Back to raw WebView history, and it keeps that policy identical on
- * every device.
+ * Capacitor core (the @capacitor/android package) installs no Back callback;
+ * @capacitor/app is what registers the OnBackPressedCallback and forwards the
+ * event to JS, and only when a listener exists. KainLog registers one so Back
+ * follows the app's routing policy (sheet -> tabs -> Diary -> exit).
+ * Unverified on a physical device: test with both gesture and 3-button
+ * navigation.
  */
 export default function NativeBackHandler() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathRef = useRef(location.pathname);
   pathRef.current = location.pathname;
+  const locationKeyRef = useRef(location.key);
+  locationKeyRef.current = location.key;
 
   useEffect(() => {
     if (!isNativePlatform()) return;
@@ -35,7 +38,13 @@ export default function NativeBackHandler() {
         return;
       }
       if (action === 'go-back') {
-        navigate(-1);
+        // 'default' means this is the first location of the session, so there
+        // is no in-app entry to pop; go to the Diary instead of doing nothing.
+        if (locationKeyRef.current === 'default') {
+          navigate('/');
+        } else {
+          navigate(-1);
+        }
         return;
       }
       if (action === 'go-diary') {

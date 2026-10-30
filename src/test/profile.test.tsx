@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { db } from '../db/db';
 import { META_PROFILE_PLACEHOLDER } from '../db/seed';
 import { META_LAST_BACKUP } from '../lib/backupMeta';
+import { applyBackup, buildBackup } from '../db/backup';
 import { renderApp, resetDatabase } from './utils';
 
 beforeEach(async () => {
@@ -123,6 +124,12 @@ describe('dark mode', () => {
 });
 
 describe('last backup', () => {
+  /** BackupFile.exportedAt is an ISO UTC timestamp by contract. */
+  function isoAgo(days: number): string {
+    // eslint-disable-next-line no-restricted-properties -- test fixture only
+    return new Date(Date.now() - days * 86_400_000).toISOString();
+  }
+
   it('says there is no backup yet and nudges', async () => {
     renderApp('/profile');
 
@@ -150,6 +157,35 @@ describe('last backup', () => {
       expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: 15 days ago'),
     );
     expect(screen.getByTestId('backup-nudge').textContent).toMatch(/15 days/);
+  });
+
+  it('uses the imported file date for the label and nudge state', async () => {
+    const backup = await buildBackup();
+    const exportedAt = isoAgo(3);
+
+    await applyBackup({ ...backup, exportedAt });
+
+    renderApp('/profile');
+
+    await waitFor(() =>
+      expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: 3 days ago'),
+    );
+    expect(screen.queryByTestId('backup-nudge')).toBeNull();
+    expect((await db.meta.get(META_LAST_BACKUP))?.value).toBe(Date.parse(exportedAt));
+  });
+
+  it('nudges when the imported file is older than 14 days', async () => {
+    const backup = await buildBackup();
+    const exportedAt = isoAgo(20);
+
+    await applyBackup({ ...backup, exportedAt });
+
+    renderApp('/profile');
+
+    await waitFor(() =>
+      expect(screen.getByTestId('last-backup').textContent).toBe('Last backup: 20 days ago'),
+    );
+    expect(screen.getByTestId('backup-nudge').textContent).toMatch(/20 days/);
   });
 
   it('records the export time and flips the label to today', async () => {

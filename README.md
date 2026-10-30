@@ -176,16 +176,25 @@ Web vs native differences:
 | Storage | IndexedDB, optionally persistent | IndexedDB inside the app; **wiped on uninstall** |
 | Offline | SW cache | always, no network layer needed |
 
-The native Back listener is a deliberate safeguard rather than a response to a documented Capacitor
-bug: `@capacitor/app` registers an `OnBackPressedCallback` and only forwards an event when JS has a
-listener. KainLog registers one so it can enforce the routing above on every device instead of
-leaving Back to raw WebView history.
+Capacitor **core** (`@capacitor/android`) installs no Back callback at all: a case-insensitive grep
+for `handleOnBackPressed` in that package finds nothing, and only `@capacitor/app` registers an
+`OnBackPressedCallback` and forwards the event to JS (and only when JS has a listener). So
+`@capacitor/app` is what makes in-app Back work; KainLog registers the listener so Back follows the
+routing above. **This is unverified on a physical device** — test Back with both gesture navigation
+and 3-button navigation.
 
 ## Status
 
 Phases 1–3 complete: schema, seed library, validator, search, calorie math, diary, Add Food, Foods,
 custom meals, goals, progress, backup and dark mode. Phase 4 adds the installable PWA and the
 Capacitor Android shell.
+
+## Dev notes
+
+`npm audit` reports advisories only in dev/build tooling (Vitest's worker/mocker chain and
+vite-plugin-pwa's Workbox/rollup chain); `npm audit --omit=dev` is clean, so nothing in the shipped
+bundle is affected. **Do not run `npm audit fix --force`**: it proposes `vitest@5` and a
+`vite-plugin-pwa@0.2.1` downgrade, both breaking changes.
 
 ## Tests
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { hasOpenSheet, sheetClosed, sheetOpened } from '../lib/sheetState';
 import { formatGrams, formatServings, targetPercent } from '../lib/format';
-import { SERVING_STEP } from '../lib/nutrition';
+import { SERVING_STEP, stepServings } from '../lib/nutrition';
 import type { Food } from '../types';
 
 type Tone = 'estimate' | 'custom' | 'hidden' | 'neutral';
@@ -173,7 +173,9 @@ export function Stepper({
   onChange: (next: number) => void;
   label: string;
 }) {
-  const step = (direction: 1 | -1) => onChange(Math.max(SERVING_STEP, value + direction * SERVING_STEP));
+  // Snapping lives here: an exact grams-derived value (1.67) lands on the
+  // quarter grid only when the user actually presses the stepper.
+  const step = (direction: 1 | -1) => onChange(stepServings(value, direction));
 
   return (
     <div aria-label={label} className="flex items-center justify-between gap-3">

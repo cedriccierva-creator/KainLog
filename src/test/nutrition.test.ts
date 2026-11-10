@@ -1,12 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { formatGrams, formatKcal, formatServings } from '../lib/format';
+import { formatEntryAmount, formatGrams, formatKcal, formatServings } from '../lib/format';
 import {
   createLogEntry,
   entryNutrition,
+  gramsFromServings,
+  isGramServingLabel,
+  isValidServings,
   kcalFromMacros,
+  MAX_SERVINGS,
+  parseGramAmount,
   roundServings,
   scaleNutrition,
+  servingsFromGrams,
   snapshotFromFood,
+  stepServings,
   sumNutrition,
   ZERO_NUTRITION,
 } from '../lib/nutrition';
@@ -54,6 +61,7 @@ describe('snapshotFromFood', () => {
     expect(snapshotFromFood(food)).toEqual({
       foodName: 'Pork Adobo',
       servingLabel: '1 cup',
+      servingGrams: 100,
       kcal: 200,
       proteinG: 10,
       carbsG: 20,
@@ -91,6 +99,131 @@ describe('createLogEntry', () => {
   });
 });
 
+describe('gram amounts', () => {
+  it('converts grams to exact servings and back', () => {
+    expect(servingsFromGrams(167, 100)).toBe(1.67);
+    expect(gramsFromServings(1.67, 100)).toBeCloseTo(167, 10);
+    expect(servingsFromGrams(47, 30)).toBeCloseTo(1.5666666666666667, 12);
+  });
+
+  it('formats non-terminating ratios without float noise', () => {
+    const servingSizes = [30, 45, 85, 180];
+    const amounts = [47, 47.5, 167];
+
+    for (const servingGrams of servingSizes) {
+      for (const grams of amounts) {
+        const servings = servingsFromGrams(grams, servingGrams);
+        expect(formatGrams(gramsFromServings(servings, servingGrams))).toBe(String(grams));
+      }
+    }
+
+    // Raw double arithmetic can carry noise even when the ratio above cancels.
+    expect(formatGrams(47.00000000000001)).toBe('47');
+    expect(formatGrams(0.47 * 150)).toBe('70.5');
+  });
+
+  it('rejects blank, non-numeric, zero, negative and oversized gram input', () => {
+    expect(parseGramAmount('')).toBeNull();
+    expect(parseGramAmount('  ')).toBeNull();
+    expect(parseGramAmount('abc')).toBeNull();
+    expect(parseGramAmount('0')).toBeNull();
+    expect(parseGramAmount('-5')).toBeNull();
+    expect(parseGramAmount('10000.1')).toBeNull();
+    expect(parseGramAmount('47.5')).toBe(47.5);
+    expect(parseGramAmount('10000')).toBe(10000);
+    expect(parseGramAmount('1e3')).toBe(1000);
+    expect(parseGramAmount('47.')).toBe(47);
+    expect(parseGramAmount('.5')).toBe(0.5);
+  });
+
+  it('treats only a bare gram amount as a gram label', () => {
+    expect(isGramServingLabel('100 g')).toBe(true);
+    expect(isGramServingLabel('85g')).toBe(true);
+    expect(isGramServingLabel(' 250 G ')).toBe(true);
+    expect(isGramServingLabel('1 cup')).toBe(false);
+    expect(isGramServingLabel('1 piece (100 g)')).toBe(false);
+    expect(isGramServingLabel('1 cup (≈4 pcs)')).toBe(false);
+  });
+
+  it('snaps only when the stepper is pressed', () => {
+    expect(stepServings(1.67, 1)).toBe(2);
+    expect(stepServings(1.67, -1)).toBe(1.5);
+    expect(stepServings(1, 1)).toBe(1.25);
+    expect(stepServings(0.25, -1)).toBe(0.25);
+  });
+
+  it('steps from 0.1 servings without ever reaching zero', () => {
+    // 0.1 is below the first quarter step: "−" is disabled in the UI and, even
+    // if forced, the minimum clamp keeps it at 0.25 rather than 0.
+    expect(stepServings(0.1, -1)).toBe(0.25);
+    expect(stepServings(0.1, 1)).toBe(0.25);
+    expect(stepServings(0.1, 1)).toBeGreaterThan(0);
+    expect(stepServings(0.1, -1)).toBeGreaterThan(0);
+  });
+
+  it('keeps exact grams-derived servings in a log entry', () => {
+    const entry = createLogEntry(makeFood({ servingGrams: 100 }), {
+      date: '2026-10-30',
+      meal: 'lunch',
+      servings: servingsFromGrams(167, 100),
+      amountMode: 'grams',
+    });
+
+    expect(entry.servings).toBe(1.67);
+    expect(entry.amountMode).toBe('grams');
+    expect(entry.snapshot.servingGrams).toBe(100);
+  });
+
+  it('renders gram entries as total grams and other entries as servings', () => {
+    const gramEntry = createLogEntry(makeFood({ servingLabel: '100 g', servingGrams: 100 }), {
+      date: '2026-10-30',
+      meal: 'lunch',
+      servings: servingsFromGrams(167, 100),
+      amountMode: 'grams',
+    });
+    expect(formatEntryAmount(gramEntry)).toBe('167 g');
+
+    const servingEntry = createLogEntry(makeFood({ servingLabel: '1 cup', servingGrams: 100 }), {
+      date: '2026-10-30',
+      meal: 'lunch',
+      servings: 1.5,
+      amountMode: 'servings',
+    });
+    expect(formatEntryAmount(servingEntry)).toBe('1.5 × 1 cup');
+
+    const legacy = createLogEntry(makeFood(), {
+      date: '2026-10-30',
+      meal: 'lunch',
+      servings: 1,
+    });
+    const legacySnapshot = { ...legacy.snapshot };
+    delete legacySnapshot.servingGrams;
+    expect(formatEntryAmount({ ...legacy, snapshot: legacySnapshot, amountMode: undefined })).toBe(
+      '1 × 1 serving',
+    );
+  });
+});
+
+describe('seeded servings guard', () => {
+  it('rejects NaN, zero, negative, Infinity and over-max servings', () => {
+    for (const value of [Number.NaN, 0, -1, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY]) {
+      expect(isValidServings(value), String(value)).toBe(false);
+      expect(() =>
+        createLogEntry(makeFood(), { date: '2026-10-30', meal: 'lunch', servings: value }),
+      ).toThrow(RangeError);
+    }
+
+    expect(isValidServings(MAX_SERVINGS + 1)).toBe(false);
+    expect(() =>
+      createLogEntry(makeFood(), { date: '2026-10-30', meal: 'lunch', servings: MAX_SERVINGS + 1 }),
+    ).toThrow(/at most 10000/);
+
+    expect(isValidServings(MAX_SERVINGS)).toBe(true);
+    expect(isValidServings(0.0001)).toBe(true);
+    expect(createLogEntry(makeFood(), { date: '2026-10-30', meal: 'lunch', servings: 0.0001 }).servings).toBe(0.0001);
+  });
+});
+
 describe('roundServings', () => {
   it('snaps to quarter steps', () => {
     expect(roundServings(0.3)).toBe(0.25);
@@ -101,6 +234,7 @@ describe('roundServings', () => {
 
   it('never goes below one step', () => {
     expect(roundServings(0)).toBe(0.25);
+    expect(roundServings(0.1)).toBe(0.25);
     expect(roundServings(-3)).toBe(0.25);
   });
 });

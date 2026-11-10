@@ -12,4 +12,5 @@ export const CATEGORY_LABELS: Record<FoodCategory, string> = {
   drinks: 'Drinks',
   fruits: 'Fruits',
   'fast-food': 'Fast food',
+  other: 'Other',
 };

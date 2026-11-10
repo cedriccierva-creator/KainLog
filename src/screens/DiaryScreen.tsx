@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { AmountField } from '../components/AmountField';
 import { CalorieRing, MacroBar, Sheet, Stepper } from '../components/ui';
 import { db } from '../db/db';
 import { useTodayKey } from '../hooks/useTodayKey';
@@ -8,10 +9,16 @@ import { deleteEntry, logFood, updateEntryServings } from '../db/logActions';
 import { getDayEntries, getRecentFoods, type RecentFood } from '../db/queries';
 import { META_PROFILE_PLACEHOLDER } from '../db/seed';
 import { addDays, formatDayLabel, isToday, todayKey } from '../lib/date';
-import { formatKcal, formatServings } from '../lib/format';
+import { formatEntryAmount, formatGrams, formatKcal, formatServings } from '../lib/format';
 import { MEAL_LABELS, MEAL_ORDER } from '../lib/meals';
-import { entryNutrition, sumNutrition } from '../lib/nutrition';
-import type { LogEntry, Meal } from '../types';
+import {
+  entryNutrition,
+  gramsFromServings,
+  parseGramAmount,
+  servingsFromGrams,
+  sumNutrition,
+} from '../lib/nutrition';
+import type { AmountMode, LogEntry, Meal } from '../types';
 
 export default function DiaryScreen() {
   const today = useTodayKey();
@@ -186,7 +193,7 @@ export default function DiaryScreen() {
                           {entry.snapshot.foodName}
                         </span>
                         <span className="block text-xs text-slate-500 dark:text-slate-400">
-                          {formatServings(entry.servings)} × {entry.snapshot.servingLabel}
+                          {formatEntryAmount(entry)}
                         </span>
                       </span>
                       <span className="shrink-0 text-sm font-semibold tabular-nums">
@@ -233,17 +240,68 @@ export default function DiaryScreen() {
 }
 
 function EntrySheet({ entry, onClose }: { entry: LogEntry; onClose: () => void }) {
+  const servingGrams = entry.snapshot.servingGrams;
+  const [mode, setMode] = useState<AmountMode>(() =>
+    entry.amountMode === 'grams' && servingGrams !== undefined ? 'grams' : 'servings',
+  );
   const [servings, setServings] = useState(entry.servings);
+  const [gramsText, setGramsText] = useState(() =>
+    servingGrams === undefined ? '' : formatGrams(gramsFromServings(entry.servings, servingGrams)),
+  );
+  // Only a real edit changes the stored mode. Opening and saving keeps it.
+  const [savedMode, setSavedMode] = useState<AmountMode | undefined>(entry.amountMode);
   const total = entryNutrition({ ...entry, servings });
+  const gramsValid = mode === 'servings' || parseGramAmount(gramsText) !== null;
+
+  function changeMode(next: AmountMode): void {
+    setMode(next);
+    if (next === 'grams' && servingGrams !== undefined) {
+      setGramsText(formatGrams(gramsFromServings(servings, servingGrams)));
+    }
+  }
+
+  function changeServings(next: number): void {
+    setServings(next);
+    if (servingGrams !== undefined) {
+      setGramsText(formatGrams(gramsFromServings(next, servingGrams)));
+      setSavedMode('servings');
+    }
+  }
+
+  function changeGrams(text: string): void {
+    setGramsText(text);
+    const grams = parseGramAmount(text);
+    if (grams === null || servingGrams === undefined) return;
+    setServings(servingsFromGrams(grams, servingGrams));
+    setSavedMode('grams');
+  }
 
   return (
     <Sheet open title={entry.snapshot.foodName} onClose={onClose}>
       <p className="text-sm text-slate-500 dark:text-slate-400">
         {entry.snapshot.servingLabel} · {formatKcal(entry.snapshot.kcal)} kcal per serving
       </p>
+      {servingGrams !== undefined ? (
+        <p className="text-xs text-slate-400 dark:text-slate-500">
+          {formatGrams(servingGrams)} g per serving
+        </p>
+      ) : (
+        <p className="text-xs text-slate-400 dark:text-slate-500">
+          Gram weight was not recorded for this entry, so it is edited in servings only.
+        </p>
+      )}
 
       <div className="mt-4">
-        <Stepper value={servings} onChange={setServings} label="Servings" />
+        <AmountField
+          servings={servings}
+          servingGrams={servingGrams}
+          mode={mode}
+          gramsText={gramsText}
+          gramsError={gramsValid ? undefined : 'Enter grams between 0.1 and 10000.'}
+          onModeChange={changeMode}
+          onServingsChange={changeServings}
+          onGramsTextChange={changeGrams}
+        />
       </div>
 
       <p className="mt-4 text-center text-sm">
@@ -254,10 +312,11 @@ function EntrySheet({ entry, onClose }: { entry: LogEntry; onClose: () => void }
       <div className="mt-5 grid gap-2">
         <button
           type="button"
+          disabled={!gramsValid}
           onClick={() => {
-            void updateEntryServings(entry.id, servings).then(onClose);
+            void updateEntryServings(entry.id, servings, db, savedMode).then(onClose);
           }}
-          className="min-h-12 rounded-xl bg-emerald-600 text-sm font-semibold text-white"
+          className="min-h-12 rounded-xl bg-emerald-600 text-sm font-semibold text-white disabled:opacity-40"
         >
           Save servings
         </button>

@@ -1,19 +1,29 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { AmountField } from '../components/AmountField';
 import FoodListItem from '../components/FoodListItem';
-import { FoodBadges, Sheet, Stepper } from '../components/ui';
+import { FoodBadges, Sheet } from '../components/ui';
 import { db } from '../db/db';
 import { logCustomMeal, logFood } from '../db/logActions';
 import { getFrequentFoods, getRecentFoods } from '../db/queries';
 import { CATEGORY_LABELS } from '../lib/categories';
 import { formatDayLabel, todayKey } from '../lib/date';
-import { formatKcal } from '../lib/format';
+import { formatGrams, formatKcal, formatServings } from '../lib/format';
 import { MEAL_LABELS, isMeal } from '../lib/meals';
-import { roundServings, scaleNutrition, snapshotFromFood } from '../lib/nutrition';
+import {
+  gramsFromServings,
+  isGramServingLabel,
+  parseGramAmount,
+  roundServings,
+  scaleNutrition,
+  servingsFromGrams,
+  snapshotFromFood,
+} from '../lib/nutrition';
 import { searchFoods } from '../lib/search';
 import {
   FOOD_CATEGORIES,
+  type AmountMode,
   type CustomMeal,
   type Food,
   type FoodCategory,
@@ -224,8 +234,8 @@ export default function AddFoodScreen() {
           food={selectedFood}
           meal={meal}
           onClose={() => setSelectedFood(null)}
-          onAdd={async (servings) => {
-            await logFood(selectedFood, { date, meal }, servings);
+          onAdd={async (servings, amountMode) => {
+            await logFood(selectedFood, { date, meal }, servings, db, amountMode);
             setSelectedFood(null);
             finish();
           }}
@@ -266,11 +276,34 @@ function FoodSheet({
   food: Food;
   meal: Meal;
   onClose: () => void;
-  onAdd: (servings: number) => Promise<void>;
+  onAdd: (servings: number, amountMode: AmountMode) => Promise<void>;
 }) {
+  // A bare gram label ("100 g") is how the user thinks about this food, so Grams wins.
+  const [mode, setMode] = useState<AmountMode>(() =>
+    isGramServingLabel(food.servingLabel) ? 'grams' : 'servings',
+  );
   const [servings, setServings] = useState(1);
+  const [gramsText, setGramsText] = useState(() => formatGrams(food.servingGrams));
   const [saving, setSaving] = useState(false);
   const totals = scaleNutrition(snapshotFromFood(food), servings);
+  const gramsValid = mode === 'servings' || parseGramAmount(gramsText) !== null;
+
+  function changeMode(next: AmountMode): void {
+    setMode(next);
+    // Convert the amount instead of resetting it.
+    setGramsText(formatGrams(gramsFromServings(servings, food.servingGrams)));
+  }
+
+  function changeServings(next: number): void {
+    setServings(next);
+    setGramsText(formatGrams(gramsFromServings(next, food.servingGrams)));
+  }
+
+  function changeGrams(text: string): void {
+    setGramsText(text);
+    const grams = parseGramAmount(text);
+    if (grams !== null) setServings(servingsFromGrams(grams, food.servingGrams));
+  }
 
   return (
     <Sheet open title={food.name} onClose={onClose}>
@@ -292,7 +325,10 @@ function FoodSheet({
                   key={alt.label}
                   type="button"
                   aria-pressed={servings === altServings}
-                  onClick={() => setServings(altServings)}
+                  onClick={() => {
+                    setMode('servings');
+                    changeServings(altServings);
+                  }}
                   className={`min-h-12 rounded-xl border px-3 text-xs font-medium ${
                     servings === altServings
                       ? 'border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300'
@@ -311,7 +347,21 @@ function FoodSheet({
       ) : null}
 
       <div className="mt-4">
-        <Stepper value={servings} onChange={setServings} label="Servings" />
+        <AmountField
+          servings={servings}
+          servingGrams={food.servingGrams}
+          mode={mode}
+          gramsText={gramsText}
+          gramsError={gramsValid ? undefined : 'Enter grams between 0.1 and 10000.'}
+          onModeChange={changeMode}
+          onServingsChange={changeServings}
+          onGramsTextChange={changeGrams}
+        />
+        {mode === 'grams' ? (
+          <p className="mt-1 text-center text-[11px] text-slate-500 dark:text-slate-400">
+            {formatServings(servings)} servings · {formatGrams(food.servingGrams)} g per serving
+          </p>
+        ) : null}
       </div>
 
       <div className="mt-4 grid grid-cols-4 gap-2 rounded-xl bg-slate-100 p-3 text-center dark:bg-slate-800">
@@ -335,10 +385,10 @@ function FoodSheet({
 
       <button
         type="button"
-        disabled={saving}
+        disabled={saving || !gramsValid}
         onClick={() => {
           setSaving(true);
-          void onAdd(servings);
+          void onAdd(servings, mode);
         }}
         className="mt-4 min-h-12 w-full rounded-xl bg-emerald-600 text-sm font-semibold text-white disabled:opacity-60"
       >

@@ -16,6 +16,8 @@ export const FOOD_CATEGORIES = [
   'drinks',
   'fruits',
   'fast-food',
+  /** Fallback for imported foods whose category is unknown or missing. */
+  'other',
 ] as const;
 
 export type FoodCategory = (typeof FOOD_CATEGORIES)[number];
@@ -61,6 +63,11 @@ export interface Food {
 export interface FoodSnapshot {
   foodName: string;
   servingLabel: string;
+  /**
+   * Grams per serving at logging time. Absent on entries logged before grams
+   * support existed: those stay servings-only, and their grams are never guessed.
+   */
+  servingGrams?: number;
   kcal: number;
   proteinG: number;
   carbsG: number;
@@ -69,14 +76,18 @@ export interface FoodSnapshot {
   sodiumMg: number;
 }
 
+/** How the amount was entered; older entries have no value (servings). */
+export type AmountMode = 'servings' | 'grams';
+
 export interface LogEntry {
   id: string;
   /** Local calendar day as "YYYY-MM-DD". Never derived from UTC. */
   date: string;
   meal: Meal;
   foodId: string;
-  /** Supports 0.25 steps. */
+  /** Grams-derived servings keep full precision; the stepper snaps to 0.25. */
   servings: number;
+  amountMode?: AmountMode;
   snapshot: FoodSnapshot;
   createdAt: number;
 }

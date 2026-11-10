@@ -8,9 +8,12 @@ import { createLogEntry } from '../lib/nutrition';
 import { todayKey } from '../lib/date';
 import { backupNudgeDue, META_LAST_BACKUP } from '../lib/backupMeta';
 import {
+  BACKUP_FILE_PREFIX,
+  FOOD_TEMPLATE_FILE_PREFIX,
   backupFilename,
   exportBackupAndRecord,
   exportBackupFile,
+  sweepStaleExports,
 } from '../lib/backupFile';
 
 const mocks = vi.hoisted(() => ({
@@ -116,6 +119,35 @@ describe('native export', () => {
     // The share no longer deletes the file afterwards; cleanup happens before
     // the next export instead.
     expect(mocks.deleteFile).not.toHaveBeenCalled();
+  });
+
+  it('sweeps every prefix it owns and leaves unrelated files alone', async () => {
+    mocks.readdir.mockResolvedValue({
+      files: [
+        { name: 'kainlog-backup-2026-01-01.json' },
+        { name: 'kainlog-foods-template.json' },
+        { name: 'kainlog-notes.json' },
+        { name: 'photo.png' },
+      ],
+    });
+
+    await sweepStaleExports([BACKUP_FILE_PREFIX, FOOD_TEMPLATE_FILE_PREFIX]);
+
+    expect(mocks.deleteFile).toHaveBeenCalledTimes(2);
+    expect(mocks.deleteFile).toHaveBeenCalledWith({
+      path: 'kainlog-backup-2026-01-01.json',
+      directory: 'CACHE',
+    });
+    expect(mocks.deleteFile).toHaveBeenCalledWith({
+      path: 'kainlog-foods-template.json',
+      directory: 'CACHE',
+    });
+    expect(mocks.deleteFile).not.toHaveBeenCalledWith(
+      expect.objectContaining({ path: 'kainlog-notes.json' }),
+    );
+    expect(mocks.deleteFile).not.toHaveBeenCalledWith(
+      expect.objectContaining({ path: 'photo.png' }),
+    );
   });
 
   it('clears leftover backup files from the cache before writing a new one', async () => {

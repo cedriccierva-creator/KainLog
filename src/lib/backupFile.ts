@@ -8,6 +8,12 @@ import { isNativePlatform } from './platform';
 
 export type BackupExportMethod = 'download' | 'share';
 
+/** Filename prefix owned by backup exports; the cache sweep only touches these. */
+export const BACKUP_FILE_PREFIX = 'kainlog-backup-';
+
+/** Filename prefix owned by the downloadable food-import template. */
+export const FOOD_TEMPLATE_FILE_PREFIX = 'kainlog-foods-template';
+
 export interface BackupExportResult {
   filename: string;
   method: BackupExportMethod;
@@ -16,7 +22,7 @@ export interface BackupExportResult {
 }
 
 export function backupFilename(now = new Date()): string {
-  return `kainlog-backup-${localDateKey(now)}.json`;
+  return `${BACKUP_FILE_PREFIX}${localDateKey(now)}.json`;
 }
 
 /** Web only: blob + temporary anchor. */
@@ -32,16 +38,25 @@ function downloadInBrowser(backup: BackupFile, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-/** Best-effort removal of previous exports left in the cache directory. */
-async function clearStaleBackups(): Promise<void> {
+/**
+ * Best-effort removal of earlier exports left in the cache directory.
+ *
+ * Callers pass the filename prefixes they own (backups, template downloads) so
+ * unrelated cache entries are never touched. A single unreadable/undeletable
+ * file, or a failed listing, never blocks the export.
+ */
+export async function sweepStaleExports(prefixes: readonly string[]): Promise<void> {
   try {
     const { files } = await Filesystem.readdir({ path: '', directory: Directory.Cache });
 
     await Promise.all(
       files
-        .filter((entry) => entry.name.startsWith('kainlog-backup-') && entry.name.endsWith('.json'))
+        .filter(
+          (entry) =>
+            entry.name.endsWith('.json') &&
+            prefixes.some((prefix) => entry.name.startsWith(prefix)),
+        )
         .map((entry) =>
-          // A single unreadable/undeletable file must not block the export.
           Filesystem.deleteFile({ path: entry.name, directory: Directory.Cache }).catch(
             () => undefined,
           ),
@@ -54,7 +69,7 @@ async function clearStaleBackups(): Promise<void> {
 
 /** Native only: clear old cache copies, write this export, open the share sheet. */
 async function shareOnDevice(backup: BackupFile, filename: string): Promise<void> {
-  await clearStaleBackups();
+  await sweepStaleExports([BACKUP_FILE_PREFIX]);
 
   await Filesystem.writeFile({
     path: filename,

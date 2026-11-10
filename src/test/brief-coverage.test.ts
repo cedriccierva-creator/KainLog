@@ -125,8 +125,9 @@ describe('brief coverage', () => {
     expect(missing).toEqual([]);
   });
 
-  it('keeps at least 5 foods in every category', () => {
-    for (const category of FOOD_CATEGORIES) {
+  it('keeps at least 5 foods in every real category', () => {
+    // "other" is the import fallback only; seed data must never need it.
+    for (const category of FOOD_CATEGORIES.filter((value) => value !== 'other')) {
       const count = seedFoods.filter((food) => food.category === category).length;
       expect(count, category).toBeGreaterThanOrEqual(5);
     }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * Validates src/data/foods.ph.json (or a path passed as argv[2]).
+ * Categories come from src/data/categories.json, the shared list.
  *
  * IMPORTANT: this checks INTERNAL CONSISTENCY ONLY (fields, duplicates, macro
  * math). It does NOT verify that the numbers match reality. Every seed row is
@@ -12,20 +13,6 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ALLOWED_CATEGORIES = [
-  'ulam',
-  'fish-seafood',
-  'vegetables',
-  'silog-breakfast',
-  'rice',
-  'noodles',
-  'street-food',
-  'merienda-desserts',
-  'drinks',
-  'fruits',
-  'fast-food',
-];
-
 const MIN_FOODS = 150;
 const MIN_PER_CATEGORY = 5;
 const MAX_FAST_FOOD = 10;
@@ -35,6 +22,18 @@ const EXCEPTION_MARKER = 'kcal-exception:';
 const FAST_FOOD_PHRASE = 'check the official nutrition info';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+
+// One shared category list: src/data/categories.json. Types, labels and the
+// backup parser are held to it by src/test/categories.test.ts.
+const CATEGORIES_FILE = path.join(scriptDir, '..', 'src', 'data', 'categories.json');
+const ALLOWED_CATEGORIES = JSON.parse(readFileSync(CATEGORIES_FILE, 'utf8'));
+
+/** "other" is the import fallback, not a real food group. */
+const FALLBACK_CATEGORY = 'other';
+const CATEGORIES_REQUIRING_MINIMUM = ALLOWED_CATEGORIES.filter(
+  (category) => category !== FALLBACK_CATEGORY,
+);
+
 const filePath = process.argv[2]
   ? path.resolve(process.argv[2])
   : path.join(scriptDir, '..', 'src', 'data', 'foods.ph.json');
@@ -92,6 +91,11 @@ foods.forEach((food, index) => {
   if (isNonEmptyString(food.category)) {
     if (!ALLOWED_CATEGORIES.includes(food.category)) {
       problem(`${where}: unknown category "${food.category}"`);
+    } else if (food.category === FALLBACK_CATEGORY) {
+      // Seed rows must never fall back: a real food has a real category.
+      problem(
+        `${where}: category "${FALLBACK_CATEGORY}" is the import fallback and must not be used in seed data`,
+      );
     } else {
       categoryCounts[food.category] += 1;
       if (food.category === 'fast-food') fastFoodCount += 1;
@@ -252,7 +256,7 @@ foods.forEach((food) => {
 if (foods.length < MIN_FOODS) {
   problem(`only ${foods.length} foods; need at least ${MIN_FOODS}`);
 }
-for (const category of ALLOWED_CATEGORIES) {
+for (const category of CATEGORIES_REQUIRING_MINIMUM) {
   if (categoryCounts[category] < MIN_PER_CATEGORY) {
     problem(`category "${category}" has ${categoryCounts[category]}; need at least ${MIN_PER_CATEGORY}`);
   }

@@ -1,13 +1,19 @@
 import { useState } from 'react';
+import { AmountField } from './AmountField';
 import {
   createCustomMeal,
   updateCustomMeal,
   type CustomMealInput,
 } from '../db/logActions';
-import { formatKcal } from '../lib/format';
+import { formatGrams, formatKcal, formatServings } from '../lib/format';
+import {
+  gramsFromServings,
+  parseGramAmount,
+  servingsFromGrams,
+} from '../lib/nutrition';
 import { searchFoods } from '../lib/search';
-import type { CustomMeal, CustomMealItem, Food } from '../types';
-import { Sheet, Stepper } from './ui';
+import type { AmountMode, CustomMeal, CustomMealItem, Food } from '../types';
+import { Sheet } from './ui';
 
 export default function MealFormSheet({
   customMeal,
@@ -22,6 +28,10 @@ export default function MealFormSheet({
   const [items, setItems] = useState<CustomMealItem[]>(customMeal?.items ?? []);
   const [query, setQuery] = useState('');
   const [saving, setSaving] = useState(false);
+  // Per-item UI state. Only servings are stored: grams are derived from the
+  // food's current servingGrams every time the row is shown.
+  const [modes, setModes] = useState<Record<string, AmountMode>>({});
+  const [gramsTexts, setGramsTexts] = useState<Record<string, string>>({});
 
   const foodById = new Map(foods.map((food) => [food.id, food]));
   const picks = query.trim()
@@ -51,8 +61,35 @@ export default function MealFormSheet({
     setItems((previous) => previous.filter((item) => item.foodId !== foodId));
   }
 
+  const modeFor = (foodId: string): AmountMode => modes[foodId] ?? 'servings';
+  const gramsTextFor = (food: Food, item: CustomMealItem): string =>
+    gramsTexts[food.id] ?? formatGrams(gramsFromServings(item.servings, food.servingGrams));
+
+  function changeMode(food: Food, item: CustomMealItem, next: AmountMode): void {
+    setModes((previous) => ({ ...previous, [food.id]: next }));
+    setGramsTexts((previous) => ({
+      ...previous,
+      [food.id]: formatGrams(gramsFromServings(item.servings, food.servingGrams)),
+    }));
+  }
+
+  function changeGrams(food: Food, text: string): void {
+    setGramsTexts((previous) => ({ ...previous, [food.id]: text }));
+    const grams = parseGramAmount(text);
+    if (grams !== null) setServings(food.id, servingsFromGrams(grams, food.servingGrams));
+  }
+
+  const invalidGrams = items.some((item) => {
+    const food = foodById.get(item.foodId);
+    return (
+      food !== undefined &&
+      modeFor(item.foodId) === 'grams' &&
+      parseGramAmount(gramsTexts[food.id] ?? '') === null
+    );
+  });
+
   async function save(): Promise<void> {
-    if (saving || name.trim().length === 0 || items.length === 0) return;
+    if (saving || invalidGrams || name.trim().length === 0 || items.length === 0) return;
     setSaving(true);
     const input: CustomMealInput = { name: name.trim(), items };
 
@@ -114,13 +151,30 @@ export default function MealFormSheet({
                       Remove
                     </button>
                   </div>
-                  <div className="mt-1">
-                    <Stepper
-                      value={item.servings}
-                      onChange={(servings) => setServings(item.foodId, servings)}
-                      label={`Servings of ${food?.name ?? 'food'}`}
-                    />
-                  </div>
+                  {food ? (
+                    <div className="mt-1">
+                      <AmountField
+                        servings={item.servings}
+                        servingGrams={food.servingGrams}
+                        mode={modeFor(item.foodId)}
+                        gramsText={gramsTextFor(food, item)}
+                        gramsError={
+                          modeFor(item.foodId) === 'grams' &&
+                          parseGramAmount(gramsTexts[food.id] ?? '') === null
+                            ? 'Enter grams between 0.1 and 10000.'
+                            : undefined
+                        }
+                        onModeChange={(next) => changeMode(food, item, next)}
+                        onServingsChange={(servings) => setServings(item.foodId, servings)}
+                        onGramsTextChange={(text) => changeGrams(food, text)}
+                        label={`Servings of ${food.name}`}
+                      />
+                      <p className="mt-0.5 text-xs tabular-nums text-slate-500 dark:text-slate-400">
+                        {formatServings(item.servings)} servings ·{' '}
+                        {formatGrams(gramsFromServings(item.servings, food.servingGrams))} g
+                      </p>
+                    </div>
+                  ) : null}
                 </li>
               );
             })}
@@ -160,7 +214,7 @@ export default function MealFormSheet({
 
       <button
         type="button"
-        disabled={saving || name.trim().length === 0 || items.length === 0}
+        disabled={saving || invalidGrams || name.trim().length === 0 || items.length === 0}
         onClick={() => void save()}
         className="mt-4 min-h-12 w-full rounded-xl bg-emerald-600 text-sm font-semibold text-white disabled:opacity-40"
       >

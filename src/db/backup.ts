@@ -1,3 +1,4 @@
+import { FOOD_CATEGORIES } from '../types';
 import type { CustomMeal, Food, LogEntry, MetaRecord, Profile, WeightEntry } from '../types';
 import { db } from './db';
 import { SEED_VERSION, seedDatabase } from './seed';
@@ -74,19 +75,6 @@ function isIsoDate(value: unknown): value is string {
 }
 
 const MEALS = ['breakfast', 'lunch', 'dinner', 'snack'];
-const CATEGORIES = [
-  'ulam',
-  'fish-seafood',
-  'vegetables',
-  'silog-breakfast',
-  'rice',
-  'noodles',
-  'street-food',
-  'merienda-desserts',
-  'drinks',
-  'fruits',
-  'fast-food',
-];
 const SOURCES = ['seed-estimate', 'user'];
 const ACTIVITY_LEVELS = ['sedentary', 'light', 'moderate', 'active', 'veryActive'];
 const GOAL_TYPES = ['lose', 'maintain', 'gain'];
@@ -112,7 +100,7 @@ function isFood(value: unknown): boolean {
     isNonEmptyString(value.name) &&
     Array.isArray(value.aliases) &&
     value.aliases.every(isString) &&
-    isOneOf(value.category, CATEGORIES) &&
+    isOneOf(value.category, FOOD_CATEGORIES) &&
     isNonEmptyString(value.servingLabel) &&
     isFiniteNumber(value.servingGrams) &&
     Array.isArray(altServings) &&
@@ -136,6 +124,7 @@ function isSnapshot(value: unknown): boolean {
   return (
     isNonEmptyString(value.foodName) &&
     isNonEmptyString(value.servingLabel) &&
+    isOptional(value.servingGrams, (grams) => isFiniteNumber(grams) && grams > 0) &&
     isFiniteNumber(value.kcal) &&
     isFiniteNumber(value.proteinG) &&
     isFiniteNumber(value.carbsG) &&
@@ -154,6 +143,7 @@ function isLogEntry(value: unknown): boolean {
     isNonEmptyString(value.foodId) &&
     isFiniteNumber(value.servings) &&
     value.servings > 0 &&
+    isOptional(value.amountMode, (mode) => mode === 'servings' || mode === 'grams') &&
     isSnapshot(value.snapshot) &&
     isFiniteNumber(value.createdAt)
   );

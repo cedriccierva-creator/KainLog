@@ -1,5 +1,6 @@
-import { createLogEntry, roundServings } from '../lib/nutrition';
+import { assertValidServings, createLogEntry } from '../lib/nutrition';
 import type {
+  AmountMode,
   CustomMeal,
   CustomMealItem,
   Food,
@@ -21,18 +22,32 @@ export async function logFood(
   target: LogTarget,
   servings: number,
   database: KainLogDB = db,
+  amountMode: AmountMode = 'servings',
 ): Promise<LogEntry> {
-  const entry = createLogEntry(food, { date: target.date, meal: target.meal, servings });
+  const entry = createLogEntry(food, {
+    date: target.date,
+    meal: target.meal,
+    servings,
+    amountMode,
+  });
   await database.logEntries.add(entry);
   return entry;
 }
 
+/**
+ * Save an edited amount. Servings are stored exactly as given: a grams entry
+ * opened and saved untouched must keep e.g. 1.67, not snap to 1.75.
+ * Pass amountMode only when the user actually changed the input mode/amount.
+ * Invalid values throw before anything is written.
+ */
 export async function updateEntryServings(
   entryId: string,
   servings: number,
   database: KainLogDB = db,
+  amountMode?: AmountMode,
 ): Promise<void> {
-  await database.logEntries.update(entryId, { servings: roundServings(servings) });
+  assertValidServings(servings);
+  await database.logEntries.update(entryId, amountMode ? { servings, amountMode } : { servings });
 }
 
 export async function deleteEntry(entryId: string, database: KainLogDB = db): Promise<void> {
@@ -77,6 +92,8 @@ export interface FoodInput {
   category: FoodCategory;
   servingLabel: string;
   servingGrams: number;
+  /** Optional so imports and per-100 g entry can say so; defaults to false. */
+  isFilipino?: boolean;
   kcal: number;
   proteinG: number;
   carbsG: number;
@@ -92,7 +109,7 @@ export async function createFood(input: FoodInput, database: KainLogDB = db): Pr
     ...input,
     id: newId(),
     altServings: [],
-    isFilipino: true,
+    isFilipino: input.isFilipino ?? false,
     source: 'user',
     verified: false,
   };

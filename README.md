@@ -116,6 +116,10 @@ as the last-backup date (clamped to the current time if the file is future-dated
 the date the data was captured. The file is also the way to move data between devices: there is no
 cloud sync.
 
+**Rollback:** a backup made after this update may not import into older builds; keep a pre-update
+export as your rollback copy. (Categories added later are rejected by the older, shorter list, and
+the import refuses the whole file rather than dropping rows.)
+
 ## Dark mode
 
 The toggle is stored in `meta` (`theme`) and applied as a class on `<html>`. With no stored choice the
